@@ -1,14 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Redirect } from "react-router";
-import { ReduxState } from "../store";
+import React from 'react';
+import './IndexPage.scss';
 
 const IndexPage = () => {
-  const isUserLoggedIn = useSelector(
-    (state: ReduxState) => state.authenticationState.isUserLoggedIn
-  );
-
-  return !isUserLoggedIn ? <Redirect to="/login" /> : <div>Index</div>;
+  return <div>index</div>;
 };
 
 export default IndexPage;

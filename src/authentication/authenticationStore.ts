@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-const name = "authentication";
+const name = 'authentication';
 
 type AuthenticationState = {
   isUserLoggedIn: boolean;
