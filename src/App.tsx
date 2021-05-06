@@ -1,23 +1,22 @@
-import { CssBaseline } from '@material-ui/core';
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Index from './pages/Index';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import React from "react";
+import { Provider as StoreProvider } from "react-redux";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import IndexPage from "./pages/IndexPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import store from "./store";
 
 const App = () => {
   return (
-    <>
-      <CssBaseline />
-
+    <StoreProvider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route path='/' exact component={Index} />
-          <Route path='/register' component={Register} />
-          <Route path='/login' component={Login} />
+          <Route path="/" exact component={IndexPage} />
+          <Route path="/register" component={RegisterPage} />
+          <Route path="/login" component={LoginPage} />
         </Switch>
       </BrowserRouter>
-    </>
+    </StoreProvider>
   );
 };
 
