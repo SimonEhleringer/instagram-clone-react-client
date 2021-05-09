@@ -1,7 +1,9 @@
 import React from 'react';
 import './LoginPage.scss';
-import instagramLogo from '../instagram-logo.png';
+import instagramLogo from '../../instagram-logo.png';
 import { Link } from 'react-router-dom';
+import Input from '../../Input/Input';
+import Button from '../../Button/Button';
 
 const LoginPage = () => {
   return (
@@ -9,19 +11,16 @@ const LoginPage = () => {
       <div className='login-form'>
         <div className='login-form__box'>
           <img
-            className='login-form__logo'
+            className='login-form__logo login-form__margin-bottom'
             src={instagramLogo}
             alt='Instagram'
           />
 
           <div className='login-form__content-wrapper'>
-            <input
-              className='login-form__input'
-              placeholder='Benutzername oder E-Mail'
-            />
-            <input className='login-form__input' placeholder='Passwort' />
+            <Input placeholder='Benutzername oder E-Mail Adresse' />
+            <Input type='password' placeholder='Passwort' />
             <div className='login-form__button-wrapper'>
-              <button className='login-form__button'>Anmelden</button>
+              <Button caption='Anmelden' />
             </div>
           </div>
         </div>

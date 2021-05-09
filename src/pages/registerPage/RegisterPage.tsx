@@ -1,5 +1,5 @@
 import React from 'react';
-import instagramLogo from '../instagram-logo.png';
+import instagramLogo from '../../instagram-logo.png';
 import { Link } from 'react-router-dom';
 import './RegisterPage.scss';
 
@@ -15,7 +15,7 @@ const RegisterPage = () => {
           />
 
           <div className='login-form__content-wrapper'>
-            <p className='login-form__paragraph'>
+            <p className='login-form__paragraph login-form__margin-bottom'>
               Registriere dich, um die Fotos und Videos deiner Freunde zu sehen.
             </p>
 
@@ -29,7 +29,7 @@ const RegisterPage = () => {
 
             <input className='login-form__input' placeholder='Passwort' />
             <div className='login-form__button-wrapper'>
-              <button className='login-form__button'>Anmelden</button>
+              <button className='login-form__button'>Registrieren</button>
             </div>
           </div>
         </div>
@@ -37,10 +37,7 @@ const RegisterPage = () => {
         <div className='login-form__box'>
           <div className='login-form__redirect-register__text'>
             Du hast ein Konto?{' '}
-            <Link
-              className='login-form__redirect-register__link'
-              to='/register'
-            >
+            <Link className='login-form__redirect-register__link' to='/login'>
               Melde dich an.
             </Link>
           </div>
