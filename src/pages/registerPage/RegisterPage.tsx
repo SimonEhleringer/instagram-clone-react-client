@@ -1,12 +1,14 @@
-import React from 'react';
-import instagramLogo from '../../instagram-logo.png';
-import { Link } from 'react-router-dom';
-import './RegisterPage.scss';
+import React from "react";
+import instagramLogo from "../../instagram-logo.png";
+import { Link } from "react-router-dom";
+import "./RegisterPage.scss";
+import RegisterForm from "../../RegisterForm";
 
 const RegisterPage = () => {
   return (
-    <div className='login-form-wrapper'>
-      <div className='login-form'>
+    <div className="login-form-wrapper">
+      <RegisterForm />
+      {/* <div className='login-form'>
         <div className='login-form__box'>
           <img
             className='login-form__logo'
@@ -42,7 +44,7 @@ const RegisterPage = () => {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

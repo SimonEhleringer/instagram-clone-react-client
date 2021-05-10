@@ -1,0 +1,61 @@
+// TODO: Variables for colors etc.
+// TODO: Other file names
+
+.authentication-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 350px;
+}
+
+.authentication-form__box {
+  background-color: white;
+  border: 1px solid rgb(219, 219, 219);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0;
+  margin: 0.25rem 0;
+  font-size: 100%;
+}
+
+.authentication-form__logo {
+  max-width: 60%;
+  margin-top: 0.5rem;
+
+  &--margin-bottom {
+    @extend .authentication-form__logo;
+    margin-bottom: 1rem;
+  }
+}
+
+.authentication-form__content-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0.5rem 3rem;
+}
+
+.authentication-form__paragraph {
+  text-align: center;
+  font-weight: 600;
+  font-size: 120%;
+  color: #8e8e8e;
+  margin-bottom: 1rem;
+}
+
+.authentication-form__submit-button {
+  width: 100%;
+  padding: 0.5rem 0;
+  display: grid;
+}
+
+.authentication-form__redirect-text {
+  padding: 1rem;
+}
+
+.authentication-form__redirect-link {
+  color: #0095f6;
+  text-decoration: none;
+  font-weight: 600;
+}

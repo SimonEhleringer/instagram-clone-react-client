@@ -1,14 +1,13 @@
-import React from 'react';
-import './LoginPage.scss';
-import instagramLogo from '../../instagram-logo.png';
-import { Link } from 'react-router-dom';
-import Input from '../../Input/Input';
-import Button from '../../Button/Button';
+import React from "react";
+import "./LoginPage.scss";
+import LoginForm from "../../LoginForm";
 
 const LoginPage = () => {
   return (
-    <div className='login-form-wrapper'>
-      <div className='login-form'>
+    <div className="login-form-wrapper">
+      <LoginForm />
+
+      {/* <div className='login-form'>
         <div className='login-form__box'>
           <img
             className='login-form__logo login-form__margin-bottom'
@@ -36,7 +35,7 @@ const LoginPage = () => {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
