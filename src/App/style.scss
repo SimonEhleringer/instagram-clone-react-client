@@ -1,9 +1,11 @@
+@use 'colors';
+
 html {
   font-size: 14px;
 }
 
 body {
-  background-color: #fafafa;
+  background-color: colors.$secondary;
 }
 
 * {

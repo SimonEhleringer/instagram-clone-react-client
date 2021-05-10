@@ -1,9 +1,11 @@
+@use 'colors';
+
 .button {
-  background-color: #0095f6;
+  background-color: colors.$primary;
   border: none;
   border-radius: 5px;
   padding: 0.5rem;
   font-weight: 600;
-  color: white;
+  color: colors.$text-on-primary;
   cursor: pointer;
 }

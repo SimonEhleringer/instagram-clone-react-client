@@ -1,17 +1,18 @@
 import React from 'react';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import IndexPage from './pages/IndexPage';
-import LoginPage from './pages/loginPage/LoginPage';
-import RegisterPage from './pages/registerPage/RegisterPage';
+import IndexPage from '../pages/IndexPage';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
 
 import { Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 
-import { ReduxState } from './store';
-import './App.scss';
+import { ReduxState } from '../store';
+import './style.scss';
 
 // TODO: Neues logo
+// Make app responsive
 
 const App = () => {
   const isUserLoggedIn = useSelector(

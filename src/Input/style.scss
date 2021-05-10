@@ -1,5 +1,7 @@
+@use 'colors';
+
 .input {
-  background-color: #fafafa;
+  background-color: colors.$secondary;
   border: 1px solid rgb(219, 219, 219);
   border-radius: 3px;
   padding: 0.75rem;
@@ -8,6 +10,6 @@
   font-size: 85%;
 
   &:focus {
-    border: 1px solid rgb(170, 170, 170);
+    border: 1px solid #8e8e8e//rgb(170, 170, 170);
   }
 }

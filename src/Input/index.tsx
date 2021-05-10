@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import './Input.scss';
+import './style.scss';
 
 const Input: FC<
   React.DetailedHTMLProps<
