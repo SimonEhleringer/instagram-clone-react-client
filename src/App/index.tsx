@@ -8,10 +8,8 @@ import RegisterPage from '../pages/RegisterPage';
 import { Redirect } from 'react-router';
 import { useSelector } from 'react-redux';
 
-import { ReduxState } from '../store';
+import { ReduxState } from '../config/store';
 import './style.scss';
-
-//TODO: Make app responsive
 
 const App = () => {
   const isUserLoggedIn = useSelector(

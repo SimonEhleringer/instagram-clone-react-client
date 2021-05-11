@@ -1,5 +1,5 @@
-import { combineReducers, createStore } from "redux";
-import { authenticationReducer } from "./authentication/authenticationStore";
+import { combineReducers, createStore } from 'redux';
+import { authenticationReducer } from '../authentication/store';
 
 const reducer = combineReducers({
   authenticationState: authenticationReducer,
