@@ -1,24 +1,43 @@
-import { PayloadAction } from '@reduxjs/toolkit';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { setErrorsForAction } from '../../errorsStore';
-import { register, RegisterRequest } from '../apiRequests';
-import { REGISTER, RegisterPayload } from '../store';
+import {
+  AccessAndRefreshTokenResponse,
+  register,
+  RegisterRequest,
+} from '../apiRequests';
+import { REGISTER, RegisterPayload, AuthenticationState } from '../store';
+import { AsyncPayloadAction } from '../../asyncAction';
+import { getUserIdFromAccessToken } from '../../accessToken';
+import { getErrorsArrayFromSagaError } from '../../sagaError';
 
 export default function* watchRegister() {
   yield takeLatest(REGISTER, handleRegister);
 }
 
-function* handleRegister(action: PayloadAction<RegisterPayload>) {
+function* handleRegister(
+  action: AsyncPayloadAction<RegisterPayload, AuthenticationState>
+) {
+  const { onSuccess, onError } = action.meta;
+
   const request: RegisterRequest = { ...action.payload };
 
   try {
-    yield call(register, request);
-  } catch (e) {
-    yield put(
-      setErrorsForAction({
-        actionName: REGISTER,
-        errors: e,
-      })
+    const response: AccessAndRefreshTokenResponse = yield call(
+      register,
+      request
     );
+
+    const { accessToken, refreshToken } = response;
+
+    const loggedInUserId = getUserIdFromAccessToken(accessToken);
+
+    const payload: AuthenticationState = {
+      accessToken,
+      refreshToken,
+      loggedInUserId,
+    };
+
+    onSuccess(payload);
+  } catch (e) {
+    onError(getErrorsArrayFromSagaError(e));
   }
 }

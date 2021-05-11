@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+// TODO: Delete this file
 
 // constants
 const name = 'errors';

@@ -1,4 +1,5 @@
-import { createAction, createSlice } from '@reduxjs/toolkit';
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AsyncActionParams } from '../asyncAction';
 
 // constants
 const name = 'authentication';
@@ -6,18 +7,25 @@ const name = 'authentication';
 export const REGISTER = `${name}/register`;
 
 const initialState: AuthenticationState = {
-  isUserLoggedIn: false,
+  loggedInUserId: undefined,
+  accessToken: '',
+  refreshToken: '',
 };
 
 // actions
-export const register = createAction<RegisterPayload>(REGISTER);
+export const register = createAction(
+  REGISTER,
+  (params: AsyncActionParams<RegisterPayload>) => params
+);
 
 // slice
 const slice = createSlice({
   name,
   initialState,
   reducers: {
-    setState() {},
+    setState(state, action: PayloadAction<AuthenticationState>) {
+      state = { ...action.payload };
+    },
   },
 });
 
@@ -25,8 +33,10 @@ export const { setState } = slice.actions;
 export const authenticationReducer = slice.reducer;
 
 // types
-type AuthenticationState = {
-  isUserLoggedIn: boolean;
+export type AuthenticationState = {
+  loggedInUserId?: string;
+  accessToken: string;
+  refreshToken: string;
 };
 
 export type RegisterPayload = {
