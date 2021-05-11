@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
-import instagramLogo from '../instagram-logo.png';
+import instagramLogo from '../assets/images/logo.png';
 import './style.scss';
 
 interface Props {
@@ -34,7 +34,9 @@ const AuthenticationForm: React.FC<Props> = ({
         />
 
         <div className='authentication-form__content-wrapper'>
-          <p className='authentication-form__sub-title'>{subTitle}</p>
+          {subTitle && (
+            <p className='authentication-form__sub-title'>{subTitle}</p>
+          )}
 
           {children}
 

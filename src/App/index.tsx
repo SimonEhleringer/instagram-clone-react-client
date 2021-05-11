@@ -11,8 +11,7 @@ import { useSelector } from 'react-redux';
 import { ReduxState } from '../store';
 import './style.scss';
 
-// TODO: Neues logo
-// Make app responsive
+//TODO: Make app responsive
 
 const App = () => {
   const isUserLoggedIn = useSelector(

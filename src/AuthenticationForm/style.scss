@@ -1,6 +1,5 @@
-// TODO: Variables for colors etc.
-// TODO: Other file names
 @use 'variables';
+@use 'mixins';
 
 .authentication-form {
   display: flex;
@@ -10,7 +9,7 @@
 }
 
 .authentication-form__box {
-  background-color: variables.$background;
+  background: variables.$background;
   border: 1px solid variables.$border;
   display: flex;
   flex-direction: column;
@@ -18,15 +17,20 @@
   padding: 0.5rem 0;
   margin: 0.25rem 0;
   font-size: 100%;
+
+  @include mixins.mobile {
+    border: none;
+  }
 }
 
 .authentication-form__logo {
-  max-width: 60%;
-  margin-top: 0.5rem;
+  max-width: 175px;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
 
   &--margin-bottom {
     @extend .authentication-form__logo;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
   }
 }
 
