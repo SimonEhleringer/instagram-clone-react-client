@@ -1,11 +1,11 @@
-@use 'colors';
+@use 'variables';
 
 .button {
-  background-color: colors.$primary;
+  background-color: variables.$primary;
   border: none;
-  border-radius: 5px;
+  border-radius: variables.$large;
   padding: 0.5rem;
-  font-weight: 600;
-  color: colors.$text-on-primary;
+  font-weight: variables.$bold;
+  color: variables.$text-on-primary;
   cursor: pointer;
 }

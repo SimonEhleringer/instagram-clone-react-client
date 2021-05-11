@@ -1,5 +1,6 @@
 // TODO: Variables for colors etc.
 // TODO: Other file names
+@use 'variables';
 
 .authentication-form {
   display: flex;
@@ -9,8 +10,8 @@
 }
 
 .authentication-form__box {
-  background-color: white;
-  border: 1px solid rgb(219, 219, 219);
+  background-color: variables.$background;
+  border: 1px solid variables.$border;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,9 +39,9 @@
 
 .authentication-form__sub-title {
   text-align: center;
-  font-weight: 600;
+  font-weight: variables.$bold;
   font-size: 120%;
-  color: #8e8e8e;
+  color: variables.$text-secondary;
   margin-bottom: 1rem;
 }
 
@@ -55,7 +56,7 @@
 }
 
 .authentication-form__redirect-link {
-  color: #0095f6;
+  color: variables.$primary;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: variables.$bold;
 }

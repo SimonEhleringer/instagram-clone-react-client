@@ -1,11 +1,13 @@
-@use 'colors';
+@use 'variables';
 
 html {
   font-size: 14px;
+  font-weight: variables.$regular;
+  color: variables.$text-primary;
 }
 
 body {
-  background-color: colors.$secondary;
+  background-color: variables.$secondary;
 }
 
 * {
