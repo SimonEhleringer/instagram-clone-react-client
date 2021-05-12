@@ -5,6 +5,7 @@ import instagramLogo from '../assets/images/logo.png';
 import './style.scss';
 
 interface Props {
+  onSubmit: () => void;
   subTitle?: string;
   submitButtonCaption: string;
   redirectText: string;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const AuthenticationForm: React.FC<Props> = ({
+  onSubmit,
   subTitle,
   submitButtonCaption,
   redirectText,
@@ -21,7 +23,7 @@ const AuthenticationForm: React.FC<Props> = ({
   children,
 }) => {
   return (
-    <div className='authentication-form'>
+    <form className='authentication-form' onSubmit={onSubmit}>
       <div className='authentication-form__box'>
         <img
           className={
@@ -41,7 +43,7 @@ const AuthenticationForm: React.FC<Props> = ({
           {children}
 
           <div className='authentication-form__submit-button'>
-            <Button caption={submitButtonCaption} />
+            <Button type='submit'>{submitButtonCaption}</Button>
           </div>
         </div>
       </div>
@@ -54,7 +56,7 @@ const AuthenticationForm: React.FC<Props> = ({
           </Link>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

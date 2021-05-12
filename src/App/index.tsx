@@ -12,15 +12,15 @@ import { ReduxState } from '../config/store';
 import './style.scss';
 
 const App = () => {
-  const isUserLoggedIn = useSelector(
-    (state: ReduxState) => state.authenticationState.isUserLoggedIn
+  const loggedInUserId = useSelector(
+    (state: ReduxState) => state.authenticationState.loggedInUserId
   );
 
   return (
     <BrowserRouter>
       <Switch>
         <Route path='/' exact>
-          {!isUserLoggedIn ? <Redirect to='/login' /> : <IndexPage />}
+          {!loggedInUserId ? <Redirect to='/login' /> : <IndexPage />}
         </Route>
         <Route path='/register' component={RegisterPage} />
         <Route path='/login' component={LoginPage} />

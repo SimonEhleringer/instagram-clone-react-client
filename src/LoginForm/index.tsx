@@ -5,6 +5,7 @@ import Input from '../Input';
 const LoginForm = () => {
   return (
     <AuthenticationForm
+      onSubmit={() => {}}
       submitButtonCaption='Anmelden'
       redirectText='Du hast kein Konto?'
       redirectButtonText='Registrieren'

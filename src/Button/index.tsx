@@ -1,12 +1,18 @@
 import React from 'react';
 import './style.scss';
 
-interface Props {
-  caption: string;
-}
+interface Props
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {}
 
-const Button: React.FC<Props> = ({ caption }) => {
-  return <button className='button'>{caption}</button>;
+const Button: React.FC<Props> = (props) => {
+  return (
+    <button {...props} className='button'>
+      {props.children}
+    </button>
+  );
 };
 
 export default Button;
