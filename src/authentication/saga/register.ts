@@ -1,13 +1,13 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
-import {
-  AccessAndRefreshTokenResponse,
-  register,
-  RegisterRequest,
-} from '../apiRequests';
+import { call, takeLatest } from 'redux-saga/effects';
+import { AccessAndRefreshTokenResponse, register } from '../apiRequests';
 import { REGISTER, RegisterPayload, AuthenticationState } from '../store';
 import { AsyncPayloadAction } from '../../asyncAction';
-import { getUserIdFromAccessToken } from '../../accessToken';
 import { getErrorsArrayFromSagaError } from '../../sagaError';
+import { morphism } from 'morphism';
+import {
+  registerPayloadToRegisterRequestSchema,
+  accessAndRefreshTokenResponseToAuthenticationStateSchema,
+} from '../mapping';
 
 export default function* watchRegister() {
   yield takeLatest(REGISTER, handleRegister);
@@ -18,7 +18,10 @@ function* handleRegister(
 ) {
   const { onSuccess, onError } = action.meta;
 
-  const request: RegisterRequest = { ...action.payload };
+  const request = morphism(
+    registerPayloadToRegisterRequestSchema,
+    action.payload
+  );
 
   try {
     const response: AccessAndRefreshTokenResponse = yield call(
@@ -26,15 +29,10 @@ function* handleRegister(
       request
     );
 
-    const { accessToken, refreshToken } = response;
-
-    const loggedInUserId = getUserIdFromAccessToken(accessToken);
-
-    const payload: AuthenticationState = {
-      accessToken,
-      refreshToken,
-      loggedInUserId,
-    };
+    const payload = morphism(
+      accessAndRefreshTokenResponseToAuthenticationStateSchema,
+      response
+    );
 
     onSuccess(payload);
   } catch (e) {

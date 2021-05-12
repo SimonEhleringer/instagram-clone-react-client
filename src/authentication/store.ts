@@ -15,7 +15,7 @@ const initialState: AuthenticationState = {
 // actions
 export const register = createAction(
   REGISTER,
-  (params: AsyncActionParams<RegisterPayload>) => params
+  (params: AsyncActionParams<RegisterPayload, AuthenticationState>) => params
 );
 
 // slice
