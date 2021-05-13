@@ -11,8 +11,8 @@ const LoginForm = () => {
       redirectButtonText='Registrieren'
       redirectTo='/register'
     >
-      <Input placeholder='Benutzername oder E-Mail Adresse' />
-      <Input type='password' placeholder='Passwort' />
+      {/* <Input placeholder='Benutzername oder E-Mail Adresse' />
+      <Input type='password' placeholder='Passwort' /> */}
     </AuthenticationForm>
   );
 };

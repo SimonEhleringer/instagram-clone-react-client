@@ -1,5 +1,10 @@
 import { call, takeLatest } from 'redux-saga/effects';
-import { AccessAndRefreshTokenResponse, register } from '../apiRequests';
+import {
+  AccessAndRefreshTokenResponse,
+  register,
+  RegisterRequest_Test,
+  requestRegister,
+} from '../apiRequests';
 import { REGISTER, RegisterPayload, AuthenticationState } from '../store';
 import { AsyncPayloadAction } from '../../asyncAction';
 import { getErrorsArrayFromSagaError } from '../../sagaError';
@@ -8,6 +13,7 @@ import {
   registerPayloadToRegisterRequestSchema,
   accessAndRefreshTokenResponseToAuthenticationStateSchema,
 } from '../mapping';
+import { AxiosResponse } from 'axios';
 
 export default function* watchRegister() {
   yield takeLatest(REGISTER, handleRegister);
@@ -16,16 +22,26 @@ export default function* watchRegister() {
 function* handleRegister(
   action: AsyncPayloadAction<RegisterPayload, AuthenticationState>
 ) {
+  console.log('registerrr');
+
   const { onSuccess, onError } = action.meta;
 
-  const request = morphism(
-    registerPayloadToRegisterRequestSchema,
-    action.payload
-  );
+  // const request = morphism(
+  //   registerPayloadToRegisterRequestSchema,
+  //   action.payload
+  // );
+
+  const request: RegisterRequest_Test = {
+    email: 'testasdf@testasdf.com',
+    password: 'Test123!',
+    username: 'Testasdf',
+  };
+
+  console.log(action.payload);
 
   try {
     const response: AccessAndRefreshTokenResponse = yield call(
-      register,
+      requestRegister,
       request
     );
 

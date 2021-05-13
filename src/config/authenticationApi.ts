@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const authenticationApi = axios.create({
-  baseURL: '', // TODO: Base URL for Authentication API
+  baseURL:
+    //'https://instagram-clone-spring-boot.herokuapp.com/api/v1/authentication',
+    'http://GiG.somee.com/api/v1',
 });
 
 export default authenticationApi;

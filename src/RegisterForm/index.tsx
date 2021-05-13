@@ -1,16 +1,17 @@
-import React from 'react';
 import AuthenticationForm from '../AuthenticationForm';
 import Input from '../Input';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { RegisterPayload, setState } from '../authentication/store';
 import { useDispatch } from 'react-redux';
 import { register as registerAction } from '../authentication/store';
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm<RegisterPayload>();
+  const { register, handleSubmit, control } = useForm<RegisterPayload>();
 
   const onSubmit: SubmitHandler<RegisterPayload> = (data) => {
+    console.log('registerr');
+
     dispatch(
       registerAction({
         payload: data,
@@ -31,10 +32,74 @@ const RegisterForm = () => {
       redirectButtonText='Melde dich an'
       redirectTo='/login'
     >
-      <Input placeholder='E-Mail Adresse' {...register('email')} />
+      <Controller
+        control={control}
+        name='email'
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <Input
+            htmlInputProps={{
+              placeholder: 'E-Mail Adresse',
+              onChange: onChange,
+              onBlur: onBlur,
+              value: value || '',
+            }}
+            innerRef={ref}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name='fullName'
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <Input
+            htmlInputProps={{
+              placeholder: 'Vollständiger Name',
+              onChange: onChange,
+              onBlur: onBlur,
+              value: value || '',
+            }}
+            innerRef={ref}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name='username'
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <Input
+            htmlInputProps={{
+              placeholder: 'Benutzername',
+              onChange: onChange,
+              onBlur: onBlur,
+              value: value || '',
+            }}
+            innerRef={ref}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
+        name='password'
+        render={({ field: { onChange, onBlur, value, ref } }) => (
+          <Input
+            htmlInputProps={{
+              type: 'password',
+              placeholder: 'Passwort',
+              onChange: onChange,
+              onBlur: onBlur,
+              value: value || '',
+            }}
+            innerRef={ref}
+          />
+        )}
+      />
+      {/* <Input placeholder='E-Mail Adresse' innerRef={register('email').ref} {...register('email')} />
       <Input placeholder='Vollständiger Name' {...register('fullName')} />
       <Input placeholder='Benutzername' {...register('username')} />
-      <Input type='password' placeholder='Passwort' {...register('password')} />
+      <Input type='password' placeholder='Passwort' {...register('password')} /> */}
     </AuthenticationForm>
   );
 };
