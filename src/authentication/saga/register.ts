@@ -1,56 +1,31 @@
-import { call, takeLatest } from 'redux-saga/effects';
-import {
-  AccessAndRefreshTokenResponse,
-  register,
-  RegisterRequest_Test,
-  requestRegister,
-} from '../apiRequests';
-import { REGISTER, RegisterPayload, AuthenticationState } from '../store';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { REGISTER, setState } from '../store';
 import { AsyncPayloadAction } from '../../asyncAction';
 import { getErrorsArrayFromSagaError } from '../../sagaError';
+import { register, RegisterDto, SuccessfulRegisterDto } from '../business';
 import { morphism } from 'morphism';
-import {
-  registerPayloadToRegisterRequestSchema,
-  accessAndRefreshTokenResponseToAuthenticationStateSchema,
-} from '../mapping';
-import { AxiosResponse } from 'axios';
+import { successfulRegisterDtoToAuthenticationStateSchema } from '../mapping';
 
 export default function* watchRegister() {
   yield takeLatest(REGISTER, handleRegister);
 }
 
-function* handleRegister(
-  action: AsyncPayloadAction<RegisterPayload, AuthenticationState>
-) {
-  console.log('registerrr');
-
+function* handleRegister(action: AsyncPayloadAction<RegisterDto, void>) {
   const { onSuccess, onError } = action.meta;
 
-  // const request = morphism(
-  //   registerPayloadToRegisterRequestSchema,
-  //   action.payload
-  // );
-
-  const request: RegisterRequest_Test = {
-    email: 'testasdf@testasdf.com',
-    password: 'Test123!',
-    username: 'Testasdf',
-  };
-
-  console.log(action.payload);
-
   try {
-    const response: AccessAndRefreshTokenResponse = yield call(
-      requestRegister,
-      request
+    const successfulRegisterDto: SuccessfulRegisterDto = yield call(
+      register,
+      action.payload
     );
 
     const payload = morphism(
-      accessAndRefreshTokenResponseToAuthenticationStateSchema,
-      response
+      successfulRegisterDtoToAuthenticationStateSchema,
+      successfulRegisterDto
     );
 
-    onSuccess(payload);
+    yield put(setState(payload));
+    onSuccess();
   } catch (e) {
     onError(getErrorsArrayFromSagaError(e));
   }

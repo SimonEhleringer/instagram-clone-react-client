@@ -10,8 +10,6 @@ interface Props {
 }
 
 const Input: FC<Props> = ({ htmlInputProps, innerRef }) => {
-  console.log(htmlInputProps);
-
   return <input className='input' ref={innerRef} {...htmlInputProps} />;
 };
 

@@ -3,6 +3,7 @@ import { applyMiddleware, combineReducers, createStore } from 'redux';
 import authenticationSaga from '../authentication/saga';
 import { authenticationReducer } from '../authentication/store';
 import createSagaMiddleware from 'redux-saga';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 function* rootSaga() {
   yield all([fork(authenticationSaga)]);
@@ -14,7 +15,10 @@ const reducer = combineReducers({
   authenticationState: authenticationReducer,
 });
 
-const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+const store = createStore(
+  reducer,
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
+);
 
 sagaMiddleware.run(rootSaga);
 

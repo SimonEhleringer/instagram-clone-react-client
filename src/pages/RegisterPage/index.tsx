@@ -1,11 +1,16 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import AuthenticationPageLayout from '../../AuthenticationPageLayout';
 import RegisterForm from '../../RegisterForm';
 
-const RegisterPage = () => {
+const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
+  const handleRegisterSuccess = () => {
+    history.push('/');
+  };
+
   return (
     <AuthenticationPageLayout>
-      <RegisterForm />
+      <RegisterForm handleRegisterSuccess={handleRegisterSuccess} />
     </AuthenticationPageLayout>
   );
 };

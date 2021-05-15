@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Button from '../Button';
 import instagramLogo from '../assets/images/logo.png';
 import './style.scss';
+import Errors from '../Errors';
 
 interface Props {
   onSubmit: () => void;
@@ -11,6 +12,7 @@ interface Props {
   redirectText: string;
   redirectButtonText: string;
   redirectTo: string;
+  errors: string[];
 }
 
 const AuthenticationForm: React.FC<Props> = ({
@@ -21,7 +23,9 @@ const AuthenticationForm: React.FC<Props> = ({
   redirectButtonText,
   redirectTo,
   children,
+  errors,
 }) => {
+  // TODO: Loading animation
   return (
     <form className='authentication-form' onSubmit={onSubmit}>
       <div className='authentication-form__box'>
@@ -45,6 +49,12 @@ const AuthenticationForm: React.FC<Props> = ({
           <div className='authentication-form__submit-button'>
             <Button type='submit'>{submitButtonCaption}</Button>
           </div>
+
+          {errors.length > 0 && (
+            <div className='authentication-form__errors'>
+              <Errors errors={errors} />
+            </div>
+          )}
         </div>
       </div>
 

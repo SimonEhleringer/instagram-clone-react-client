@@ -1,23 +1,28 @@
 import AuthenticationForm from '../AuthenticationForm';
 import Input from '../Input';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
-import { RegisterPayload, setState } from '../authentication/store';
 import { useDispatch } from 'react-redux';
 import { register as registerAction } from '../authentication/store';
+import { useState } from 'react';
+import { RegisterDto } from '../authentication/business';
 
-const RegisterForm = () => {
+interface Props {
+  handleRegisterSuccess: () => void;
+}
+
+// TODO: Values of Inputs are initially "" -> on second press values are undefined
+const RegisterForm: React.FC<Props> = ({ handleRegisterSuccess }) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, control } = useForm<RegisterPayload>();
+  const { handleSubmit, control } = useForm<RegisterDto>();
+  const [errors, setErrors] = useState<string[]>([]);
 
-  const onSubmit: SubmitHandler<RegisterPayload> = (data) => {
-    console.log('registerr');
-
+  const onSubmit: SubmitHandler<RegisterDto> = (data) => {
     dispatch(
       registerAction({
         payload: data,
         meta: {
-          onSuccess: (params) => dispatch(setState(params)),
-          onError: (errors) => console.log(errors),
+          onSuccess: () => handleRegisterSuccess(),
+          onError: (errors) => setErrors(errors),
         },
       })
     );
@@ -31,6 +36,7 @@ const RegisterForm = () => {
       redirectText='Du hast ein Konto?'
       redirectButtonText='Melde dich an'
       redirectTo='/login'
+      errors={errors}
     >
       <Controller
         control={control}
@@ -96,10 +102,6 @@ const RegisterForm = () => {
           />
         )}
       />
-      {/* <Input placeholder='E-Mail Adresse' innerRef={register('email').ref} {...register('email')} />
-      <Input placeholder='Vollständiger Name' {...register('fullName')} />
-      <Input placeholder='Benutzername' {...register('username')} />
-      <Input type='password' placeholder='Passwort' {...register('password')} /> */}
     </AuthenticationForm>
   );
 };

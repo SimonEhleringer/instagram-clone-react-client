@@ -10,6 +10,8 @@ const LoginForm = () => {
       redirectText='Du hast kein Konto?'
       redirectButtonText='Registrieren'
       redirectTo='/register'
+      // TODO: Errors state
+      errors={[]}
     >
       {/* <Input placeholder='Benutzername oder E-Mail Adresse' />
       <Input type='password' placeholder='Passwort' /> */}

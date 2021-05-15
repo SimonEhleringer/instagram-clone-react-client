@@ -8,4 +8,8 @@
   font-weight: variables.$bold;
   color: variables.$text-on-primary;
   cursor: pointer;
+
+  &:active {
+    background-color: lighten(variables.$primary, 15%);
+  }
 }

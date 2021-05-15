@@ -1,0 +1,20 @@
+@use 'variables';
+
+$-error-padding: 0.25rem;
+
+.errors__error {
+  color: variables.$error;
+  text-align: center;
+}
+
+.errors__error--top {
+  padding-bottom: $-error-padding;
+}
+
+.errors__error--middle {
+  padding: $-error-padding 0;
+}
+
+.errors__error--bottom {
+  padding-top: $-error-padding;
+}
