@@ -2,14 +2,17 @@ import { AxiosResponse } from 'axios';
 import authenticationApi from '../config/authenticationApi';
 
 export const requestRegister = async (request: RegisterRequest) => {
-  console.log(request);
-
   const response: AxiosResponse<AccessAndRefreshTokenResponse> =
     await authenticationApi.post('register', {
       ...request,
     });
 
-  console.log(response);
+  return response;
+};
+
+export const requestLogin = async (request: LoginRequest) => {
+  const response: AxiosResponse<AccessAndRefreshTokenResponse> =
+    await authenticationApi.post('login', { ...request });
 
   return response;
 };
@@ -19,6 +22,11 @@ export type RegisterRequest = {
   email: string;
   fullName: string;
   username: string;
+  password: string;
+};
+
+export type LoginRequest = {
+  usernameOrEmail: string;
   password: string;
 };
 

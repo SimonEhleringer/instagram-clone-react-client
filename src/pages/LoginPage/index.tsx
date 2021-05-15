@@ -1,11 +1,16 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import AuthenticationPageLayout from '../../AuthenticationPageLayout';
 import LoginForm from '../../LoginForm';
 
-const LoginPage = () => {
+const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
+  const handleLoginSuccess = () => {
+    history.push('/');
+  };
+
   return (
     <AuthenticationPageLayout>
-      <LoginForm />
+      <LoginForm handleLoginSuccess={handleLoginSuccess} />
     </AuthenticationPageLayout>
   );
 };

@@ -1,6 +1,6 @@
 import { createSchema } from 'morphism';
-import { RegisterRequest } from './apiRequests';
-import { RegisterDto, SuccessfulRegisterDto } from './business';
+import { LoginRequest, RegisterRequest } from './apiRequests';
+import { LoginDto, RegisterDto, SuccessfulAuthenticationDto } from './business';
 import { AuthenticationState } from './store';
 
 export const registerDtoToRegisterRequestSchema = createSchema<
@@ -13,11 +13,17 @@ export const registerDtoToRegisterRequestSchema = createSchema<
   password: (src) => src.password,
 });
 
-export const successfulRegisterDtoToAuthenticationStateSchema = createSchema<
-  AuthenticationState,
-  SuccessfulRegisterDto
+export const loginDtoToLoginRequestSchema = createSchema<
+  LoginRequest,
+  LoginDto
 >({
-  loggedInUserId: (src) => src.loggedInUserId,
-  accessToken: (src) => src.accessToken,
-  refreshToken: (src) => src.refreshToken,
+  usernameOrEmail: (src) => src.usernameOrEmail,
+  password: (src) => src.password,
 });
+
+export const successfulAuthenticationDtoToAuthenticationStateSchema =
+  createSchema<AuthenticationState, SuccessfulAuthenticationDto>({
+    loggedInUserId: (src) => src.loggedInUserId,
+    accessToken: (src) => src.accessToken,
+    refreshToken: (src) => src.refreshToken,
+  });

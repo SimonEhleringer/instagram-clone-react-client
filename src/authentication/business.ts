@@ -1,8 +1,15 @@
 import { AxiosResponse } from 'axios';
 import { morphism } from 'morphism';
 import { getUserIdFromAccessToken } from '../accessToken';
-import { AccessAndRefreshTokenResponse, requestRegister } from './apiRequests';
-import { registerDtoToRegisterRequestSchema } from './mapping';
+import {
+  AccessAndRefreshTokenResponse,
+  requestLogin,
+  requestRegister,
+} from './apiRequests';
+import {
+  loginDtoToLoginRequestSchema,
+  registerDtoToRegisterRequestSchema,
+} from './mapping';
 
 export const register = async (registerDto: RegisterDto) => {
   const request = morphism(registerDtoToRegisterRequestSchema, registerDto);
@@ -10,11 +17,29 @@ export const register = async (registerDto: RegisterDto) => {
   const response: AxiosResponse<AccessAndRefreshTokenResponse> =
     await requestRegister(request);
 
-  const { accessToken, refreshToken } = response.data;
+  return convertAccessAndRefreshTokenResponseToSuccessfulAuthenticationDto(
+    response.data
+  );
+};
+
+export const login = async (loginDto: LoginDto) => {
+  const request = morphism(loginDtoToLoginRequestSchema, loginDto);
+
+  const response = await requestLogin(request);
+
+  return convertAccessAndRefreshTokenResponseToSuccessfulAuthenticationDto(
+    response.data
+  );
+};
+
+const convertAccessAndRefreshTokenResponseToSuccessfulAuthenticationDto = (
+  accessAndRefreshTokenResponse: AccessAndRefreshTokenResponse
+) => {
+  const { accessToken, refreshToken } = accessAndRefreshTokenResponse;
 
   const loggedInUserId = getUserIdFromAccessToken(accessToken);
 
-  const result: SuccessfulRegisterDto = {
+  const result: SuccessfulAuthenticationDto = {
     loggedInUserId,
     accessToken,
     refreshToken,
@@ -31,7 +56,12 @@ export interface RegisterDto {
   password: string;
 }
 
-export interface SuccessfulRegisterDto {
+export interface LoginDto {
+  usernameOrEmail: string;
+  password: string;
+}
+
+export interface SuccessfulAuthenticationDto {
   loggedInUserId: string;
   accessToken: string;
   refreshToken: string;
