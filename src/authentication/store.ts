@@ -1,29 +1,13 @@
-import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AsyncActionParams } from '../asyncAction';
-import { LoginDto, RegisterDto } from './business';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // constants
 const name = 'authentication';
-
-export const REGISTER = `${name}/register`;
-export const LOGIN = `${name}/login`;
 
 const initialState: AuthenticationState = {
   loggedInUserId: undefined,
   accessToken: '',
   refreshToken: '',
 };
-
-// actions
-export const register = createAction(
-  REGISTER,
-  (params: AsyncActionParams<RegisterDto, void>) => params
-);
-
-export const login = createAction(
-  LOGIN,
-  (params: AsyncActionParams<LoginDto, void>) => params
-);
 
 // slice
 const slice = createSlice({

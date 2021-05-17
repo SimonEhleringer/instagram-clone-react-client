@@ -2,9 +2,14 @@ import AuthenticationForm from '../AuthenticationForm';
 import Input from '../Input';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { register as registerAction } from '../authentication/store';
+import {
+  RegisterRequest,
+  requestRegister,
+} from '../authentication/apiRequests';
 import { useState } from 'react';
-import { RegisterDto } from '../authentication/business';
+import { getErrorsArrayFromSagaError } from '../sagaError';
+import { setState } from '../authentication/store';
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../authentication/utils';
 
 interface Props {
   handleRegisterSuccess: () => void;
@@ -13,19 +18,22 @@ interface Props {
 // TODO: Values of Inputs are initially "" -> on second press values are undefined
 const RegisterForm: React.FC<Props> = ({ handleRegisterSuccess }) => {
   const dispatch = useDispatch();
-  const { handleSubmit, control } = useForm<RegisterDto>();
+  const { handleSubmit, control } = useForm<RegisterRequest>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const onSubmit: SubmitHandler<RegisterDto> = (data) => {
-    dispatch(
-      registerAction({
-        payload: data,
-        meta: {
-          onSuccess: () => handleRegisterSuccess(),
-          onError: (errors) => setErrors(errors),
-        },
-      })
-    );
+  const onSubmit: SubmitHandler<RegisterRequest> = async (data) => {
+    try {
+      const response = await requestRegister(data);
+
+      const payload = convertAccessAndRefreshTokenResponseToAuthenticationState(
+        response.data
+      );
+
+      dispatch(setState(payload));
+      handleRegisterSuccess();
+    } catch (e) {
+      setErrors(getErrorsArrayFromSagaError(e));
+    }
   };
 
   return (

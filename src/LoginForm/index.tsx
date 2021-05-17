@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { LoginDto } from '../authentication/business';
-import { login } from '../authentication/store';
+import { LoginRequest, requestLogin } from '../authentication/apiRequests';
+import { setState } from '../authentication/store';
 import AuthenticationForm from '../AuthenticationForm';
 import Input from '../Input';
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../authentication/utils';
+import { getErrorsArrayFromSagaError } from '../sagaError';
 
 interface Props {
   handleLoginSuccess: () => void;
@@ -12,19 +14,23 @@ interface Props {
 
 const LoginForm: React.FC<Props> = ({ handleLoginSuccess }) => {
   const dispatch = useDispatch();
-  const { handleSubmit, control } = useForm<LoginDto>();
+  const { handleSubmit, control } = useForm<LoginRequest>();
   const [errors, setErrors] = useState<string[]>([]);
 
-  const onSubmit: SubmitHandler<LoginDto> = (data) => {
-    dispatch(
-      login({
-        payload: data,
-        meta: {
-          onSuccess: () => handleLoginSuccess(),
-          onError: (errors) => setErrors(errors),
-        },
-      })
-    );
+  const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
+    try {
+      const response = await requestLogin(data);
+
+      const authenticationState =
+        convertAccessAndRefreshTokenResponseToAuthenticationState(
+          response.data
+        );
+
+      dispatch(setState(authenticationState));
+      handleLoginSuccess();
+    } catch (e) {
+      setErrors(getErrorsArrayFromSagaError(e));
+    }
   };
 
   return (
