@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+// TODO: Test store
 // constants
 const name = 'authentication';
 

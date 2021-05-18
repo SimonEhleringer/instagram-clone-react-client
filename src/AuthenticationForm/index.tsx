@@ -27,7 +27,11 @@ const AuthenticationForm: React.FC<Props> = ({
 }) => {
   // TODO: Loading animation
   return (
-    <form className='authentication-form' onSubmit={onSubmit}>
+    <form
+      data-testid='authentication-form'
+      className='authentication-form'
+      onSubmit={onSubmit}
+    >
       <div className='authentication-form__box'>
         <img
           className={
