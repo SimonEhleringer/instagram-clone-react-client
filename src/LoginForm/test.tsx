@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   fireEvent,
   render,
@@ -6,24 +6,36 @@ import {
   Matcher,
   MatcherOptions,
   RenderResult,
-} from '@testing-library/react';
-import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
-import { AuthenticationState } from '../authentication/store';
-import LoginForm from './index';
-import { Provider } from 'react-redux';
-import { requestLogin } from '../authentication/apiRequests';
+} from "@testing-library/react";
+import configureStore, { MockStoreEnhanced } from "redux-mock-store";
+import { AuthenticationState } from "../authentication/store";
+import LoginForm from "./index";
+import { Provider } from "react-redux";
+import {
+  AccessAndRefreshTokenResponse,
+  LoginRequest,
+  requestLogin,
+} from "../authentication/apiRequests";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from "../authentication/utils";
 
-jest.mock('../authentication/apiRequests');
+jest.mock("../authentication/apiRequests");
 const requestLoginMock = requestLogin as jest.MockedFunction<
   typeof requestLogin
 >;
+
+jest.mock("../authentication/utils");
+const convertAccessAndRefreshTokenResponseToAuthenticationStateMock =
+  convertAccessAndRefreshTokenResponseToAuthenticationState as jest.MockedFunction<
+    typeof convertAccessAndRefreshTokenResponseToAuthenticationState
+  >;
 
 const mockStore = configureStore<AuthenticationState>([]);
 
 let store: MockStoreEnhanced<AuthenticationState, {}>;
 
 let component: RenderResult<
-  typeof import('c:/Users/simon/source/repos/instagram-clone-react-client/node_modules/@testing-library/dom/types/queries'),
+  typeof import("@testing-library/dom/types/queries"),
   HTMLElement
 >;
 
@@ -33,11 +45,13 @@ let getByTestId: (
   waitForElementOptions?: unknown
 ) => HTMLElement;
 
+let handleLoginSuccessMock = jest.fn(() => {});
+
 beforeEach(() => {
   const initialState: AuthenticationState = {
     loggedInUserId: undefined,
-    accessToken: '',
-    refreshToken: '',
+    accessToken: "",
+    refreshToken: "",
   };
 
   store = mockStore(initialState);
@@ -47,7 +61,7 @@ beforeEach(() => {
   // TODO: Maybe a mock handleLoginSuccess?
   component = render(
     <Provider store={store}>
-      <LoginForm handleLoginSuccess={() => {}} />
+      <LoginForm handleLoginSuccess={handleLoginSuccessMock} />
     </Provider>
   );
 
@@ -59,10 +73,59 @@ beforeEach(() => {
 //   expect(component.).toMatchSnapshot();
 // })
 
-it('should call API and update store', () => {
-  const formEl = getByTestId('authentication-form');
+it("should call API and update store", () => {
+  const formEl = getByTestId("authentication-form");
+  const usernameOrEmailInputEl = getByTestId("usernameOrEmail-input");
+  const passwordInputEl = getByTestId("password-input");
 
-  requestLoginMock.mockResolvedValue();
+  const apiResponse = getMockedAxiosResponse();
+
+  requestLoginMock.mockResolvedValue(apiResponse);
+
+  convertAccessAndRefreshTokenResponseToAuthenticationStateMock.mockReturnValue(
+    apiResponse.data
+  );
+
+  const usernameOrEmail = "usernameOrEmail";
+  const password = "password";
+
+  fireEvent.input(usernameOrEmailInputEl, {
+    target: {
+      value: usernameOrEmail,
+    },
+  });
+
+  fireEvent.input(passwordInputEl, {
+    target: {
+      value: password,
+    },
+  });
+
+  const formData: LoginRequest = {
+    usernameOrEmail,
+    password,
+  };
 
   fireEvent.submit(formEl);
+
+  expect(requestLoginMock).toHaveBeenCalledWith(formData);
 });
+
+const getMockedAxiosResponse = () => {
+  const data: AccessAndRefreshTokenResponse = {
+    accessToken: "accessToken",
+    refreshToken: "refreshToken",
+  };
+
+  const config: AxiosRequestConfig = {};
+
+  const response: AxiosResponse<AccessAndRefreshTokenResponse> = {
+    data,
+    status: 200,
+    statusText: "",
+    config,
+    headers: [],
+  };
+
+  return response;
+};

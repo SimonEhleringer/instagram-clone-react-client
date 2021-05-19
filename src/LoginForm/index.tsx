@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import { LoginRequest, requestLogin } from '../authentication/apiRequests';
-import { setState } from '../authentication/store';
-import AuthenticationForm from '../AuthenticationForm';
-import Input from '../Input';
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../authentication/utils';
-import { getErrorsArrayFromSagaError } from '../sagaError';
+import React, { useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { LoginRequest, requestLogin } from "../authentication/apiRequests";
+import { setState } from "../authentication/store";
+import AuthenticationForm from "../AuthenticationForm";
+import Input from "../Input";
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from "../authentication/utils";
+import { getErrorsArrayFromSagaError } from "../sagaError";
 
 interface Props {
   handleLoginSuccess: () => void;
@@ -36,22 +36,23 @@ const LoginForm: React.FC<Props> = ({ handleLoginSuccess }) => {
   return (
     <AuthenticationForm
       onSubmit={handleSubmit(onSubmit)}
-      submitButtonCaption='Anmelden'
-      redirectText='Du hast kein Konto?'
-      redirectButtonText='Registrieren'
-      redirectTo='/register'
+      submitButtonCaption="Anmelden"
+      redirectText="Du hast kein Konto?"
+      redirectButtonText="Registrieren"
+      redirectTo="/register"
       errors={errors}
     >
       <Controller
         control={control}
-        name='usernameOrEmail'
+        name="usernameOrEmail"
         render={({ field: { onChange, onBlur, value, ref } }) => (
           <Input
+            data-testid="usernameOrEmail-input"
             htmlInputProps={{
-              placeholder: 'Benutzername oder E-Mail Adresse',
+              placeholder: "Benutzername oder E-Mail Adresse",
               onChange: onChange,
               onBlur: onBlur,
-              value: value || '',
+              value: value || "",
             }}
             innerRef={ref}
           />
@@ -60,15 +61,16 @@ const LoginForm: React.FC<Props> = ({ handleLoginSuccess }) => {
 
       <Controller
         control={control}
-        name='password'
+        name="password"
         render={({ field: { onChange, onBlur, value, ref } }) => (
           <Input
+            data-testid="password-input"
             htmlInputProps={{
-              placeholder: 'Passwort',
+              placeholder: "Passwort",
               onChange: onChange,
               onBlur: onBlur,
-              value: value || '',
-              type: 'password',
+              value: value || "",
+              type: "password",
             }}
             innerRef={ref}
           />
