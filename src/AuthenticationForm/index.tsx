@@ -56,7 +56,7 @@ const AuthenticationForm: React.FC<Props> = ({
 
           {errors.length > 0 && (
             <div className='authentication-form__errors'>
-              <Errors errors={errors} />
+              <Errors testId='errors' errors={errors} />
             </div>
           )}
         </div>
