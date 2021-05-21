@@ -9,7 +9,7 @@ interface Props
 
 const Button: React.FC<Props> = (props) => {
   return (
-    <button {...props} className='button'>
+    <button data-testid='button' {...props} className='button'>
       {props.children}
     </button>
   );
