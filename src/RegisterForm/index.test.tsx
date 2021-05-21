@@ -1,31 +1,31 @@
-import { AuthenticationState, setState } from "../authentication/store";
-import configureStore, { MockStoreEnhanced } from "redux-mock-store";
-import { createMemoryHistory } from "history";
+import { AuthenticationState, setState } from '../authentication/store';
+import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
+import { createMemoryHistory } from 'history';
 import {
   fireEvent,
   Matcher,
   MatcherOptions,
   render,
   waitFor,
-} from "@testing-library/react";
-import { Provider } from "react-redux";
-import { Router } from "react-router";
-import RegisterForm from ".";
+} from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router';
+import RegisterForm from '.';
 import {
   AccessAndRefreshTokenResponse,
   RegisterRequest,
   requestRegister,
-} from "../authentication/apiRequests";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from "../authentication/utils";
-import { ErrorResponse } from "../sagaError";
+} from '../authentication/apiRequests';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../authentication/utils';
+import { ErrorResponse } from '../error';
 
-jest.mock("../authentication/apiRequests.ts");
+jest.mock('../authentication/apiRequests.ts');
 const requestRegisterMock = requestRegister as jest.MockedFunction<
   typeof requestRegister
 >;
 
-jest.mock("../authentication/utils.ts");
+jest.mock('../authentication/utils.ts');
 const convertAccessAndRefreshTokenResponseToAuthenticationStateMock =
   convertAccessAndRefreshTokenResponseToAuthenticationState as jest.MockedFunction<
     typeof convertAccessAndRefreshTokenResponseToAuthenticationState
@@ -46,8 +46,8 @@ let getByTestId: (
 beforeEach(() => {
   const initialState: AuthenticationState = {
     loggedInUserId: undefined,
-    accessToken: "",
-    refreshToken: "",
+    accessToken: '',
+    refreshToken: '',
   };
 
   storeMock = mockStore(initialState);
@@ -67,16 +67,16 @@ beforeEach(() => {
   getByTestId = component.getByTestId;
 });
 
-it("should call API and update state when API call was successful", async () => {
-  const authenticationFormEl = getByTestId("authentication-form");
-  const emailInputEl = getByTestId("emailInput");
-  const usernameInputEl = getByTestId("usernameInput");
-  const fullNameInputEl = getByTestId("fullNameInput");
-  const passwordEl = getByTestId("passwordInput");
+it('should call API and update state when API call was successful', async () => {
+  const authenticationFormEl = getByTestId('authentication-form');
+  const emailInputEl = getByTestId('emailInput');
+  const usernameInputEl = getByTestId('usernameInput');
+  const fullNameInputEl = getByTestId('fullNameInput');
+  const passwordEl = getByTestId('passwordInput');
 
   const apiResponseData: AccessAndRefreshTokenResponse = {
-    accessToken: "accessToken",
-    refreshToken: "refreshToken",
+    accessToken: 'accessToken',
+    refreshToken: 'refreshToken',
   };
 
   const apiConfig: AxiosRequestConfig = {};
@@ -86,25 +86,25 @@ it("should call API and update state when API call was successful", async () => 
     config: apiConfig,
     headers: [],
     status: 200,
-    statusText: "",
+    statusText: '',
   };
 
   requestRegisterMock.mockResolvedValue(apiResponse);
 
   const authenticationState: AuthenticationState = {
-    accessToken: "accessToken",
-    refreshToken: "refreshToken",
-    loggedInUserId: "loggedInUserId",
+    accessToken: 'accessToken',
+    refreshToken: 'refreshToken',
+    loggedInUserId: 'loggedInUserId',
   };
 
   convertAccessAndRefreshTokenResponseToAuthenticationStateMock.mockReturnValue(
     authenticationState
   );
 
-  const email = "email";
-  const username = "username";
-  const fullName = "fullName";
-  const password = "password";
+  const email = 'email';
+  const username = 'username';
+  const fullName = 'fullName';
+  const password = 'password';
 
   fireEvent.change(emailInputEl, {
     target: {
@@ -151,15 +151,15 @@ it("should call API and update state when API call was successful", async () => 
   expect(handleRegisterSuccessMock).toHaveBeenCalled();
 });
 
-it("should call API and display errors when API call failed", async () => {
-  const authenticationFormEl = getByTestId("authentication-form");
-  const emailInputEl = getByTestId("emailInput");
-  const usernameInputEl = getByTestId("usernameInput");
-  const fullNameInputEl = getByTestId("fullNameInput");
-  const passwordEl = getByTestId("passwordInput");
+it('should call API and display errors when API call failed', async () => {
+  const authenticationFormEl = getByTestId('authentication-form');
+  const emailInputEl = getByTestId('emailInput');
+  const usernameInputEl = getByTestId('usernameInput');
+  const fullNameInputEl = getByTestId('fullNameInput');
+  const passwordEl = getByTestId('passwordInput');
 
   const apiResponseData: ErrorResponse = {
-    errors: ["error"],
+    errors: ['error'],
   };
 
   const apiResponseConfig: AxiosRequestConfig = {};
@@ -169,15 +169,15 @@ it("should call API and display errors when API call failed", async () => {
     config: apiResponseConfig,
     headers: [],
     status: 400,
-    statusText: "",
+    statusText: '',
   };
 
   requestRegisterMock.mockRejectedValue(apiResponse);
 
-  const email = "email";
-  const username = "username";
-  const fullName = "fullName";
-  const password = "password";
+  const email = 'email';
+  const username = 'username';
+  const fullName = 'fullName';
+  const password = 'password';
 
   fireEvent.change(emailInputEl, {
     target: {
@@ -221,6 +221,6 @@ it("should call API and display errors when API call failed", async () => {
   expect(storeMock.dispatch).not.toHaveBeenCalled();
   expect(handleRegisterSuccessMock).not.toHaveBeenCalled();
 
-  const errorsEl = getByTestId("errors");
+  const errorsEl = getByTestId('errors');
   expect(errorsEl.childElementCount).toBe(1);
 });

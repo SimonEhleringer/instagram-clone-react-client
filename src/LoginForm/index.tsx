@@ -6,7 +6,7 @@ import { setState } from '../authentication/store';
 import AuthenticationForm from '../AuthenticationForm';
 import Input from '../Input';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../authentication/utils';
-import { getErrorsArrayFromSagaError } from '../sagaError';
+import { getErrorsArrayFromError } from '../error';
 
 interface Props {
   handleLoginSuccess: () => void;
@@ -29,7 +29,7 @@ const LoginForm: React.FC<Props> = ({ handleLoginSuccess }) => {
       dispatch(setState(authenticationState));
       handleLoginSuccess();
     } catch (e) {
-      setErrors(getErrorsArrayFromSagaError(e));
+      setErrors(getErrorsArrayFromError(e));
     }
   };
 

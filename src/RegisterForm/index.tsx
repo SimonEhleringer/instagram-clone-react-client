@@ -7,7 +7,7 @@ import {
   requestRegister,
 } from '../authentication/apiRequests';
 import { useState } from 'react';
-import { getErrorsArrayFromSagaError } from '../sagaError';
+import { getErrorsArrayFromError } from '../error';
 import { setState } from '../authentication/store';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../authentication/utils';
 
@@ -32,7 +32,7 @@ const RegisterForm: React.FC<Props> = ({ handleRegisterSuccess }) => {
       dispatch(setState(payload));
       handleRegisterSuccess();
     } catch (e) {
-      setErrors(getErrorsArrayFromSagaError(e));
+      setErrors(getErrorsArrayFromError(e));
     }
   };
 
