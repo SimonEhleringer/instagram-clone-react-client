@@ -1,16 +1,18 @@
 import React from 'react';
 import './style.scss';
 
-interface Props
-  extends React.DetailedHTMLProps<
+interface Props {
+  testId: string;
+  htmlInputProps: React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
-  > {}
+  >;
+}
 
-const Button: React.FC<Props> = (props) => {
+const Button: React.FC<Props> = ({ htmlInputProps, testId, children }) => {
   return (
-    <button data-testid='button' {...props} className='button'>
-      {props.children}
+    <button {...htmlInputProps} data-testid={testId} className='button'>
+      {children}
     </button>
   );
 };

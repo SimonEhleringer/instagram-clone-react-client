@@ -5,7 +5,7 @@ import instagramLogo from '../assets/images/logo.png';
 import './style.scss';
 import Errors from '../Errors';
 
-interface Props {
+export interface AuthenticationFormProps {
   onSubmit: () => void;
   subTitle?: string;
   submitButtonCaption: string;
@@ -15,7 +15,7 @@ interface Props {
   errors: string[];
 }
 
-const AuthenticationForm: React.FC<Props> = ({
+const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   onSubmit,
   subTitle,
   submitButtonCaption,
@@ -45,13 +45,20 @@ const AuthenticationForm: React.FC<Props> = ({
 
         <div className='authentication-form__content-wrapper'>
           {subTitle && (
-            <p className='authentication-form__sub-title'>{subTitle}</p>
+            <p
+              data-testid='subTitle'
+              className='authentication-form__sub-title'
+            >
+              {subTitle}
+            </p>
           )}
 
           {children}
 
           <div className='authentication-form__submit-button'>
-            <Button type='submit'>{submitButtonCaption}</Button>
+            <Button testId='button' htmlInputProps={{ type: 'submit' }}>
+              {submitButtonCaption}
+            </Button>
           </div>
 
           {errors.length > 0 && (
@@ -63,7 +70,10 @@ const AuthenticationForm: React.FC<Props> = ({
       </div>
 
       <div className='authentication-form__box'>
-        <div className='authentication-form__redirect-text'>
+        <div
+          data-testid='redirectText'
+          className='authentication-form__redirect-text'
+        >
           {redirectText}{' '}
           <Link className='authentication-form__redirect-link' to={redirectTo}>
             {redirectButtonText}

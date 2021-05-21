@@ -4,7 +4,11 @@ import Button from '.';
 it('should render text in button', () => {
   const buttonText = 'buttonText';
 
-  const { getByTestId } = render(<Button>{buttonText}</Button>);
+  const { getByTestId } = render(
+    <Button testId='button' htmlInputProps={{}}>
+      {buttonText}
+    </Button>
+  );
 
   const buttonEl = getByTestId('button');
 
