@@ -8,26 +8,26 @@ import {
   waitFor,
 } from '@testing-library/react';
 import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
-import { AuthenticationState, setState } from '../authentication/store';
-import LoginForm from './index';
+import { AuthenticationState, setState } from '../../authentication/store';
 import { Provider } from 'react-redux';
 import {
   AccessAndRefreshTokenResponse,
   LoginRequest,
   requestLogin,
-} from '../authentication/apiRequests';
+} from '../../authentication/apiRequests';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../authentication/utils';
-import { Router } from 'react-router';
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
+import { Route, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import { ErrorResponse } from '../error';
+import { ErrorResponse } from '../../error';
+import LoginPage from './index';
 
-jest.mock('../authentication/apiRequests');
+jest.mock('../../authentication/apiRequests');
 const requestLoginMock = requestLogin as jest.MockedFunction<
   typeof requestLogin
 >;
 
-jest.mock('../authentication/utils');
+jest.mock('../../authentication/utils');
 const convertAccessAndRefreshTokenResponseToAuthenticationStateMock =
   convertAccessAndRefreshTokenResponseToAuthenticationState as jest.MockedFunction<
     typeof convertAccessAndRefreshTokenResponseToAuthenticationState
@@ -48,7 +48,7 @@ let getByTestId: (
   waitForElementOptions?: unknown
 ) => HTMLElement;
 
-let handleLoginSuccessMock = jest.fn(() => {});
+const history = createMemoryHistory();
 
 beforeEach(() => {
   const initialState: AuthenticationState = {
@@ -61,12 +61,11 @@ beforeEach(() => {
 
   store.dispatch = jest.fn();
 
-  const history = createMemoryHistory();
-
+  history.push('/login');
   component = render(
     <Provider store={store}>
       <Router history={history}>
-        <LoginForm handleLoginSuccess={handleLoginSuccessMock} />
+        <Route path='/login' component={LoginPage} />
       </Router>
     </Provider>
   );
@@ -120,7 +119,7 @@ it('should call API and update store when API returns no error', async () => {
     convertAccessAndRefreshTokenResponseToAuthenticationStateMock
   ).toHaveBeenCalledWith(apiResponse.data);
   expect(store.dispatch).toHaveBeenCalledWith(setState(authenticationState));
-  expect(handleLoginSuccessMock).toHaveBeenCalled();
+  expect(history.location.pathname).toBe('/');
 });
 
 it('should call API and set errors when API returns an error', async () => {
@@ -159,7 +158,7 @@ it('should call API and set errors when API returns an error', async () => {
     convertAccessAndRefreshTokenResponseToAuthenticationStateMock
   ).not.toHaveBeenCalled();
   expect(store.dispatch).not.toHaveBeenCalled();
-  expect(handleLoginSuccessMock).not.toHaveBeenCalled();
+  expect(history.location.pathname).toBe('/login');
 
   const errorsEl = getByTestId('errors');
   expect(errorsEl.childElementCount).toBe(1);
