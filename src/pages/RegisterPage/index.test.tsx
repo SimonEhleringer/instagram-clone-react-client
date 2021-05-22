@@ -10,7 +10,6 @@ import {
 } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { Route, Router } from 'react-router';
-import RegisterForm from '.';
 import {
   AccessAndRefreshTokenResponse,
   RegisterRequest,

@@ -2,7 +2,7 @@ import { combineReducers, createStore } from 'redux';
 import { authenticationReducer } from '../authentication/store';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-const reducer = combineReducers({
+export const reducer = combineReducers({
   authenticationState: authenticationReducer,
 });
 
