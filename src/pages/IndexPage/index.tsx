@@ -1,7 +1,8 @@
 import React from 'react';
+import AppLayout from '../../AppLayout';
 
 const IndexPage = () => {
-  return <div>index</div>;
+  return <AppLayout>test</AppLayout>;
 };
 
 export default IndexPage;

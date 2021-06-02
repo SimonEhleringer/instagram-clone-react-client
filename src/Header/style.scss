@@ -1,0 +1,35 @@
+@use 'variables';
+
+.header {
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: variables.$background;
+  border-bottom: 1px solid variables.$border;
+}
+
+.header__content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: variables.$tablet;
+  width: 100%;
+  padding: 0 1.5rem;
+}
+
+.header__logo {
+  padding-top: 7px;
+  max-width: 100px;
+}
+
+.header__links {
+  display: flex;
+  align-items: center;
+}
+
+.header__link {
+  padding-left: 1.5rem;
+  height: 24px;
+  color: variables.$text-primary;
+}
