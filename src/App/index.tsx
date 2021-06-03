@@ -4,26 +4,19 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import IndexPage from '../pages/IndexPage';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
-
-import { Redirect } from 'react-router';
-import { useSelector } from 'react-redux';
-
-import { ReduxState } from '../config/store';
 import './style.scss';
+import SuggestionsPage from '../pages/SuggestionsPage';
+import ProtectedRoute from '../ProtectedRoute';
 
+// TODO: Add remaining tests
 const App = () => {
-  const loggedInUserId = useSelector(
-    (state: ReduxState) => state.authenticationState.loggedInUserId
-  );
-
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact>
-          {!loggedInUserId ? <Redirect to='/login' /> : <IndexPage />}
-        </Route>
+        <ProtectedRoute path='/' exact component={IndexPage} />
         <Route path='/register' component={RegisterPage} />
         <Route path='/login' component={LoginPage} />
+        <ProtectedRoute path='/suggestions' component={SuggestionsPage} />
       </Switch>
     </BrowserRouter>
   );

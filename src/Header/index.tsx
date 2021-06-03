@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = () => {
         <div className='header__links'>
           <HeaderLink Icon={BsHouseDoor} to='/' />
           <HeaderLink Icon={BsPlusCircle} to='/4' />
-          <HeaderLink Icon={BsHeart} to='/4' />
+          <HeaderLink Icon={BsHeart} to='/suggestions' />
           <HeaderLink Icon={BsPerson} to='/4' />
         </div>
       </div>
