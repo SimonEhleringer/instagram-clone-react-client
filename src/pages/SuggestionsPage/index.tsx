@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { getSuggestions } from '../../apiRequests';
+import { getSuggestions, SuggestionsResponseDto } from '../../apiRequests';
 import AppLayout from '../../AppLayout';
+import SuggestionsList from '../../SuggestionsList';
 
 const SuggestionsPage: React.FC<RouteComponentProps> = () => {
+  const [suggestions, setSuggestions] =
+    useState<SuggestionsResponseDto | undefined>(undefined);
+
   useEffect(() => {
-    getSuggestions().then(
-      (value) => console.log(value.data),
-      (error) => console.log(error)
-    );
+    getSuggestions().then((value) => setSuggestions(value.data));
   }, []);
 
-  return <AppLayout>suggestions</AppLayout>;
+  return (
+    <AppLayout>
+      {suggestions && <SuggestionsList suggestions={suggestions} />}
+    </AppLayout>
+  );
 };
 
 export default SuggestionsPage;
