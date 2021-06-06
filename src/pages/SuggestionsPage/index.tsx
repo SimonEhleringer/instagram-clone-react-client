@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
+import Loader from '../../Loader';
 import { getSuggestions, SuggestionsResponseDto } from '../../apiRequests';
 import AppLayout from '../../AppLayout';
 import SuggestionsList from '../../SuggestionsList';
@@ -19,7 +20,7 @@ const SuggestionsPage: React.FC<RouteComponentProps> = () => {
 
   return (
     <AppLayout>
-      {suggestions && (
+      {suggestions ? (
         <div className='suggestions-page__layout'>
           <div className='suggestions-page__wrapper'>
             <h1 className='suggestions-page__heading'>Vorschläge für dich</h1>
@@ -30,6 +31,8 @@ const SuggestionsPage: React.FC<RouteComponentProps> = () => {
             />
           </div>
         </div>
+      ) : (
+        <Loader />
       )}
     </AppLayout>
   );

@@ -17,6 +17,7 @@ const SuggestionsList: React.FC<SuggestionsListProps> = ({
       {suggestions.suggestions.map((suggestion, index) => {
         return (
           <Suggestion
+            key={index}
             suggestion={suggestion}
             handleSuccessfulSubscription={handleSuccessfulSubscription}
           />

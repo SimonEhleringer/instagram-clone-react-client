@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { addFollow, UserResponseDto } from '../common/api';
 import Avatar from '../Avatar';
 import Button from '../Button';
@@ -14,12 +14,18 @@ const Suggestion: React.FC<SuggestionProps> = ({
   suggestion,
   handleSuccessfulSubscription,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   const { userId, fullName, username, publicProfileImageId } = suggestion;
 
   const handleSubscribe = async (userIdToSubscribeTo: string) => {
+    setLoading(true);
+
     await addFollow(userIdToSubscribeTo);
 
     handleSuccessfulSubscription();
+
+    setLoading(false);
   };
 
   return (
@@ -37,7 +43,7 @@ const Suggestion: React.FC<SuggestionProps> = ({
 
       <div className='suggestion__button'>
         <Button
-          loading={true}
+          loading={loading}
           htmlInputProps={{
             onClick: () => handleSubscribe(userId),
           }}

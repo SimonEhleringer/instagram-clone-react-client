@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.scss';
-import FadeLoader from 'react-spinners/FadeLoader';
+import { css } from '@emotion/react';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 interface Props {
   testId?: string;
@@ -18,14 +19,17 @@ const Button: React.FC<Props> = ({
   children,
 }) => {
   return (
-    <button {...htmlInputProps} data-testid={testId} className={'button'}>
-      {loading ? (
+    <button
+      {...htmlInputProps}
+      data-testid={testId}
+      className={`button ${loading && 'button--loading'}`}
+    >
+      {loading && (
         <div className='button__spinner'>
-          <FadeLoader />
+          <ClipLoader size='1em' color='white' />
         </div>
-      ) : (
-        children
       )}
+      {children}
     </button>
   );
 };

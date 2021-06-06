@@ -10,12 +10,16 @@ import AuthenticationPageLayout from '../../AuthenticationPageLayout';
 import { getErrorsArrayFromError } from '../../error';
 import Input from '../../Input';
 
+// TODO: Add tests for loading
 const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
   const dispatch = useDispatch();
   const { handleSubmit, control } = useForm<LoginRequest>();
   const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
+    setLoading(true);
+
     try {
       const response = await requestLogin(data);
 
@@ -29,6 +33,8 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
     } catch (e) {
       setErrors(getErrorsArrayFromError(e));
     }
+
+    setLoading(false);
   };
 
   return (
@@ -40,6 +46,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
         redirectButtonText='Registrieren'
         redirectTo='/register'
         errors={errors}
+        loading={loading}
       >
         <Controller
           control={control}

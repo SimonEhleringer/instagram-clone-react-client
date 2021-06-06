@@ -13,12 +13,16 @@ import AuthenticationPageLayout from '../../AuthenticationPageLayout';
 import { getErrorsArrayFromError } from '../../error';
 import Input from '../../Input';
 
+// TODO: Add tests for loading
 const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
   const dispatch = useDispatch();
   const { handleSubmit, control } = useForm<RegisterRequest>();
   const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit: SubmitHandler<RegisterRequest> = async (data) => {
+    setLoading(true);
+
     try {
       const response = await requestRegister(data);
 
@@ -31,6 +35,8 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
     } catch (e) {
       setErrors(getErrorsArrayFromError(e));
     }
+
+    setLoading(false);
   };
 
   return (
@@ -43,6 +49,7 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
         redirectButtonText='Melde dich an'
         redirectTo='/login'
         errors={errors}
+        loading={loading}
       >
         <Controller
           control={control}

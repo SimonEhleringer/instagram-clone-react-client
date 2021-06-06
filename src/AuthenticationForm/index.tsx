@@ -13,8 +13,10 @@ export interface AuthenticationFormProps {
   redirectButtonText: string;
   redirectTo: string;
   errors: string[];
+  loading: boolean;
 }
 
+// TODO: Add tests for loading
 const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   onSubmit,
   subTitle,
@@ -24,6 +26,7 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   redirectTo,
   children,
   errors,
+  loading,
 }) => {
   // TODO: Loading animation
   return (
@@ -59,7 +62,7 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
             <Button
               testId='button'
               htmlInputProps={{ type: 'submit' }}
-              loading={true}
+              loading={loading}
             >
               {submitButtonCaption}
             </Button>
