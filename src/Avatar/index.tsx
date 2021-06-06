@@ -6,14 +6,14 @@ interface AvatarProps {
   widthInPx: number;
 }
 
+// TODO: Add tests
 const Avatar: React.FC<AvatarProps> = ({ publicProfileImageId, widthInPx }) => {
   return (
     <Image
       publicId={
         publicProfileImageId
           ? publicProfileImageId
-          : // : 'instagram-clone/static/blank-profile-image'
-            'sample'
+          : 'instagram-clone/static/blank-profile-image'
       }
       width={`${widthInPx}`}
     >

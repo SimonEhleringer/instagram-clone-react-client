@@ -2,8 +2,8 @@ import React from 'react';
 import './style.scss';
 
 interface Props {
-  testId: string;
-  htmlInputProps: React.DetailedHTMLProps<
+  testId?: string;
+  htmlInputProps?: React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   >;
