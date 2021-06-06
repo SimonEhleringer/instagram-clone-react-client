@@ -1,0 +1,13 @@
+@use 'variables';
+@use 'mixins';
+
+.suggestions-list {
+  border: 1px solid variables.$border;
+  background-color: variables.$background;
+  border-radius: variables.$medium;
+  padding: 0.5rem 0;
+
+  @include mixins.mobile {
+    border: none;
+  }
+}

@@ -13,6 +13,7 @@ import { NavLink } from 'react-router-dom';
 import { IconType } from 'react-icons';
 
 interface HeaderProps {}
+// TODO: Make responsive for galaxy fold
 // TODO: Add tests
 const Header: React.FC<HeaderProps> = () => {
   interface HeaderLinkProps {
@@ -29,15 +30,17 @@ const Header: React.FC<HeaderProps> = () => {
   };
 
   return (
-    <div className='header'>
-      <div className='header__content-wrapper'>
-        <img className='header__logo' src={instagramLogo} alt='Instagram' />
+    <div className='header__page-padding'>
+      <div className='header'>
+        <div className='header__content-wrapper'>
+          <img className='header__logo' src={instagramLogo} alt='Instagram' />
 
-        <div className='header__links'>
-          <HeaderLink Icon={BsHouseDoor} to='/' />
-          <HeaderLink Icon={BsPlusCircle} to='/4' />
-          <HeaderLink Icon={BsHeart} to='/suggestions' />
-          <HeaderLink Icon={BsPerson} to='/4' />
+          <div className='header__links'>
+            <HeaderLink Icon={BsHouseDoor} to='/' />
+            <HeaderLink Icon={BsPlusCircle} to='/4' />
+            <HeaderLink Icon={BsHeart} to='/suggestions' />
+            <HeaderLink Icon={BsPerson} to='/4' />
+          </div>
         </div>
       </div>
     </div>

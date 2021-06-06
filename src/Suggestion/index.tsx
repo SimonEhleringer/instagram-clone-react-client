@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserResponseDto } from '../common/api';
+import { addFollow, UserResponseDto } from '../common/api';
 import Avatar from '../Avatar';
 import Button from '../Button';
 import { Link } from 'react-router-dom';
@@ -7,15 +7,26 @@ import './style.scss';
 
 interface SuggestionProps {
   suggestion: UserResponseDto;
+  handleSuccessfulSubscription: () => void;
 }
 
-const Suggestion: React.FC<SuggestionProps> = ({ suggestion }) => {
+const Suggestion: React.FC<SuggestionProps> = ({
+  suggestion,
+  handleSuccessfulSubscription,
+}) => {
   const { userId, fullName, username, publicProfileImageId } = suggestion;
+
+  const handleSubscribe = async (userIdToSubscribeTo: string) => {
+    await addFollow(userIdToSubscribeTo);
+
+    handleSuccessfulSubscription();
+  };
 
   return (
     <div className='suggestion'>
       <Avatar publicProfileImageId={publicProfileImageId} widthInPx={44} />
 
+      {/* TODO: Change route for link */}
       <div className='suggestion__user-information'>
         <Link to='/' className='suggestion__username'>
           {username}
@@ -25,7 +36,14 @@ const Suggestion: React.FC<SuggestionProps> = ({ suggestion }) => {
       </div>
 
       <div className='suggestion__button'>
-        <Button>Abonnieren</Button>
+        <Button
+          loading={true}
+          htmlInputProps={{
+            onClick: () => handleSubscribe(userId),
+          }}
+        >
+          Abonnieren
+        </Button>
       </div>
     </div>
   );

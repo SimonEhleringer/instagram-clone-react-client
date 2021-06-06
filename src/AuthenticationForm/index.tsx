@@ -56,7 +56,11 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           {children}
 
           <div className='authentication-form__submit-button'>
-            <Button testId='button' htmlInputProps={{ type: 'submit' }}>
+            <Button
+              testId='button'
+              htmlInputProps={{ type: 'submit' }}
+              loading={true}
+            >
               {submitButtonCaption}
             </Button>
           </div>

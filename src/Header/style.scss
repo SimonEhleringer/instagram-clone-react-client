@@ -1,5 +1,9 @@
 @use 'variables';
 
+.header__page-padding {
+  height: 4rem;
+}
+
 .header {
   height: 4rem;
   display: flex;
@@ -7,6 +11,8 @@
   align-items: center;
   background-color: variables.$background;
   border-bottom: 1px solid variables.$border;
+  position: fixed;
+  width: 100%;
 }
 
 .header__content-wrapper {
