@@ -1,10 +1,13 @@
 @use 'variables';
 
+$padding-vertical: 5px;
+$padding-horizontal: 0.75rem;
+
 .button {
   background-color: variables.$primary;
   border: none;
   border-radius: variables.$large;
-  padding: 0.5rem;
+  padding: $padding-vertical $padding-horizontal;
   font-weight: variables.$bold;
   color: variables.$text-on-primary;
   cursor: pointer;
@@ -21,7 +24,7 @@
 
 .button__spinner {
   position: absolute;
-  transform: translate(-0.5rem, -0.5rem);
+  transform: translate(-$padding-horizontal, -$padding-vertical);
   width: 100%;
   height: 100%;
   display: flex;
