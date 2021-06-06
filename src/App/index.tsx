@@ -7,18 +7,21 @@ import RegisterPage from '../pages/RegisterPage';
 import './style.scss';
 import SuggestionsPage from '../pages/SuggestionsPage';
 import ProtectedRoute from '../ProtectedRoute';
+import { CloudinaryContext } from 'cloudinary-react';
 
 // TODO: Add remaining tests
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <ProtectedRoute path='/' exact component={IndexPage} />
-        <Route path='/register' component={RegisterPage} />
-        <Route path='/login' component={LoginPage} />
-        <ProtectedRoute path='/suggestions' component={SuggestionsPage} />
-      </Switch>
-    </BrowserRouter>
+    <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
+      <BrowserRouter>
+        <Switch>
+          <ProtectedRoute path='/' exact component={IndexPage} />
+          <Route path='/register' component={RegisterPage} />
+          <Route path='/login' component={LoginPage} />
+          <ProtectedRoute path='/suggestions' component={SuggestionsPage} />
+        </Switch>
+      </BrowserRouter>
+    </CloudinaryContext>
   );
 };
 

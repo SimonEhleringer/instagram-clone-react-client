@@ -12,6 +12,10 @@ const SuggestionsPage: React.FC<RouteComponentProps> = () => {
     getSuggestions().then((value) => setSuggestions(value.data));
   }, []);
 
+  useEffect(() => {
+    console.log(suggestions);
+  }, [suggestions]);
+
   return (
     <AppLayout>
       {suggestions && <SuggestionsList suggestions={suggestions} />}
