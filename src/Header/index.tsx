@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import './style.scss';
 import instagramLogo from '../assets/images/logo.png';
-import { BsHouseDoor, BsHeart, BsPlusCircle, BsPerson } from 'react-icons/bs';
 import {
-  MdAddCircle,
-  MdAddCircleOutline,
-  MdFavorite,
-  MdFavoriteBorder,
-} from 'react-icons/md';
-import { FiUser } from 'react-icons/fi';
+  BsHouseDoor,
+  BsHouseDoorFill,
+  BsHeart,
+  BsPlusCircle,
+  BsPerson,
+  BsPlusCircleFill,
+  BsHeartFill,
+  BsPersonFill,
+} from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
 import { IconType } from 'react-icons';
 
@@ -18,14 +20,33 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = () => {
   interface HeaderLinkProps {
     Icon: IconType;
+    ActiveIcon: IconType;
     to: string;
   }
 
-  const HeaderLink: React.FC<HeaderLinkProps> = ({ Icon, to }) => {
+  const HeaderLink: React.FC<HeaderLinkProps> = ({ Icon, ActiveIcon, to }) => {
+    const size = 24;
+
     return (
-      <NavLink to={to} className='header__link'>
-        <Icon size={24} />
-      </NavLink>
+      <>
+        <NavLink
+          exact
+          to={to}
+          className='header__link'
+          activeClassName='header__link--hidden'
+        >
+          <Icon size={size} />
+        </NavLink>
+
+        <NavLink
+          exact
+          to={to}
+          className='header__link header__link--hidden'
+          activeClassName='header__link--active'
+        >
+          <ActiveIcon size={size} />
+        </NavLink>
+      </>
     );
   };
 
@@ -36,10 +57,22 @@ const Header: React.FC<HeaderProps> = () => {
           <img className='header__logo' src={instagramLogo} alt='Instagram' />
 
           <div className='header__links'>
-            <HeaderLink Icon={BsHouseDoor} to='/' />
-            <HeaderLink Icon={BsPlusCircle} to='/4' />
-            <HeaderLink Icon={BsHeart} to='/suggestions' />
-            <HeaderLink Icon={BsPerson} to='/4' />
+            <HeaderLink
+              Icon={BsHouseDoor}
+              ActiveIcon={BsHouseDoorFill}
+              to='/'
+            />
+            <HeaderLink
+              Icon={BsPlusCircle}
+              ActiveIcon={BsPlusCircleFill}
+              to='/4'
+            />
+            <HeaderLink
+              Icon={BsHeart}
+              ActiveIcon={BsHeartFill}
+              to='/suggestions'
+            />
+            <HeaderLink Icon={BsPerson} ActiveIcon={BsPersonFill} to='/4' />
           </div>
         </div>
       </div>

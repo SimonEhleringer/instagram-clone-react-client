@@ -9,7 +9,6 @@ import SuggestionsPage from '../pages/SuggestionsPage';
 import ProtectedRoute from '../ProtectedRoute';
 import { CloudinaryContext } from 'cloudinary-react';
 
-// TODO: Add remaining tests
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
@@ -18,7 +17,11 @@ const App = () => {
           <ProtectedRoute path='/' exact component={IndexPage} />
           <Route path='/register' component={RegisterPage} />
           <Route path='/login' component={LoginPage} />
-          <ProtectedRoute path='/suggestions' component={SuggestionsPage} />
+          <ProtectedRoute
+            path='/suggestions'
+            exact
+            component={SuggestionsPage}
+          />
         </Switch>
       </BrowserRouter>
     </CloudinaryContext>

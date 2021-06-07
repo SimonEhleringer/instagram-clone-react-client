@@ -39,3 +39,11 @@
   height: 24px;
   color: variables.$text-primary;
 }
+
+.header__link--hidden {
+  display: none;
+}
+
+.header__link--active {
+  display: inline;
+}

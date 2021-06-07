@@ -17,6 +17,7 @@ it('should redirect when link is pressed', () => {
     redirectText: '',
     redirectTo,
     submitButtonCaption: '',
+    loading: false,
   });
 
   const linkEl = getByText(redirectButtonText);
@@ -47,6 +48,7 @@ it('should render texts and children', () => {
       redirectTo: '',
       submitButtonCaption,
       subTitle,
+      loading: false,
     },
     children
   );
@@ -78,6 +80,7 @@ it('should call submit handler when submit event is fired', () => {
     redirectText: '',
     redirectTo: '',
     submitButtonCaption: '',
+    loading: false,
   });
 
   const authenticationFormEl = getByTestId('authentication-form');

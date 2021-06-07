@@ -28,7 +28,6 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   errors,
   loading,
 }) => {
-  // TODO: Loading animation
   return (
     <form
       data-testid='authentication-form'

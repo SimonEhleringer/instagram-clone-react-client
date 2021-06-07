@@ -24,7 +24,7 @@ const Button: React.FC<Props> = ({
       className={`button ${loading && 'button--loading'}`}
     >
       {loading && (
-        <div className='button__spinner'>
+        <div className='button__spinner' data-testid='buttonsLoader'>
           <ClipLoader size='1em' color='white' />
         </div>
       )}

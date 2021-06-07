@@ -5,6 +5,7 @@ const resourceApi = axios.create({
   baseURL: 'https://instagram-clone-spring-boot.herokuapp.com/api/v1',
 });
 
+// TODO: Add tests for interceptor
 resourceApi.interceptors.request.use((config: AxiosRequestConfig) => {
   const accessToken = store.getState().authenticationState.accessToken;
 

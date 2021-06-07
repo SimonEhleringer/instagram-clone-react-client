@@ -6,7 +6,7 @@ interface AvatarProps {
   widthInPx: number;
 }
 
-// TODO: Add tests
+// Add tests if possible (seems very hard to test that Cloudinary Image component)
 const Avatar: React.FC<AvatarProps> = ({ publicProfileImageId, widthInPx }) => {
   return (
     <Image
