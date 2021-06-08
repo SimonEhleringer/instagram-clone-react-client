@@ -11,45 +11,11 @@ import {
   BsHeartFill,
   BsPersonFill,
 } from 'react-icons/bs';
-import { NavLink } from 'react-router-dom';
-import { IconType } from 'react-icons';
+import HeaderLink from './HeaderLink';
 
 interface HeaderProps {}
-// TODO: Make responsive for galaxy fold
-// TODO: Add tests
+// TODO: Add tests (Maybe add tests with integration for App component)
 const Header: React.FC<HeaderProps> = () => {
-  interface HeaderLinkProps {
-    Icon: IconType;
-    ActiveIcon: IconType;
-    to: string;
-  }
-
-  const HeaderLink: React.FC<HeaderLinkProps> = ({ Icon, ActiveIcon, to }) => {
-    const size = 24;
-
-    return (
-      <>
-        <NavLink
-          exact
-          to={to}
-          className='header__link'
-          activeClassName='header__link--hidden'
-        >
-          <Icon size={size} />
-        </NavLink>
-
-        <NavLink
-          exact
-          to={to}
-          className='header__link header__link--hidden'
-          activeClassName='header__link--active'
-        >
-          <ActiveIcon size={size} />
-        </NavLink>
-      </>
-    );
-  };
-
   return (
     <div className='header__page-padding'>
       <div className='header'>

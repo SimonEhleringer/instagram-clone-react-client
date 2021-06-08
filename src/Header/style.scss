@@ -1,4 +1,5 @@
 @use 'variables';
+@use 'mixins';
 
 .header__page-padding {
   height: 4rem;
@@ -22,6 +23,10 @@
   max-width: variables.$tablet;
   width: 100%;
   padding: 0 1.5rem;
+
+  @include mixins.mobile-small {
+    padding: 0 1rem;
+  }
 }
 
 .header__logo {
@@ -32,18 +37,4 @@
 .header__links {
   display: flex;
   align-items: center;
-}
-
-.header__link {
-  margin-left: 1.5rem;
-  height: 24px;
-  color: variables.$text-primary;
-}
-
-.header__link--hidden {
-  display: none;
-}
-
-.header__link--active {
-  display: inline;
 }

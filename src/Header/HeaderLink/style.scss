@@ -1,0 +1,20 @@
+@use 'variables';
+@use 'mixins';
+
+.header-link {
+  margin-left: 1.5rem;
+  height: 24px;
+  color: variables.$text-primary;
+
+  @include mixins.mobile-small {
+    margin-left: 1rem;
+  }
+}
+
+.header-link--hidden {
+  display: none;
+}
+
+.header-link--active {
+  display: inline;
+}
