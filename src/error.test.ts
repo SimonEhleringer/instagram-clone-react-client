@@ -1,20 +1,6 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 
-// import {
-//   ErrorResponse,
-//   getErrorsArrayFromError,
-//   isAxiosError,
-//   isErrorResponse,
-// } from './error';
 import * as testModule from './error';
-// jest.mock('./error.ts');
-
-// const isAxiosErrorMock = isAxiosError as jest.MockedFunction<
-//   typeof isAxiosError
-// >;
-// const isErrorResponseMock = isErrorResponse as jest.MockedFunction<
-//   typeof isErrorResponse
-// >;
 
 describe('isAxiosError', () => {
   it('should return true when error is axios error', () => {

@@ -2,43 +2,40 @@ import { render } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory, State } from 'history';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import ProtectedRoute from '.';
-
-type MockAuthenticationState = {
-  loggedInUserId?: string;
-};
-
-type MockReduxState = {
-  authenticationState: MockAuthenticationState;
-};
-
-const mockStore = configureMockStore<MockReduxState>();
-
-let storeMock: MockStoreEnhanced<MockReduxState>;
-
-let history: MemoryHistory<State>;
+import { configureStore } from '../config/store';
+import { initialState } from '../authentication/store';
 
 it('should redirect to login route when user is not logged in', () => {
-  const initialState = getInitialState();
+  const store = configureStore();
+  const history = createMemoryHistory();
 
   render(
-    <Setup initialState={initialState}>
-      <ProtectedRoute path='/' component={componentToRender} />
-    </Setup>
+    <Provider store={store}>
+      <Router history={history}>
+        <ProtectedRoute path='/' component={componentToRender} />
+      </Router>
+    </Provider>
   );
 
   expect(history.location.pathname).toBe('/login');
 });
 
 it('should show component when user is logged in and component prop is given', () => {
-  const initialState = getInitialState();
-  initialState.authenticationState.loggedInUserId = 'loggedInUserId';
+  const store = configureStore();
+  const history = createMemoryHistory();
+
+  const state = { ...initialState };
+  state.loggedInUserId = 'loggedInUserId';
+
+  store.getState().authenticationState = state;
 
   const { getByTestId } = render(
-    <Setup initialState={initialState}>
-      <ProtectedRoute path='/' component={componentToRender} />
-    </Setup>
+    <Provider store={store}>
+      <Router history={history}>
+        <ProtectedRoute path='/' component={componentToRender} />
+      </Router>
+    </Provider>
   );
 
   const renderedEl = getByTestId('componentToRender');
@@ -48,13 +45,20 @@ it('should show component when user is logged in and component prop is given', (
 });
 
 it('should show children when user is logged in and children are given', () => {
-  const initialState = getInitialState();
-  initialState.authenticationState.loggedInUserId = 'loggedInUserId';
+  const store = configureStore();
+  const history = createMemoryHistory();
+
+  const state = { ...initialState };
+  state.loggedInUserId = 'loggedInUserId';
+
+  store.getState().authenticationState = state;
 
   const { getByTestId } = render(
-    <Setup initialState={initialState}>
-      <ProtectedRoute path='/'>{componentToRender}</ProtectedRoute>
-    </Setup>
+    <Provider store={store}>
+      <Router history={history}>
+        <ProtectedRoute path='/'>{componentToRender}</ProtectedRoute>
+      </Router>
+    </Provider>
   );
 
   const renderedEl = getByTestId('componentToRender');
@@ -63,28 +67,4 @@ it('should show children when user is logged in and children are given', () => {
   expect(renderedEl).toBeInTheDocument();
 });
 
-interface SetupProps {
-  initialState: MockReduxState;
-}
-
-const Setup: React.FC<SetupProps> = ({ initialState, children }) => {
-  storeMock = mockStore(initialState);
-
-  history = createMemoryHistory();
-
-  return (
-    <Provider store={storeMock}>
-      <Router history={history}>{children}</Router>
-    </Provider>
-  );
-};
-
 const componentToRender = () => <div data-testid='componentToRender'></div>;
-
-const getInitialState = () => {
-  const initialState: MockReduxState = {
-    authenticationState: { loggedInUserId: undefined },
-  };
-
-  return initialState;
-};

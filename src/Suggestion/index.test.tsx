@@ -7,7 +7,7 @@ import { AxiosResponse } from 'axios';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import store from '../config/store';
+import { configureStore } from '../config/store';
 
 jest.mock('../common/api.ts');
 
@@ -21,6 +21,8 @@ const getSuggestionsMock = getSuggestions as jest.MockedFunction<
 jest.mock('../Avatar', () => () => <div />);
 
 it('should add follow and reload suggestions when subscribe button is pressed', async () => {
+  const store = configureStore();
+
   const userId = 'userId';
 
   const suggestion: UserResponseDto = {

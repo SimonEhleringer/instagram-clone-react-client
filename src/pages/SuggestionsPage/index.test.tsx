@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { Provider } from 'react-redux';
 import { render, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import store from '../../config/store';
+import { configureStore } from '../../config/store';
 import { UserResponseDto } from '../../common/api';
 
 jest.mock('../../apiRequests.ts');
@@ -29,7 +29,7 @@ it('should show loading animation on startup when no suggestions are present', (
   getSuggestionsMock.mockResolvedValueOnce(suggestionsResponse);
 
   const { getByTestId } = render(
-    <Provider store={store}>
+    <Provider store={configureStore()}>
       <Router history={createMemoryHistory({ initialEntries: [initialRoute] })}>
         <Route path={initialRoute} component={SuggestionsPage} />
       </Router>
@@ -42,6 +42,8 @@ it('should show loading animation on startup when no suggestions are present', (
 });
 
 it('should show loading animation on startup when some suggestions are present', async () => {
+  const store = configureStore();
+
   const fullName = 'fullName';
   const username = 'username';
 
@@ -62,8 +64,6 @@ it('should show loading animation on startup when some suggestions are present',
       },
     ],
   };
-
-  console.log(store.getState());
 
   const suggestionsResponse: AxiosResponse<SuggestionsResponseDto> = {
     config: {},
@@ -127,7 +127,7 @@ it('should show suggestions when suggestions are loaded', async () => {
   getSuggestionsMock.mockResolvedValueOnce(suggestionsResponse);
 
   const { getByText, queryByTestId } = render(
-    <Provider store={store}>
+    <Provider store={configureStore()}>
       <Router history={createMemoryHistory({ initialEntries: [initialRoute] })}>
         <Route path={initialRoute} component={SuggestionsPage} />
       </Router>

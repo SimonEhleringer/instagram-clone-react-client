@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  fireEvent,
-  render,
-  Matcher,
-  MatcherOptions,
-  RenderResult,
-  waitFor,
-} from '@testing-library/react';
-import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
-import { AuthenticationState, setState } from '../../authentication/store';
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { AuthenticationState, initialState } from '../../authentication/store';
 import { Provider } from 'react-redux';
 import {
   AccessAndRefreshTokenResponse,
@@ -21,6 +13,7 @@ import { Route, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { ErrorResponse } from '../../error';
 import LoginPage from './index';
+import { configureStore } from '../../config/store';
 
 jest.mock('../../authentication/apiRequests');
 const requestLoginMock = requestLogin as jest.MockedFunction<
@@ -33,36 +26,11 @@ const convertAccessAndRefreshTokenResponseToAuthenticationStateMock =
     typeof convertAccessAndRefreshTokenResponseToAuthenticationState
   >;
 
-const mockStore = configureStore<AuthenticationState>([]);
+it('should call API and update store when API returns no error', async () => {
+  const store = configureStore();
+  const history = createMemoryHistory({ initialEntries: ['/login'] });
 
-let store: MockStoreEnhanced<AuthenticationState, {}>;
-
-let component: RenderResult<
-  typeof import('@testing-library/dom/types/queries'),
-  HTMLElement
->;
-
-let getByTestId: (
-  text: Matcher,
-  options?: MatcherOptions | undefined,
-  waitForElementOptions?: unknown
-) => HTMLElement;
-
-const history = createMemoryHistory();
-
-beforeEach(() => {
-  const initialState: AuthenticationState = {
-    loggedInUserId: undefined,
-    accessToken: '',
-    refreshToken: '',
-  };
-
-  store = mockStore(initialState);
-
-  store.dispatch = jest.fn();
-
-  history.push('/login');
-  component = render(
+  const { getByTestId } = render(
     <Provider store={store}>
       <Router history={history}>
         <Route path='/login' component={LoginPage} />
@@ -70,10 +38,6 @@ beforeEach(() => {
     </Provider>
   );
 
-  getByTestId = component.getByTestId;
-});
-
-it('should call API and update store when API returns no error', async () => {
   const formEl = getByTestId('authentication-form');
   const usernameOrEmailInputEl = getByTestId('usernameOrEmailInput');
   const passwordInputEl = getByTestId('passwordInput');
@@ -118,11 +82,22 @@ it('should call API and update store when API returns no error', async () => {
   expect(
     convertAccessAndRefreshTokenResponseToAuthenticationStateMock
   ).toHaveBeenCalledWith(apiResponse.data);
-  expect(store.dispatch).toHaveBeenCalledWith(setState(authenticationState));
+  expect(store.getState().authenticationState).toEqual(authenticationState);
   expect(history.location.pathname).toBe('/');
 });
 
 it('should call API and set errors when API returns an error', async () => {
+  const store = configureStore();
+  const history = createMemoryHistory({ initialEntries: ['/login'] });
+
+  const { getByTestId } = render(
+    <Provider store={store}>
+      <Router history={history}>
+        <Route path='/login' component={LoginPage} />
+      </Router>
+    </Provider>
+  );
+
   const formEl = getByTestId('authentication-form');
   const usernameOrEmailInputEl = getByTestId('usernameOrEmailInput');
   const passwordInputEl = getByTestId('passwordInput');
@@ -157,7 +132,7 @@ it('should call API and set errors when API returns an error', async () => {
   expect(
     convertAccessAndRefreshTokenResponseToAuthenticationStateMock
   ).not.toHaveBeenCalled();
-  expect(store.dispatch).not.toHaveBeenCalled();
+  expect(store.getState().authenticationState).toEqual(initialState);
   expect(history.location.pathname).toBe('/login');
 
   const errorsEl = getByTestId('errors');

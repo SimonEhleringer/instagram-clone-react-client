@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 // constants
 const name = 'authentication';
 
-const initialState: AuthenticationState = {
+export const initialState: AuthenticationState = {
   loggedInUserId: undefined,
   accessToken: '',
   refreshToken: '',

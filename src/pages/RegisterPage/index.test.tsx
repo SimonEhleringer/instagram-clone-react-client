@@ -1,13 +1,6 @@
-import { AuthenticationState, setState } from '../../authentication/store';
-import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
+import { AuthenticationState, initialState } from '../../authentication/store';
 import { createMemoryHistory } from 'history';
-import {
-  fireEvent,
-  Matcher,
-  MatcherOptions,
-  render,
-  waitFor,
-} from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { Route, Router } from 'react-router';
 import {
@@ -19,6 +12,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
 import { ErrorResponse } from '../../error';
 import RegisterPage from '.';
+import { configureStore } from '../../config/store';
 
 jest.mock('../../authentication/apiRequests.ts');
 const requestRegisterMock = requestRegister as jest.MockedFunction<
@@ -31,42 +25,18 @@ const convertAccessAndRefreshTokenResponseToAuthenticationStateMock =
     typeof convertAccessAndRefreshTokenResponseToAuthenticationState
   >;
 
-const mockStore = configureStore<AuthenticationState>([]);
+it('should call API and update state when API call was successful', async () => {
+  const history = createMemoryHistory({ initialEntries: ['/register'] });
+  const store = configureStore();
 
-let storeMock: MockStoreEnhanced<AuthenticationState, {}>;
-
-const history = createMemoryHistory();
-
-let getByTestId: (
-  text: Matcher,
-  options?: MatcherOptions | undefined,
-  waitForElementOptions?: unknown
-) => HTMLElement;
-
-beforeEach(() => {
-  const initialState: AuthenticationState = {
-    loggedInUserId: undefined,
-    accessToken: '',
-    refreshToken: '',
-  };
-
-  storeMock = mockStore(initialState);
-
-  storeMock.dispatch = jest.fn();
-
-  history.push('/register');
-  const component = render(
-    <Provider store={storeMock}>
+  const { getByTestId } = render(
+    <Provider store={store}>
       <Router history={history}>
         <Route path='/register' component={RegisterPage} />
       </Router>
     </Provider>
   );
 
-  getByTestId = component.getByTestId;
-});
-
-it('should call API and update state when API call was successful', async () => {
   const authenticationFormEl = getByTestId('authentication-form');
   const emailInputEl = getByTestId('emailInput');
   const usernameInputEl = getByTestId('usernameInput');
@@ -144,13 +114,22 @@ it('should call API and update state when API call was successful', async () => 
   expect(
     convertAccessAndRefreshTokenResponseToAuthenticationStateMock
   ).toHaveBeenCalledWith(apiResponseData);
-  expect(storeMock.dispatch).toHaveBeenCalledWith(
-    setState(authenticationState)
-  );
+  expect(store.getState().authenticationState).toEqual(authenticationState);
   expect(history.location.pathname).toBe('/');
 });
 
 it('should call API and display errors when API call failed', async () => {
+  const history = createMemoryHistory({ initialEntries: ['/register'] });
+  const store = configureStore();
+
+  const { getByTestId } = render(
+    <Provider store={store}>
+      <Router history={history}>
+        <Route path='/register' component={RegisterPage} />
+      </Router>
+    </Provider>
+  );
+
   const authenticationFormEl = getByTestId('authentication-form');
   const emailInputEl = getByTestId('emailInput');
   const usernameInputEl = getByTestId('usernameInput');
@@ -217,7 +196,7 @@ it('should call API and display errors when API call failed', async () => {
   expect(
     convertAccessAndRefreshTokenResponseToAuthenticationStateMock
   ).not.toHaveBeenCalled();
-  expect(storeMock.dispatch).not.toHaveBeenCalled();
+  expect(store.getState().authenticationState).toEqual(initialState);
   expect(history.location.pathname).toBe('/register');
 
   const errorsEl = getByTestId('errors');

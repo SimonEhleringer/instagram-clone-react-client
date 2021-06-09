@@ -10,14 +10,21 @@ export const reducer = combineReducers({
   suggestionsState: suggestionsReducer,
 });
 
-const sagaMiddleware = createSagaMiddleware();
+export const configureStore = () => {
+  const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(
-  reducer,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
-);
+  const store = createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(sagaMiddleware))
+  );
 
-sagaMiddleware.run(suggestionsSaga);
+  sagaMiddleware.run(suggestionsSaga);
+
+  return store;
+};
 
 export type ReduxState = ReturnType<typeof reducer>;
-export default store;
+
+const applicationStore = configureStore();
+
+export default applicationStore;

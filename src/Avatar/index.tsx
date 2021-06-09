@@ -6,7 +6,8 @@ export interface AvatarProps {
   widthInPx: number;
 }
 
-// Add tests if possible (seems very hard to test that Cloudinary Image component)
+// TODO: Add tests if possible (seems very hard to test that Cloudinary Image component)
+// TODO: Maybe add manual mock for automatically mocking Image component from cloudinary?
 const Avatar: React.FC<AvatarProps> = ({ publicProfileImageId, widthInPx }) => {
   return (
     <Image

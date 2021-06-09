@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import store from './config/store';
+import applicationStore from './config/store';
 import { Provider as StoreProvider } from 'react-redux';
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoreProvider store={store}>
+    <StoreProvider store={applicationStore}>
       <App />
     </StoreProvider>
   </React.StrictMode>,
