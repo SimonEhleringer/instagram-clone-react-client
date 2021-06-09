@@ -4,16 +4,16 @@ import Avatar from '../Avatar';
 import Button from '../Button';
 import { Link } from 'react-router-dom';
 import './style.scss';
+import { useDispatch } from 'react-redux';
+import { loadSuggestions } from '../slice';
 
-interface SuggestionProps {
+export interface SuggestionProps {
   suggestion: UserResponseDto;
-  handleSuccessfulSubscription: () => void;
 }
 
-const Suggestion: React.FC<SuggestionProps> = ({
-  suggestion,
-  handleSuccessfulSubscription,
-}) => {
+const Suggestion: React.FC<SuggestionProps> = ({ suggestion }) => {
+  const dispatch = useDispatch();
+
   const [loading, setLoading] = useState(false);
 
   const { userId, fullName, username, publicProfileImageId } = suggestion;
@@ -23,7 +23,7 @@ const Suggestion: React.FC<SuggestionProps> = ({
 
     await addFollow(userIdToSubscribeTo);
 
-    handleSuccessfulSubscription();
+    dispatch(loadSuggestions());
 
     setLoading(false);
   };
@@ -34,15 +34,22 @@ const Suggestion: React.FC<SuggestionProps> = ({
 
       {/* TODO: Change route for link */}
       <div className='suggestion__user-information'>
-        <Link to='/' className='suggestion__username'>
+        <Link
+          to='/'
+          className='suggestion__username'
+          data-testid='suggestionUsername'
+        >
           {username}
         </Link>
 
-        <div className='suggestion__full-name'>{fullName}</div>
+        <div className='suggestion__full-name' data-testid='suggestionFullName'>
+          {fullName}
+        </div>
       </div>
 
       <div className='suggestion__button'>
         <Button
+          testId='button'
           loading={loading}
           htmlInputProps={{
             onClick: () => handleSubscribe(userId),

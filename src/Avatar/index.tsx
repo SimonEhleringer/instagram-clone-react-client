@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Transformation } from 'cloudinary-react';
 
-interface AvatarProps {
+export interface AvatarProps {
   publicProfileImageId?: string;
   widthInPx: number;
 }

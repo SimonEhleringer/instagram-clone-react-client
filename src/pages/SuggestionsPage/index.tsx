@@ -5,35 +5,43 @@ import { getSuggestions, SuggestionsResponseDto } from '../../apiRequests';
 import AppLayout from '../../AppLayout';
 import SuggestionsList from '../../SuggestionsList';
 import './style.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxState } from '../../config/store';
+import { loadSuggestions } from '../../slice';
+import { useUpdateEffect } from '../../hooks/useUpdateEffect';
 
 const SuggestionsPage: React.FC<RouteComponentProps> = () => {
-  const [suggestions, setSuggestions] =
-    useState<SuggestionsResponseDto | undefined>(undefined);
+  const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const isStoreLoading = useSelector(
+    (state: ReduxState) => state.suggestionsState.isLoading
+  );
+
+  const suggestions = useSelector(
+    (state: ReduxState) => state.suggestionsState.suggestions
+  );
 
   useEffect(() => {
-    loadSuggestions();
-  }, []);
+    dispatch(loadSuggestions());
+  }, [dispatch]);
 
-  const loadSuggestions = () => {
-    getSuggestions().then((value) => setSuggestions(value.data));
-  };
+  useUpdateEffect(() => {
+    setIsLoading(isStoreLoading);
+  }, [isStoreLoading]);
 
   return (
     <AppLayout>
-      {suggestions ? (
+      <Loader loading={isLoading}>
         <div className='suggestions-page__layout'>
           <div className='suggestions-page__wrapper'>
             <h1 className='suggestions-page__heading'>Vorschläge für dich</h1>
 
-            <SuggestionsList
-              suggestions={suggestions}
-              handleSuccessfulSubscription={loadSuggestions}
-            />
+            <SuggestionsList suggestions={suggestions} />
           </div>
         </div>
-      ) : (
-        <Loader />
-      )}
+      </Loader>
     </AppLayout>
   );
 };

@@ -1,27 +1,20 @@
-import React from 'react';
-import { SuggestionsResponseDto } from '../apiRequests';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { UserResponseDto } from '../common/api';
+import { ReduxState } from '../config/store';
+import { loadSuggestions } from '../slice';
 import Suggestion from '../Suggestion';
 import './style.scss';
 
 interface SuggestionsListProps {
-  suggestions: SuggestionsResponseDto;
-  handleSuccessfulSubscription: () => void;
+  suggestions: UserResponseDto[];
 }
 
-const SuggestionsList: React.FC<SuggestionsListProps> = ({
-  suggestions,
-  handleSuccessfulSubscription,
-}) => {
+const SuggestionsList: React.FC<SuggestionsListProps> = ({ suggestions }) => {
   return (
     <div className='suggestions-list'>
-      {suggestions.suggestions.map((suggestion, index) => {
-        return (
-          <Suggestion
-            key={index}
-            suggestion={suggestion}
-            handleSuccessfulSubscription={handleSuccessfulSubscription}
-          />
-        );
+      {suggestions.map((suggestion, index) => {
+        return <Suggestion key={index} suggestion={suggestion} />;
       })}
     </div>
   );
