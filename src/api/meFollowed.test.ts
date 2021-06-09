@@ -1,5 +1,5 @@
 import resourceApi from '../config/resourceApi';
-import { addFollow } from './api';
+import { addFollow } from './meFollowed';
 
 jest.mock('../config/resourceApi.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;

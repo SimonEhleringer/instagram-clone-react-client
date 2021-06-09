@@ -1,5 +1,5 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserResponseDto } from './common/api';
+import { UserResponseDto } from './api/meFollowed';
 
 const name = 'suggestions';
 
@@ -22,15 +22,11 @@ const suggestionsSlice = createSlice({
   initialState,
   reducers: {
     loadSuggestionsStarted(state) {
-      console.log('load suggestions reducer :)');
-
       state.isLoading = true;
     },
     loadSuggestionsSucceeded(state, action: PayloadAction<UserResponseDto[]>) {
       state.suggestions = action.payload;
       state.isLoading = false;
-
-      console.log('im reducer von load suggestion success');
     },
     loadSuggestionsFailed(state) {
       state.isLoading = false;

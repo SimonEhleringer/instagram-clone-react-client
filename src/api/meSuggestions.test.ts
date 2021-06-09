@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios';
-import { getSuggestions, SuggestionsResponseDto } from './apiRequests';
-import resourceApi from './config/resourceApi';
+import { getSuggestions, SuggestionsResponseDto } from './meSuggestions';
+import resourceApi from '../config/resourceApi';
 
-jest.mock('./config/resourceApi.ts');
+jest.mock('../config/resourceApi.ts');
 const resourceApiMock = resourceApi as jest.Mocked<typeof resourceApi>;
 
 describe('getSuggestions', () => {

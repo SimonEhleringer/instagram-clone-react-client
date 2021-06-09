@@ -1,5 +1,5 @@
 import { getUserIdFromAccessToken } from '../accessToken';
-import { AccessAndRefreshTokenResponse } from './apiRequests';
+import { AccessAndRefreshTokenResponse } from '../api/authentication';
 import { AuthenticationState } from './store';
 
 export const convertAccessAndRefreshTokenResponseToAuthenticationState = (

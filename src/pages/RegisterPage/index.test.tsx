@@ -7,14 +7,14 @@ import {
   AccessAndRefreshTokenResponse,
   RegisterRequest,
   requestRegister,
-} from '../../authentication/apiRequests';
+} from '../../api/authentication';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
 import { ErrorResponse } from '../../error';
 import RegisterPage from '.';
 import { configureStore } from '../../config/store';
 
-jest.mock('../../authentication/apiRequests.ts');
+jest.mock('../../api/authentication.ts');
 const requestRegisterMock = requestRegister as jest.MockedFunction<
   typeof requestRegister
 >;

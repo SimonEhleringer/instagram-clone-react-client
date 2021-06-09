@@ -1,5 +1,5 @@
-import { UserResponseDto } from './common/api';
-import resourceApi from './config/resourceApi';
+import { UserResponseDto } from './meFollowed';
+import resourceApi from '../config/resourceApi';
 
 export const getSuggestions = async () => {
   const response = await resourceApi.get<SuggestionsResponseDto>(

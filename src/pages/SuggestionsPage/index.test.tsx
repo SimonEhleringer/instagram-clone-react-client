@@ -1,14 +1,17 @@
 import { Route, Router } from 'react-router';
 import SuggestionsPage from '.';
-import { getSuggestions, SuggestionsResponseDto } from '../../apiRequests';
+import {
+  getSuggestions,
+  SuggestionsResponseDto,
+} from '../../api/meSuggestions';
 import { AxiosResponse } from 'axios';
 import { Provider } from 'react-redux';
 import { render, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { configureStore } from '../../config/store';
-import { UserResponseDto } from '../../common/api';
+import { UserResponseDto } from '../../api/meFollowed';
 
-jest.mock('../../apiRequests.ts');
+jest.mock('../../api/meSuggestions.ts');
 jest.mock('../../Avatar', () => () => <div />);
 
 const getSuggestionsMock = getSuggestions as jest.MockedFunction<

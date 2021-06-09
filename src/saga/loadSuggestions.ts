@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { getSuggestions, SuggestionsResponseDto } from '../apiRequests';
+import { getSuggestions, SuggestionsResponseDto } from '../api/meSuggestions';
 import {
   loadSuggestionsFailed,
   loadSuggestionsSucceeded,

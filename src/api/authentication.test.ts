@@ -1,4 +1,4 @@
-import authenticationApi from '../../config/authenticationApi';
+import authenticationApi from '../config/authenticationApi';
 
 import {
   AccessAndRefreshTokenResponse,
@@ -6,9 +6,9 @@ import {
   RegisterRequest,
   requestLogin,
   requestRegister,
-} from '../apiRequests';
+} from './authentication';
 
-jest.mock('../../config/authenticationApi');
+jest.mock('../config/authenticationApi.ts');
 const mockedAuthenticationApi = authenticationApi as jest.Mocked<
   typeof authenticationApi
 >;

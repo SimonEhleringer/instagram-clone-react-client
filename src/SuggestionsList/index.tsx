@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserResponseDto } from '../common/api';
+import { UserResponseDto } from '../api/meFollowed';
 import Suggestion from '../Suggestion';
 import './style.scss';
 

@@ -1,19 +1,19 @@
 import { render, waitFor } from '@testing-library/react';
 import Suggestion from '.';
-import { addFollow, UserResponseDto } from '../common/api';
+import { addFollow, UserResponseDto } from '../api/meFollowed';
 import userEvent from '@testing-library/user-event';
-import { getSuggestions, SuggestionsResponseDto } from '../apiRequests';
+import { getSuggestions, SuggestionsResponseDto } from '../api/meSuggestions';
 import { AxiosResponse } from 'axios';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import { configureStore } from '../config/store';
 
-jest.mock('../common/api.ts');
+jest.mock('../api/meFollowed.ts');
 
 const addFollowMock = addFollow as jest.MockedFunction<typeof addFollow>;
 
-jest.mock('../apiRequests.ts');
+jest.mock('../api/meSuggestions.ts');
 const getSuggestionsMock = getSuggestions as jest.MockedFunction<
   typeof getSuggestions
 >;

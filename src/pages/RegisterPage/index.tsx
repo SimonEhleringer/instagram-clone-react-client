@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import {
-  RegisterRequest,
-  requestRegister,
-} from '../../authentication/apiRequests';
+import { RegisterRequest, requestRegister } from '../../api/authentication';
 import { setState } from '../../authentication/store';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
 import AuthenticationForm from '../../AuthenticationForm';

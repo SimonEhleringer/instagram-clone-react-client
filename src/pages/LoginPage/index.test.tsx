@@ -6,7 +6,7 @@ import {
   AccessAndRefreshTokenResponse,
   LoginRequest,
   requestLogin,
-} from '../../authentication/apiRequests';
+} from '../../api/authentication';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
 import { Route, Router } from 'react-router';
@@ -15,7 +15,7 @@ import { ErrorResponse } from '../../error';
 import LoginPage from './index';
 import { configureStore } from '../../config/store';
 
-jest.mock('../../authentication/apiRequests');
+jest.mock('../../api/authentication.ts');
 const requestLoginMock = requestLogin as jest.MockedFunction<
   typeof requestLogin
 >;

@@ -1,4 +1,4 @@
-import { AccessAndRefreshTokenResponse } from '../apiRequests';
+import { AccessAndRefreshTokenResponse } from '../../api/authentication';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../utils';
 import { getUserIdFromAccessToken } from '../../accessToken';
 

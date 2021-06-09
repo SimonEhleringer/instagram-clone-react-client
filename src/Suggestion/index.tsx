@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addFollow, UserResponseDto } from '../common/api';
+import { addFollow, UserResponseDto } from '../api/meFollowed';
 import Avatar from '../Avatar';
 import Button from '../Button';
 import { Link } from 'react-router-dom';
