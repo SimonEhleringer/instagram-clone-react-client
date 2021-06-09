@@ -1,11 +1,13 @@
-import { waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import Suggestion from '.';
 import { addFollow, UserResponseDto } from '../common/api';
 import userEvent from '@testing-library/user-event';
 import { getSuggestions, SuggestionsResponseDto } from '../apiRequests';
-import { renderWithReduxProviderAndRouter } from '../testUtils';
-import { loadSuggestions, SuggestionsState } from '../slice';
 import { AxiosResponse } from 'axios';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router';
+import { createMemoryHistory } from 'history';
+import store from '../config/store';
 
 jest.mock('../common/api.ts');
 
@@ -28,6 +30,11 @@ it('should add follow and reload suggestions when subscribe button is pressed', 
     publicProfileImageId: 'publicProfileImageId',
   };
 
+  store.getState().suggestionsState = {
+    isLoading: false,
+    suggestions: [suggestion],
+  };
+
   const suggestionsResponse: AxiosResponse<SuggestionsResponseDto> = {
     config: {},
     data: { suggestions: [] },
@@ -38,21 +45,18 @@ it('should add follow and reload suggestions when subscribe button is pressed', 
 
   getSuggestionsMock.mockResolvedValueOnce(suggestionsResponse);
 
-  const initialState: SuggestionsState = {
-    isLoading: false,
-    suggestions: [],
-  };
-
-  const { getByText, storeMock } = renderWithReduxProviderAndRouter(
-    <Suggestion suggestion={suggestion} />,
-    { initialState }
+  const { getByText } = render(
+    <Provider store={store}>
+      <Router history={createMemoryHistory()}>
+        <Suggestion suggestion={suggestion} />
+      </Router>
+    </Provider>,
+    {}
   );
 
   userEvent.click(getByText('Abonnieren'));
 
   await waitFor(() => expect(addFollowMock).toHaveBeenCalledWith(userId));
 
-  const actions = storeMock.getActions();
-  expect(actions.length).toBe(1);
-  expect(actions[0]).toEqual(loadSuggestions());
+  expect(store.getState().suggestionsState.suggestions.length).toBe(0);
 });

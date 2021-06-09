@@ -10,7 +10,7 @@ export interface SuggestionsState {
   isLoading: boolean;
 }
 
-const initialState: SuggestionsState = {
+export const initialState: SuggestionsState = {
   suggestions: [],
   isLoading: false,
 };
@@ -29,6 +29,8 @@ const suggestionsSlice = createSlice({
     loadSuggestionsSucceeded(state, action: PayloadAction<UserResponseDto[]>) {
       state.suggestions = action.payload;
       state.isLoading = false;
+
+      console.log('im reducer von load suggestion success');
     },
     loadSuggestionsFailed(state) {
       state.isLoading = false;

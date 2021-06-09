@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import Loader from '../../Loader';
-import { getSuggestions, SuggestionsResponseDto } from '../../apiRequests';
 import AppLayout from '../../AppLayout';
 import SuggestionsList from '../../SuggestionsList';
 import './style.scss';

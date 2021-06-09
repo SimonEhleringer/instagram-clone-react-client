@@ -1,8 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { UserResponseDto } from '../common/api';
-import { ReduxState } from '../config/store';
-import { loadSuggestions } from '../slice';
 import Suggestion from '../Suggestion';
 import './style.scss';
 
