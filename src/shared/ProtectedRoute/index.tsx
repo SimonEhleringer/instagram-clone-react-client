@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect, Route, RouteProps } from 'react-router';
-import { ReduxState } from '../config/store';
+import React from "react";
+import { useSelector } from "react-redux";
+import { Redirect, Route, RouteProps } from "react-router";
+import { ReduxState } from "../../config/store";
 
 interface ProtectedRouteProps extends RouteProps {}
 
@@ -19,7 +19,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     const componentToRender = component ? component : children;
 
     return !loggedInUserId ? (
-      <Redirect to='/login' />
+      <Redirect to="/login" />
     ) : (
       React.createElement(componentToRender, props)
     );

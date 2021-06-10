@@ -1,7 +1,7 @@
-import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserResponseDto } from './api/meFollowed';
+import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UserResponseDto } from "../../api/meFollowed";
 
-const name = 'suggestions';
+const name = "suggestions";
 
 export const LOAD_SUGGESTIONS = `${name}/loadSuggestions`;
 

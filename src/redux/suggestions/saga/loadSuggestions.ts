@@ -1,12 +1,15 @@
-import { AxiosResponse } from 'axios';
-import { call, put, takeLatest } from 'redux-saga/effects';
-import { getSuggestions, SuggestionsResponseDto } from '../api/meSuggestions';
+import { AxiosResponse } from "axios";
+import { call, put, takeLatest } from "redux-saga/effects";
+import {
+  getSuggestions,
+  SuggestionsResponseDto,
+} from "../../../api/meSuggestions";
 import {
   loadSuggestionsFailed,
   loadSuggestionsSucceeded,
   loadSuggestionsStarted,
   LOAD_SUGGESTIONS,
-} from '../slice';
+} from "../slice";
 
 export function* loadSuggestionsSaga() {
   yield takeLatest(LOAD_SUGGESTIONS, handleLoadSuggestions);

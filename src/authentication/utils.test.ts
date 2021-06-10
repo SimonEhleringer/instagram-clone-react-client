@@ -1,18 +1,18 @@
-import { AccessAndRefreshTokenResponse } from '../../api/authentication';
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../utils';
-import { getUserIdFromAccessToken } from '../../accessToken';
+import { AccessAndRefreshTokenResponse } from "../api/authentication";
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from "./utils";
+import { getUserIdFromAccessToken } from "../authentication/accessToken";
 
-jest.mock('../../accessToken');
+jest.mock("../authentication/accessToken.ts");
 const mockedGetUserIdFromAccessToken =
   getUserIdFromAccessToken as jest.MockedFunction<
     typeof getUserIdFromAccessToken
   >;
 
-describe('convertAccessAndRefreshTokenResponseToAuthenticationState', () => {
-  it('should convert successfully', () => {
-    const accessToken = 'accessToken';
-    const refreshToken = 'refreshToken';
-    const loggedInUserId = 'userId';
+describe("convertAccessAndRefreshTokenResponseToAuthenticationState", () => {
+  it("should convert successfully", () => {
+    const accessToken = "accessToken";
+    const refreshToken = "refreshToken";
+    const loggedInUserId = "userId";
 
     const accessAndRefreshTokenResponse: AccessAndRefreshTokenResponse = {
       accessToken,

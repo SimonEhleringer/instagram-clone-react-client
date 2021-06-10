@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
-import Loader from '../../Loader';
-import AppLayout from '../../AppLayout';
-import SuggestionsList from '../../SuggestionsList';
-import './style.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { ReduxState } from '../../config/store';
-import { loadSuggestions } from '../../slice';
-import { useUpdateEffect } from '../../hooks/useUpdateEffect';
+import React, { useEffect, useState } from "react";
+import { RouteComponentProps } from "react-router";
+import Loader from "../../shared/Loader";
+import AppLayout from "../../shared/AppLayout";
+import SuggestionsList from "../../suggestions/SuggestionsList";
+import "./style.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { ReduxState } from "../../config/store";
+import { loadSuggestions } from "../../redux/suggestions/slice";
+import { useUpdateEffect } from "../../shared/hooks/useUpdateEffect";
 
 const SuggestionsPage: React.FC<RouteComponentProps> = () => {
   const dispatch = useDispatch();
@@ -33,9 +33,9 @@ const SuggestionsPage: React.FC<RouteComponentProps> = () => {
   return (
     <AppLayout>
       <Loader loading={isLoading}>
-        <div className='suggestions-page__layout'>
-          <div className='suggestions-page__wrapper'>
-            <h1 className='suggestions-page__heading'>Vorschläge für dich</h1>
+        <div className="suggestions-page__layout">
+          <div className="suggestions-page__wrapper">
+            <h1 className="suggestions-page__heading">Vorschläge für dich</h1>
 
             <SuggestionsList suggestions={suggestions} />
           </div>

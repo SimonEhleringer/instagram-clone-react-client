@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { addFollow, UserResponseDto } from '../api/meFollowed';
-import Avatar from '../Avatar';
-import Button from '../Button';
-import { Link } from 'react-router-dom';
-import './style.scss';
-import { useDispatch } from 'react-redux';
-import { loadSuggestions } from '../slice';
+import React, { useState } from "react";
+import { addFollow, UserResponseDto } from "../../api/meFollowed";
+import Avatar from "../../shared/Avatar";
+import Button from "../../shared/Button";
+import { Link } from "react-router-dom";
+import "./style.scss";
+import { useDispatch } from "react-redux";
+import { loadSuggestions } from "../../redux/suggestions/slice";
 
 export interface SuggestionProps {
   suggestion: UserResponseDto;
@@ -29,27 +29,27 @@ const Suggestion: React.FC<SuggestionProps> = ({ suggestion }) => {
   };
 
   return (
-    <div className='suggestion'>
+    <div className="suggestion">
       <Avatar publicProfileImageId={publicProfileImageId} widthInPx={44} />
 
       {/* TODO: Change route for link */}
-      <div className='suggestion__user-information'>
+      <div className="suggestion__user-information">
         <Link
-          to='/'
-          className='suggestion__username'
-          data-testid='suggestionUsername'
+          to="/"
+          className="suggestion__username"
+          data-testid="suggestionUsername"
         >
           {username}
         </Link>
 
-        <div className='suggestion__full-name' data-testid='suggestionFullName'>
+        <div className="suggestion__full-name" data-testid="suggestionFullName">
           {fullName}
         </div>
       </div>
 
-      <div className='suggestion__button'>
+      <div className="suggestion__button">
         <Button
-          testId='button'
+          testId="button"
           loading={loading}
           htmlInputProps={{
             onClick: () => handleSubscribe(userId),

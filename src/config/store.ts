@@ -1,9 +1,9 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { authenticationReducer } from '../authentication/store';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import createSagaMiddleware from 'redux-saga';
-import { suggestionsSaga } from '../saga';
-import { suggestionsReducer } from '../slice';
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import { authenticationReducer } from "../redux/authentication/slice";
+import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
+import { suggestionsSaga } from "../redux/suggestions/saga";
+import { suggestionsReducer } from "../redux/suggestions/slice";
 
 export const reducer = combineReducers({
   authenticationState: authenticationReducer,

@@ -1,7 +1,7 @@
-import React from 'react';
-import { UserResponseDto } from '../api/meFollowed';
-import Suggestion from '../Suggestion';
-import './style.scss';
+import React from "react";
+import { UserResponseDto } from "../../api/meFollowed";
+import Suggestion from "../Suggestion";
+import "./style.scss";
 
 interface SuggestionsListProps {
   suggestions: UserResponseDto[];
@@ -9,7 +9,7 @@ interface SuggestionsListProps {
 
 const SuggestionsList: React.FC<SuggestionsListProps> = ({ suggestions }) => {
   return (
-    <div className='suggestions-list'>
+    <div className="suggestions-list">
       {suggestions.map((suggestion, index) => {
         return <Suggestion key={index} suggestion={suggestion} />;
       })}

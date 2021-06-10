@@ -1,6 +1,6 @@
-import { getUserIdFromAccessToken } from '../accessToken';
-import { AccessAndRefreshTokenResponse } from '../api/authentication';
-import { AuthenticationState } from './store';
+import { getUserIdFromAccessToken } from "../authentication/accessToken";
+import { AccessAndRefreshTokenResponse } from "../api/authentication";
+import { AuthenticationState } from "../redux/authentication/slice";
 
 export const convertAccessAndRefreshTokenResponseToAuthenticationState = (
   accessAndRefreshTokenResponse: AccessAndRefreshTokenResponse

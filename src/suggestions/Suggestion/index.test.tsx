@@ -1,35 +1,38 @@
-import { render, waitFor } from '@testing-library/react';
-import Suggestion from '.';
-import { addFollow, UserResponseDto } from '../api/meFollowed';
-import userEvent from '@testing-library/user-event';
-import { getSuggestions, SuggestionsResponseDto } from '../api/meSuggestions';
-import { AxiosResponse } from 'axios';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import { createMemoryHistory } from 'history';
-import { configureStore } from '../config/store';
+import { render, waitFor } from "@testing-library/react";
+import Suggestion from ".";
+import { addFollow, UserResponseDto } from "../../api/meFollowed";
+import userEvent from "@testing-library/user-event";
+import {
+  getSuggestions,
+  SuggestionsResponseDto,
+} from "../../api/meSuggestions";
+import { AxiosResponse } from "axios";
+import { Provider } from "react-redux";
+import { Router } from "react-router";
+import { createMemoryHistory } from "history";
+import { configureStore } from "../../config/store";
 
-jest.mock('../api/meFollowed.ts');
+jest.mock("../../api/meFollowed.ts");
 
 const addFollowMock = addFollow as jest.MockedFunction<typeof addFollow>;
 
-jest.mock('../api/meSuggestions.ts');
+jest.mock("../../api/meSuggestions.ts");
 const getSuggestionsMock = getSuggestions as jest.MockedFunction<
   typeof getSuggestions
 >;
 
-jest.mock('../Avatar', () => () => <div />);
+jest.mock("../../shared/Avatar", () => () => <div />);
 
-it('should add follow and reload suggestions when subscribe button is pressed', async () => {
+it("should add follow and reload suggestions when subscribe button is pressed", async () => {
   const store = configureStore();
 
-  const userId = 'userId';
+  const userId = "userId";
 
   const suggestion: UserResponseDto = {
-    fullName: 'fullName',
+    fullName: "fullName",
     userId,
-    username: 'username',
-    publicProfileImageId: 'publicProfileImageId',
+    username: "username",
+    publicProfileImageId: "publicProfileImageId",
   };
 
   store.getState().suggestionsState = {
@@ -42,7 +45,7 @@ it('should add follow and reload suggestions when subscribe button is pressed', 
     data: { suggestions: [] },
     headers: [],
     status: 1,
-    statusText: '',
+    statusText: "",
   };
 
   getSuggestionsMock.mockResolvedValueOnce(suggestionsResponse);
@@ -56,7 +59,7 @@ it('should add follow and reload suggestions when subscribe button is pressed', 
     {}
   );
 
-  userEvent.click(getByText('Abonnieren'));
+  userEvent.click(getByText("Abonnieren"));
 
   await waitFor(() => expect(addFollowMock).toHaveBeenCalledWith(userId));
 
