@@ -1,0 +1,19 @@
+.add-new-post-link-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+}
+
+.add-new-post-link-prevent-click {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.add-new-post-link-file-input {
+  display: none;
+}

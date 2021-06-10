@@ -1,0 +1,47 @@
+@use 'variables';
+@use 'mixins';
+
+.new-post-form {
+  border: 1px solid variables.$border;
+  background-color: variables.$background;
+  border-radius: variables.$medium;
+  padding: 0.5rem 0;
+
+  @include mixins.mobile {
+    border: none;
+  }
+}
+
+.new-post-form__caption-input {
+  padding: 0.5rem 1rem;
+  display: grid;
+}
+
+.new-post-form__image-preview-container {
+  padding: 0.5rem 1rem;
+}
+
+.new-post-form__image-preview-crop-size {
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+}
+
+.new-post-form__image-preview {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.new-post-form__bottom-section {
+  display: flex;
+  justify-content: center;
+}
+
+.new-post-form__submit-button {
+  margin: 0.5rem 1rem;
+  display: grid;
+  width: 200px;
+}
