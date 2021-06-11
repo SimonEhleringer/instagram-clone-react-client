@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import './style.scss';
+import React, { FC } from "react";
+import "./style.scss";
 
 interface Props {
   testId: string;
@@ -13,7 +13,7 @@ interface Props {
 const Input: FC<Props> = ({ testId, htmlInputProps, innerRef }) => {
   return (
     <input
-      className='input'
+      className="input"
       ref={innerRef}
       {...htmlInputProps}
       data-testid={testId}

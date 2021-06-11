@@ -12,9 +12,15 @@
   }
 }
 
+.new-post-form__caption-input-container {
+  margin: 0.5rem 1rem;
+}
+
 .new-post-form__caption-input {
-  padding: 0.5rem 1rem;
-  display: grid;
+  @include mixins.input;
+
+  resize: none;
+  width: 100%;
 }
 
 .new-post-form__image-preview-container {
@@ -37,7 +43,13 @@
 
 .new-post-form__bottom-section {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.new-post-form__errors {
+  padding: 0.5rem 0;
 }
 
 .new-post-form__submit-button {
