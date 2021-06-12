@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router";
-import Loader from "../../shared/Loader";
-import AppLayout from "../../shared/AppLayout";
-import SuggestionsList from "../../suggestions/SuggestionsList";
-import "./style.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { ReduxState } from "../../config/store";
-import { loadSuggestions } from "../../redux/suggestions/slice";
-import { useUpdateEffect } from "../../shared/hooks/useUpdateEffect";
+import React, { useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router';
+import Loader from '../../shared/Loader';
+import AppLayout from '../../shared/AppLayout';
+import SuggestionsList from '../../suggestions/SuggestionsList';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxState } from '../../config/store';
+import { loadSuggestions } from '../../redux/suggestions/slice';
+import { useUpdateEffect } from '../../shared/hooks/useUpdateEffect';
+import SlimPageLayout from '../../shared/SlimPageLayout';
+import ResponsiveHeading from '../../shared/ResponsiveHeading';
 
 const SuggestionsPage: React.FC<RouteComponentProps> = () => {
   const dispatch = useDispatch();
@@ -33,13 +34,11 @@ const SuggestionsPage: React.FC<RouteComponentProps> = () => {
   return (
     <AppLayout>
       <Loader loading={isLoading}>
-        <div className="suggestions-page__layout">
-          <div className="suggestions-page__wrapper">
-            <h1 className="suggestions-page__heading">Vorschläge für dich</h1>
+        <SlimPageLayout>
+          <ResponsiveHeading>Vorschläge für dich</ResponsiveHeading>
 
-            <SuggestionsList suggestions={suggestions} />
-          </div>
-        </div>
+          <SuggestionsList suggestions={suggestions} />
+        </SlimPageLayout>
       </Loader>
     </AppLayout>
   );

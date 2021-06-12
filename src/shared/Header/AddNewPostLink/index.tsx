@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import HeaderLink from '../HeaderLink';
 import './style.scss';
-import { setImage } from '../../../redux/newPost/slice';
+import { setSelectedImageDataUri } from '../../../redux/newPost/slice';
 import { reducer } from '../../../config/store';
 
 // TODO: Add tests
@@ -32,7 +32,7 @@ const AddNewPostLink = () => {
         return;
       }
 
-      dispatch(setImage(reader.result));
+      dispatch(setSelectedImageDataUri(reader.result));
 
       history.push('/new-post');
     };
@@ -43,6 +43,7 @@ const AddNewPostLink = () => {
       <input
         ref={fileInputRef}
         type='file'
+        accept='image/png, image/jpeg'
         className='add-new-post-link-file-input'
         onChange={handleFileInputChange}
       />

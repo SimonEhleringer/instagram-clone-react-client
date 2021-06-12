@@ -3,25 +3,28 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const name = 'newPost';
 
 export type NewPostState = {
-  selectedImageDataUrl: SelectedImageDataUrl;
+  selectedImageDataUri: SelectedImageDataUri;
 };
 
 export const initialState: NewPostState = {
-  selectedImageDataUrl: '',
+  selectedImageDataUri: '',
 };
 
 const newPostSlice = createSlice({
   name,
   initialState,
   reducers: {
-    setImage(state, action: PayloadAction<SelectedImageDataUrl>) {
-      state.selectedImageDataUrl = action.payload;
+    setSelectedImageDataUri(
+      state,
+      action: PayloadAction<SelectedImageDataUri>
+    ) {
+      state.selectedImageDataUri = action.payload;
     },
   },
 });
 
-export const { setImage } = newPostSlice.actions;
+export const { setSelectedImageDataUri } = newPostSlice.actions;
 
 export const newPostReducer = newPostSlice.reducer;
 
-export type SelectedImageDataUrl = string;
+export type SelectedImageDataUri = string;

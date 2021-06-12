@@ -19,6 +19,7 @@
 .new-post-form__caption-input {
   @include mixins.input;
 
+  margin: 0;
   resize: none;
   width: 100%;
 }

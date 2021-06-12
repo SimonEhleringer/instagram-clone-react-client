@@ -10,6 +10,8 @@ import ProtectedRoute from '../shared/ProtectedRoute';
 import { CloudinaryContext } from 'cloudinary-react';
 import NewPostPage from '../pages/NewPostPage';
 
+// TODO: Suggestions: Show some text when no suggestions are there
+// TODO: Maybe add padding scss variable?
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
