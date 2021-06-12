@@ -8,14 +8,12 @@ import { ReduxState } from '../../config/store';
 import Button from '../../shared/Button';
 import { getErrorsArrayFromError } from '../../shared/error';
 import Errors from '../../shared/Errors';
-import Input from '../../shared/Input';
 import './style.scss';
 
-// TODO: Make components for unnessecary double styles (suggestions has some styles that are exactly same)
 const NewPostForm = () => {
   const history = useHistory();
 
-  const selectedImageDataUrl = useSelector(
+  const selectedImageDataUri = useSelector(
     (state: ReduxState) => state.newPostState.selectedImageDataUri
   );
 
@@ -27,7 +25,7 @@ const NewPostForm = () => {
     setIsLoading(true);
 
     const request: PostRequestDto = {
-      imageDataUri: selectedImageDataUrl,
+      imageDataUri: selectedImageDataUri,
       text: caption,
     };
 
@@ -37,13 +35,13 @@ const NewPostForm = () => {
       history.push('/');
     } catch (e) {
       setErrors(getErrorsArrayFromError(e));
-
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
   };
 
   return (
-    <div className='new-post-form'>
+    <div className='new-post-form' data-testid='newPostForm'>
       <div className='new-post-form__caption-input-container'>
         <textarea
           className='new-post-form__caption-input'
@@ -57,7 +55,7 @@ const NewPostForm = () => {
         <div className='new-post-form__image-preview-crop-size'>
           <img
             className='new-post-form__image-preview'
-            src={selectedImageDataUrl}
+            src={selectedImageDataUri}
             alt='selectedImagePreview'
           />
         </div>
@@ -72,6 +70,7 @@ const NewPostForm = () => {
 
         <div className='new-post-form__submit-button'>
           <Button
+            loaderTestId='submitButtonsLoader'
             loading={isLoading}
             htmlInputProps={{ onClick: handleSubmitButtonClick }}
           >

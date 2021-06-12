@@ -5,9 +5,7 @@ import { useHistory } from 'react-router';
 import HeaderLink from '../HeaderLink';
 import './style.scss';
 import { setSelectedImageDataUri } from '../../../redux/newPost/slice';
-import { reducer } from '../../../config/store';
 
-// TODO: Add tests
 const AddNewPostLink = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -20,6 +18,8 @@ const AddNewPostLink = () => {
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
+
+    console.log('im handleChange');
 
     if (!file) {
       return;
@@ -39,16 +39,17 @@ const AddNewPostLink = () => {
   };
 
   return (
-    <button onClick={handleButtonClick} className='add-new-post-link-button'>
+    <button onClick={handleButtonClick} className='add-new-post-link__button'>
       <input
+        data-testid='fileInput'
         ref={fileInputRef}
         type='file'
         accept='image/png, image/jpeg'
-        className='add-new-post-link-file-input'
+        className='add-new-post-link__file-input'
         onChange={handleFileInputChange}
       />
 
-      <div className='add-new-post-link-prevent-click' />
+      <div className='add-new-post-link__prevent-click' />
       <HeaderLink
         Icon={BsPlusCircle}
         ActiveIcon={BsPlusCircleFill}

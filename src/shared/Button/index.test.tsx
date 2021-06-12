@@ -17,7 +17,12 @@ it('should render text in button when not loading', () => {
 
 it('should render loader in button when loading', () => {
   const { getByTestId } = render(
-    <Button testId='button' htmlInputProps={{}} loading={true}>
+    <Button
+      testId='button'
+      loaderTestId='buttonsLoader'
+      htmlInputProps={{}}
+      loading={true}
+    >
       button
     </Button>
   );
