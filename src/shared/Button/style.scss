@@ -4,21 +4,36 @@ $padding-vertical: 5px;
 $padding-horizontal: 0.75rem;
 
 .button {
+  padding: $padding-vertical $padding-horizontal;
+  font-weight: variables.$bold;
+
+  cursor: pointer;
+  position: relative;
+
+  &--loading {
+    color: transparent !important;
+  }
+}
+
+.button--primary-contained {
   background-color: variables.$primary;
   border: none;
   border-radius: variables.$large;
-  padding: $padding-vertical $padding-horizontal;
-  font-weight: variables.$bold;
   color: variables.$text-on-primary;
-  cursor: pointer;
-  position: relative;
 
   &:active {
     background-color: lighten(variables.$primary, 15%);
   }
+}
 
-  &--loading {
-    color: variables.$primary;
+.button--secondary-contained {
+  background-color: variables.$secondary;
+  border: 1px solid variables.$border;
+  border-radius: variables.$large;
+  color: variables.$text-primary;
+
+  &:active {
+    color: lighten(variables.$text-primary, 50%);
   }
 }
 

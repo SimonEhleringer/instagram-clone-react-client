@@ -13,3 +13,7 @@ export interface PostResponseDto {
 export interface PostsResponseDto {
   posts: PostResponseDto[];
 }
+
+export interface RefreshTokenRequestDto {
+  refreshToken: string;
+}

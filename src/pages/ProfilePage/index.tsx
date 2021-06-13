@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { RouteComponentProps, useParams } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { UserResponseDto } from '../../api/meFollowed';
 import { PostResponseDto } from '../../api/sharedDtos';
 import { getUser } from '../../api/user';
@@ -11,6 +11,12 @@ import Avatar from '../../shared/Avatar';
 import './style.scss';
 import { Image, Transformation } from 'cloudinary-react';
 import { BsGrid3X3 } from 'react-icons/bs';
+import Loader from '../../shared/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReduxState } from '../../config/store';
+import Button, { ButtonType } from '../../shared/Button';
+import { requestLogout } from '../../api/authentication';
+import { initialState, setState } from '../../redux/authentication/slice';
 
 interface ProfileRouteParams {
   userId: string;
@@ -20,8 +26,21 @@ interface ProfileRouteParams {
 const ProfilePage: React.FC<RouteComponentProps<ProfileRouteParams>> = ({
   match,
 }) => {
+  const dispatch = useDispatch();
+
+  const { refreshToken, loggedInUserId } = useSelector(
+    (state: ReduxState) => state.authenticationState
+  );
+
+  if (!loggedInUserId) {
+    throw new Error('User is not logged in.');
+  }
+
   const [user, setUser] = useState<UserResponseDto | undefined>(undefined);
   const [posts, setPosts] = useState<PostResponseDto[] | undefined>(undefined);
+  const [isLogoutButtonLoading, setIsLogoutButtonLoading] = useState(false);
+
+  const isLoggedInUsersProfile = loggedInUserId === user?.userId;
 
   useEffect(() => {
     getUser(match.params.userId).then((value) => setUser(value.data));
@@ -30,9 +49,21 @@ const ProfilePage: React.FC<RouteComponentProps<ProfileRouteParams>> = ({
     );
   }, [match.params.userId]);
 
+  const handleLogoutButtonClick = async () => {
+    setIsLogoutButtonLoading(true);
+
+    await requestLogout({ refreshToken });
+
+    dispatch(setState(initialState));
+
+    setIsLogoutButtonLoading(false);
+  };
+
   return (
     <AppLayout>
-      {user && posts && (
+      {!user || !posts ? (
+        <Loader />
+      ) : (
         <div className='profile-page'>
           <div className='profile-page__content-wrapper'>
             <div className='profile-page__profile-information'>
@@ -46,6 +77,20 @@ const ProfilePage: React.FC<RouteComponentProps<ProfileRouteParams>> = ({
               <div className='profile-page__profile-details'>
                 <div className='profile-page__username-detail'>
                   <h2 className='profile-page__username'>{user.username}</h2>
+
+                  {isLoggedInUsersProfile ? (
+                    <Button
+                      loading={isLogoutButtonLoading}
+                      type={ButtonType.SecondaryContained}
+                      htmlInputProps={{
+                        onClick: handleLogoutButtonClick,
+                      }}
+                    >
+                      Abmelden
+                    </Button>
+                  ) : (
+                    <div>test2</div>
+                  )}
                 </div>
 
                 <div className='profile-page__posts-and-followers-detail'>
@@ -71,7 +116,7 @@ const ProfilePage: React.FC<RouteComponentProps<ProfileRouteParams>> = ({
                   <Image publicId={post.publicImageId}>
                     <Transformation
                       aspectRatio='1:1'
-                      crop='scale'
+                      crop='lfill'
                       width={300}
                     />
                   </Image>

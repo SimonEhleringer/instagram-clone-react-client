@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import authenticationApi from '../config/authenticationApi';
+import { RefreshTokenRequestDto } from './sharedDtos';
 
 export const requestRegister = async (request: RegisterRequest) => {
   const response: AxiosResponse<AccessAndRefreshTokenResponse> =
@@ -15,6 +16,11 @@ export const requestLogin = async (request: LoginRequest) => {
     await authenticationApi.post('login', { ...request });
 
   return response;
+};
+
+// TODO: Add test
+export const requestLogout = async (request: RefreshTokenRequestDto) => {
+  return await authenticationApi.post('logout', request);
 };
 
 // requests

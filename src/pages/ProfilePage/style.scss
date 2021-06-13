@@ -35,9 +35,15 @@
   }
 }
 
+.profile-page__username-detail {
+  display: flex;
+  align-items: center;
+}
+
 .profile-page__username {
   font-size: 200%;
   font-weight: variables.$light;
+  margin-right: 1.5rem;
 }
 
 .profile-page__full-name {
