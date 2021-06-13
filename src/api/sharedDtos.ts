@@ -9,3 +9,7 @@ export interface PostResponseDto {
   text: string;
   creationTime: Date;
 }
+
+export interface PostsResponseDto {
+  posts: PostResponseDto[];
+}

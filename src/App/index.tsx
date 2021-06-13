@@ -9,6 +9,7 @@ import SuggestionsPage from '../pages/SuggestionsPage';
 import ProtectedRoute from '../shared/ProtectedRoute';
 import { CloudinaryContext } from 'cloudinary-react';
 import NewPostPage from '../pages/NewPostPage';
+import ProfilePage from '../pages/ProfilePage';
 
 // TODO: Suggestions: Show some text when no suggestions are there
 // TODO: Maybe add padding scss variable?
@@ -26,6 +27,7 @@ const App = () => {
             component={SuggestionsPage}
           />
           <ProtectedRoute path='/new-post' component={NewPostPage} />
+          <ProtectedRoute path='/profile/:userId' component={ProfilePage} />
         </Switch>
       </BrowserRouter>
     </CloudinaryContext>

@@ -1,0 +1,86 @@
+@use 'variables';
+@use 'mixins';
+
+.profile-page {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-page__content-wrapper {
+  // background-color: red;
+  width: 100%;
+  max-width: variables.$tablet;
+  padding: 2rem 1.5rem;
+}
+
+.profile-page__profile-information {
+  display: flex;
+}
+
+.profile-page__profile-image {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-page__profile-details {
+  flex-grow: 4;
+
+  > * {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.profile-page__username {
+  font-size: 200%;
+  font-weight: variables.$light;
+}
+
+.profile-page__full-name {
+  font-size: 115%;
+  font-weight: variables.$bold;
+}
+
+.profile-page__separator {
+  border-top: 1px solid variables.$border;
+  margin-top: 3rem;
+  height: calc(4rem - 1px);
+  display: flex;
+  justify-content: center;
+}
+
+.profile-page__separator-text {
+  border-top: 1px solid variables.$text-primary;
+  height: calc(4rem - 1px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-1px);
+}
+
+.profile-page__separator-text-span {
+  margin-left: 0.5rem;
+  font-size: 85%;
+  font-weight: variables.$bold;
+  letter-spacing: 1px;
+}
+
+.profile-page__posts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-gap: 2rem;
+
+  @include mixins.mobile {
+    grid-gap: 0.25rem;
+  }
+}
+
+.profile-page__post {
+  img {
+    width: 100%;
+  }
+}
