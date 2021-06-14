@@ -33,6 +33,12 @@ const Header: React.FC<HeaderProps> = () => {
             <HeaderLink
               Icon={BsHouseDoor}
               ActiveIcon={BsHouseDoorFill}
+              to='/profile/154e7c0e-cd46-4de7-a440-58904edc3ff0'
+            />
+
+            <HeaderLink
+              Icon={BsHouseDoor}
+              ActiveIcon={BsHouseDoorFill}
               to='/'
             />
 
