@@ -1,0 +1,9 @@
+@use 'variables';
+
+.stat {
+  font-size: 115%;
+}
+
+.stat__number {
+  font-weight: variables.$bold;
+}

@@ -1,0 +1,49 @@
+@use 'variables';
+@use 'mixins';
+
+.profile-posts__heading-wrapper {
+  border-top: 1px solid variables.$border;
+  margin-top: 3rem;
+  height: calc(4rem - 1px);
+  display: flex;
+  justify-content: center;
+}
+
+.profile-posts__heading {
+  border-top: 1px solid variables.$text-primary;
+  height: calc(4rem - 1px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-1px);
+}
+
+.profile-posts__heading-text {
+  margin-left: 0.5rem;
+  font-size: 85%;
+  font-weight: variables.$bold;
+  letter-spacing: 1px;
+}
+
+.profile-posts__no-posts-placeholder {
+  padding: 4rem;
+  font-size: 200%;
+  font-weight: variables.$light;
+  text-align: center;
+}
+
+.profile-posts__posts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-gap: 2rem;
+
+  @include mixins.mobile {
+    grid-gap: 0.25rem;
+  }
+}
+
+.profile-posts__post {
+  img {
+    width: 100%;
+  }
+}

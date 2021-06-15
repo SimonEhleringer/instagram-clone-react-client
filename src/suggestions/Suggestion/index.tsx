@@ -35,7 +35,7 @@ const Suggestion: React.FC<SuggestionProps> = ({ suggestion }) => {
       {/* TODO: Change route for link */}
       <div className='suggestion__user-information'>
         <Link
-          to={`/profile/${userId}`}
+          to={`/profiles/${userId}`}
           className='suggestion__username'
           data-testid='suggestionUsername'
         >

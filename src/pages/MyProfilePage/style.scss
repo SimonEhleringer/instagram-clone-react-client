@@ -1,0 +1,14 @@
+@use 'variables';
+@use 'mixins';
+
+.profile-page {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-page__content-wrapper {
+  // background-color: red;
+  width: 100%;
+  max-width: variables.$tablet;
+  padding: 2rem 1.5rem;
+}

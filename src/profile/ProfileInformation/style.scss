@@ -1,0 +1,51 @@
+@use 'variables';
+
+.profile-information {
+  display: flex;
+}
+
+.profile-information__image {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-information__details {
+  flex-grow: 4;
+
+  > * {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.profile-information__username-and-button {
+  display: flex;
+  align-items: center;
+}
+
+.profile-information__username {
+  font-size: 200%;
+  font-weight: variables.$light;
+  margin-right: 1.5rem;
+}
+
+.profile-information__stats {
+  display: flex;
+
+  > * {
+    margin-right: 3rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.profile-information__full-name {
+  font-size: 115%;
+  font-weight: variables.$bold;
+}

@@ -13,16 +13,10 @@ import {
 } from 'react-icons/bs';
 import HeaderLink from './HeaderLink';
 import AddNewPostLink from './AddNewPostLink';
-import { useSelector } from 'react-redux';
-import { ReduxState } from '../../config/store';
 
 interface HeaderProps {}
 // TODO: Add tests (Maybe add tests with integration for App component)
 const Header: React.FC<HeaderProps> = () => {
-  const loggedInUserId = useSelector(
-    (state: ReduxState) => state.authenticationState.loggedInUserId
-  );
-
   return (
     <div className='header__page-padding'>
       <div className='header'>
@@ -33,7 +27,7 @@ const Header: React.FC<HeaderProps> = () => {
             <HeaderLink
               Icon={BsHouseDoor}
               ActiveIcon={BsHouseDoorFill}
-              to='/profile/154e7c0e-cd46-4de7-a440-58904edc3ff0'
+              to='/profiles/154e7c0e-cd46-4de7-a440-58904edc3ff0'
             />
 
             <HeaderLink
@@ -52,7 +46,7 @@ const Header: React.FC<HeaderProps> = () => {
             <HeaderLink
               Icon={BsPerson}
               ActiveIcon={BsPersonFill}
-              to={`/profile/${loggedInUserId}`}
+              to='/profiles/me'
             />
           </div>
         </div>
