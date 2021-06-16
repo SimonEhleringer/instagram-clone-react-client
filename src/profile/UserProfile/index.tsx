@@ -14,7 +14,7 @@ export interface UserProfileProps {
   followers: UserResponseDto[];
   followed: UserResponseDto[];
   loggedInUsersFollowed: UserResponseDto[];
-  loadLoggedInUsersFollowed: () => void;
+  reloadUserInformation: () => void;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
@@ -23,28 +23,31 @@ const UserProfile: React.FC<UserProfileProps> = ({
   posts,
   followers,
   followed,
-  loadLoggedInUsersFollowed,
+  reloadUserInformation: loadLoggedInUsersFollowed,
 }) => {
-  const [isButtonLoading, setIsButtonLoading] = useState(false);
+  const [isFollowButtonLoading, setIsFollowButtonLoading] = useState(false);
+  const [isUnfollowButtonLoading, setIsUnfollowButtonLoading] = useState(false);
 
   const handleFollowButtonClick = async () => {
-    setIsButtonLoading(true);
+    setIsFollowButtonLoading(true);
+    setIsUnfollowButtonLoading(false);
 
     await addFollow(user.userId);
 
     await loadLoggedInUsersFollowed();
 
-    setIsButtonLoading(false);
+    // setIsFollowButtonLoading(false);
   };
 
   const handleUnfollowButtonClick = async () => {
-    setIsButtonLoading(true);
+    setIsUnfollowButtonLoading(true);
+    setIsFollowButtonLoading(false);
 
     await deleteFollow(user.userId);
 
     await loadLoggedInUsersFollowed();
 
-    setIsButtonLoading(false);
+    // setIsUnfollowButtonLoading(false);
   };
 
   const renderButton = () => {
@@ -56,7 +59,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
       <>
         {doesLoggedInUserFollowUser ? (
           <Button
-            loading={isButtonLoading}
+            loading={isUnfollowButtonLoading}
             htmlInputProps={{
               onClick: handleUnfollowButtonClick,
             }}
@@ -66,7 +69,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
           </Button>
         ) : (
           <Button
-            loading={isButtonLoading}
+            loading={isFollowButtonLoading}
             htmlInputProps={{
               onClick: handleFollowButtonClick,
             }}

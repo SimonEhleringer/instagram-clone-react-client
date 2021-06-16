@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useCallback } from 'react';
 import { useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import {
@@ -17,22 +18,27 @@ interface UserProfilePageParams {
 const UserProfilePage: React.FC<RouteComponentProps<UserProfilePageParams>> = ({
   match,
 }) => {
-  const { user, posts, followers, followed } = useFetchProfileInformation(
-    match.params.userId
-  );
+  const { user, posts, followers, followed, reloadProfileInformation } =
+    useFetchProfileInformation(match.params.userId);
 
   const [loggedInUsersFollowed, setLoggedInUsersFollowed] =
     useState<UserResponseDto[] | undefined>(undefined);
 
-  const loadLoggedInUsersFollowed = () => {
+  const loadLoggedInUsersFollowed = useCallback(() => {
     getLoggedInUsersFollowed().then((val) =>
       setLoggedInUsersFollowed(val.data.followed)
     );
+  }, []);
+
+  const reloadUserInformation = () => {
+    reloadProfileInformation();
+
+    loadLoggedInUsersFollowed();
   };
 
   useEffect(() => {
     loadLoggedInUsersFollowed();
-  });
+  }, [loadLoggedInUsersFollowed]);
 
   return (
     <AppLayout>
@@ -48,7 +54,7 @@ const UserProfilePage: React.FC<RouteComponentProps<UserProfilePageParams>> = ({
               followers={followers}
               followed={followed}
               loggedInUsersFollowed={loggedInUsersFollowed}
-              loadLoggedInUsersFollowed={loadLoggedInUsersFollowed}
+              reloadUserInformation={reloadUserInformation}
             />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { UserResponseDto } from '../api/meFollowed';
 import { PostResponseDto } from '../api/sharedDtos';
 import { getUser } from '../api/user';
@@ -14,7 +14,7 @@ export const useFetchProfileInformation = (userId: string) => {
   const [followers, setFollowers] =
     useState<UserResponseDto[] | undefined>(undefined);
 
-  useEffect(() => {
+  const reloadProfileInformation = useCallback(() => {
     getUser(userId).then((value) => setUser(value.data));
     getUsersPosts(userId).then((value) => setPosts(value.data.posts));
     getUsersFollowers(userId).then((value) =>
@@ -23,5 +23,15 @@ export const useFetchProfileInformation = (userId: string) => {
     getUsersFollowed(userId).then((value) => setFollowed(value.data.followed));
   }, [userId]);
 
-  return { user, posts, followed, followers };
+  useEffect(() => {
+    reloadProfileInformation();
+  }, [reloadProfileInformation]);
+
+  return {
+    user,
+    posts,
+    followed,
+    followers,
+    reloadProfileInformation,
+  };
 };
