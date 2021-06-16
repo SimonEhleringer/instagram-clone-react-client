@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './style.scss';
 import instagramLogo from '../../assets/images/logo.png';
 import {
   BsHouseDoor,
   BsHouseDoorFill,
   BsHeart,
-  BsPlusCircle,
   BsPerson,
-  BsPlusCircleFill,
   BsHeartFill,
   BsPersonFill,
 } from 'react-icons/bs';
@@ -24,12 +22,6 @@ const Header: React.FC<HeaderProps> = () => {
           <img className='header__logo' src={instagramLogo} alt='Instagram' />
 
           <div className='header__links'>
-            <HeaderLink
-              Icon={BsHouseDoor}
-              ActiveIcon={BsHouseDoorFill}
-              to='/profiles/154e7c0e-cd46-4de7-a440-58904edc3ff0'
-            />
-
             <HeaderLink
               Icon={BsHouseDoor}
               ActiveIcon={BsHouseDoorFill}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { UserResponseDto } from '../../api/meFollowed';
 import { PostResponseDto } from '../../api/sharedDtos';
 import Profile from '../Profile';

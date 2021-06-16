@@ -1,14 +1,17 @@
 @use 'variables';
 @use 'mixins';
 
-.profile-page {
+.normal-page-layout {
   display: flex;
   justify-content: center;
 }
 
-.profile-page__content-wrapper {
-  // background-color: red;
+.normal-page-layout__content-wrapper {
   width: 100%;
   max-width: variables.$tablet;
   padding: 2rem 1.5rem;
+
+  @include mixins.mobile {
+    padding: 0;
+  }
 }

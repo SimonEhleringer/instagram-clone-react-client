@@ -1,16 +1,31 @@
 @use 'variables';
+@use 'mixins';
 
 .profile-information {
   display: flex;
+
+  @include mixins.mobile {
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 1rem 0 1rem;
+  }
 }
 
 .profile-information__image {
   flex-grow: 1;
   display: flex;
   justify-content: center;
+  margin-right: 1.5rem;
+
+  @include mixins.mobile {
+    margin-bottom: 1.5rem;
+    margin-right: 0;
+  }
 }
 
 .profile-information__details {
+  display: flex;
+  flex-direction: column;
   flex-grow: 4;
 
   > * {
@@ -20,17 +35,26 @@
       margin-bottom: 0;
     }
   }
+
+  @include mixins.mobile {
+    align-items: center;
+    width: 100%;
+  }
 }
 
 .profile-information__username-and-button {
   display: flex;
   align-items: center;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .profile-information__username {
   font-size: 200%;
   font-weight: variables.$light;
   margin-right: 1.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .profile-information__stats {
@@ -43,9 +67,23 @@
       margin-right: 0;
     }
   }
+
+  @include mixins.mobile {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    > * {
+      margin-right: 0;
+    }
+  }
 }
 
 .profile-information__full-name {
   font-size: 115%;
   font-weight: variables.$bold;
+  max-width: 100%;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }

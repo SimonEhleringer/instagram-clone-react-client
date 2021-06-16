@@ -1,12 +1,9 @@
-import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { addFollow, deleteFollow, UserResponseDto } from '../../api/meFollowed';
 import { PostResponseDto } from '../../api/sharedDtos';
 import Profile from '../Profile';
 import Button, { ButtonType } from '../../shared/Button';
 import { useState } from 'react';
-import { useEffect } from 'react';
-import { useRef } from 'react';
 
 export interface UserProfileProps {
   user: UserResponseDto;
@@ -35,8 +32,6 @@ const UserProfile: React.FC<UserProfileProps> = ({
     await addFollow(user.userId);
 
     await loadLoggedInUsersFollowed();
-
-    // setIsFollowButtonLoading(false);
   };
 
   const handleUnfollowButtonClick = async () => {
@@ -46,8 +41,6 @@ const UserProfile: React.FC<UserProfileProps> = ({
     await deleteFollow(user.userId);
 
     await loadLoggedInUsersFollowed();
-
-    // setIsUnfollowButtonLoading(false);
   };
 
   const renderButton = () => {

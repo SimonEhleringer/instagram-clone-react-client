@@ -1,7 +1,14 @@
 @use 'variables';
+@use 'mixins';
 
 .stat {
   font-size: 115%;
+
+  @include mixins.mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .stat__number {

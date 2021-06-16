@@ -10,6 +10,7 @@ import { useFetchProfileInformation } from '../../profile/useFetchProfileInforma
 import UserProfile from '../../profile/UserProfile';
 import AppLayout from '../../shared/AppLayout';
 import Loader from '../../shared/Loader';
+import NormalPageLayout from '../../shared/NormalPageLayout';
 
 interface UserProfilePageParams {
   userId: string;
@@ -45,19 +46,16 @@ const UserProfilePage: React.FC<RouteComponentProps<UserProfilePageParams>> = ({
       {!user || !posts || !followers || !followed || !loggedInUsersFollowed ? (
         <Loader />
       ) : (
-        // TODO: Make component for layout (is same as in myProfilePage)
-        <div className='profile-page'>
-          <div className='profile-page__content-wrapper'>
-            <UserProfile
-              user={user}
-              posts={posts}
-              followers={followers}
-              followed={followed}
-              loggedInUsersFollowed={loggedInUsersFollowed}
-              reloadUserInformation={reloadUserInformation}
-            />
-          </div>
-        </div>
+        <NormalPageLayout>
+          <UserProfile
+            user={user}
+            posts={posts}
+            followers={followers}
+            followed={followed}
+            loggedInUsersFollowed={loggedInUsersFollowed}
+            reloadUserInformation={reloadUserInformation}
+          />
+        </NormalPageLayout>
       )}
     </AppLayout>
   );
