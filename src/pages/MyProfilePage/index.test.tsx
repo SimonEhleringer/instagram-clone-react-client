@@ -23,6 +23,7 @@ import { initialState } from '../../redux/authentication/slice';
 import userEvent from '@testing-library/user-event';
 import { buildLogoutUrl } from '../../api/authentication';
 import ProtectedRoute from '../../shared/ProtectedRoute';
+import { buildMyProfilePath, loginPath, myProfilePath } from '../../routes';
 
 jest.mock('../../config/resourceApi.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
@@ -55,10 +56,13 @@ it('should load data and show profile when data is loaded and no errors occurred
     loggedInUserId: user.userId,
   };
 
-  renderWithProviders(<Route path='/profiles/me' component={MyProfilePage} />, {
-    route: '/profiles/me',
-    store: store,
-  });
+  renderWithProviders(
+    <Route path={myProfilePath} component={MyProfilePage} />,
+    {
+      route: buildMyProfilePath(),
+      store: store,
+    }
+  );
 
   expect(screen.getByTestId('loader')).toBeInTheDocument();
 
@@ -118,11 +122,11 @@ it('should log user out when log out button is pressed', async () => {
 
   renderWithProviders(
     <>
-      <ProtectedRoute path='/profiles/me' component={MyProfilePage} />
-      <Route path='/login' component={MockedLoginPage} />
+      <ProtectedRoute path={myProfilePath} component={MyProfilePage} />
+      <Route path={loginPath} component={MockedLoginPage} />
     </>,
     {
-      route: '/profiles/me',
+      route: buildMyProfilePath(),
       store: store,
     }
   );

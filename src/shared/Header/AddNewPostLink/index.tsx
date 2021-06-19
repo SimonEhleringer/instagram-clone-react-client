@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 import HeaderLink from '../HeaderLink';
 import './style.scss';
 import { setSelectedImageDataUri } from '../../../redux/newPost/slice';
+import { buildNewPostPath } from '../../../routes';
 
 const AddNewPostLink = () => {
   const history = useHistory();
@@ -34,7 +35,7 @@ const AddNewPostLink = () => {
 
       dispatch(setSelectedImageDataUri(reader.result));
 
-      history.push('/new-post');
+      history.push(buildNewPostPath());
     };
   };
 
@@ -53,7 +54,7 @@ const AddNewPostLink = () => {
       <HeaderLink
         Icon={BsPlusCircle}
         ActiveIcon={BsPlusCircleFill}
-        to='/new-post'
+        to={buildNewPostPath()}
       />
     </button>
   );

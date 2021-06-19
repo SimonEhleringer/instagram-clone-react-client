@@ -7,6 +7,7 @@ import './style.scss';
 import { useDispatch } from 'react-redux';
 import { loadSuggestions } from '../../redux/suggestions/slice';
 import userEvent from '@testing-library/user-event';
+import { buildUserProfilePath } from '../../routes';
 
 export interface SuggestionProps {
   suggestion: UserResponseDto;
@@ -40,7 +41,7 @@ const Suggestion: React.FC<SuggestionProps> = ({ suggestion }) => {
       {/* TODO: Change route for link */}
       <div className='suggestion__user-information'>
         <Link
-          to={`/profiles/${userId}`}
+          to={buildUserProfilePath(userId)}
           className='suggestion__username'
           data-testid='suggestionUsername'
         >

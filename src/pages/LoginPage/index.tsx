@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { RouteComponentProps } from "react-router";
-import { LoginRequest, requestLogin } from "../../api/authentication";
-import { setState } from "../../redux/authentication/slice";
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from "../../authentication/utils";
-import AuthenticationForm from "../../authentication/AuthenticationForm";
-import AuthenticationPageLayout from "../../authentication/AuthenticationPageLayout";
-import { getErrorsArrayFromError } from "../../shared/error";
-import Input from "../../shared/Input";
+import React, { useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { LoginRequest, requestLogin } from '../../api/authentication';
+import { setState } from '../../redux/authentication/slice';
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
+import AuthenticationForm from '../../authentication/AuthenticationForm';
+import AuthenticationPageLayout from '../../authentication/AuthenticationPageLayout';
+import { getErrorsArrayFromError } from '../../shared/error';
+import Input from '../../shared/Input';
+import { buildRegisterPath } from '../../routes';
 
 // TODO: Add tests for loading
 const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
@@ -29,7 +30,7 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
         );
 
       dispatch(setState(authenticationState));
-      history.push("/");
+      history.push('/');
     } catch (e) {
       setErrors(getErrorsArrayFromError(e));
     }
@@ -41,24 +42,24 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
     <AuthenticationPageLayout>
       <AuthenticationForm
         onSubmit={handleSubmit(onSubmit)}
-        submitButtonCaption="Anmelden"
-        redirectText="Du hast kein Konto?"
-        redirectButtonText="Registrieren"
-        redirectTo="/register"
+        submitButtonCaption='Anmelden'
+        redirectText='Du hast kein Konto?'
+        redirectButtonText='Registrieren'
+        redirectTo={buildRegisterPath()}
         errors={errors}
         loading={loading}
       >
         <Controller
           control={control}
-          name="usernameOrEmail"
+          name='usernameOrEmail'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId="usernameOrEmailInput"
+              testId='usernameOrEmailInput'
               htmlInputProps={{
-                placeholder: "Benutzername oder E-Mail Adresse",
+                placeholder: 'Benutzername oder E-Mail Adresse',
                 onChange: onChange,
                 onBlur: onBlur,
-                value: value || "",
+                value: value || '',
               }}
               innerRef={ref}
             />
@@ -67,16 +68,16 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
 
         <Controller
           control={control}
-          name="password"
+          name='password'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId="passwordInput"
+              testId='passwordInput'
               htmlInputProps={{
-                placeholder: "Passwort",
+                placeholder: 'Passwort',
                 onChange: onChange,
                 onBlur: onBlur,
-                value: value || "",
-                type: "password",
+                value: value || '',
+                type: 'password',
               }}
               innerRef={ref}
             />

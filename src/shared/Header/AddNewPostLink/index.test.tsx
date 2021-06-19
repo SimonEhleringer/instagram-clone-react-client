@@ -6,6 +6,7 @@ import { Router, Route, BrowserRouter } from 'react-router-dom';
 import AddNewPostLink from '.';
 import { configureStore } from '../../../config/store';
 import NewPostForm from '../../../newPost/NewPostForm';
+import { newPostPath } from '../../../routes';
 
 it('should open file inputs dialog when button is pressed', () => {
   const { getByRole, getByTestId } = render(
@@ -34,7 +35,7 @@ it('should load file, redirect to new post page and show image preview when file
     <Provider store={store}>
       <BrowserRouter>
         <AddNewPostLink />
-        <Route path='/new-post' component={NewPostForm} />
+        <Route path={newPostPath} component={NewPostForm} />
       </BrowserRouter>
     </Provider>
   );

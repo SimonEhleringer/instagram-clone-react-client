@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { RouteComponentProps } from "react-router";
-import { RegisterRequest, requestRegister } from "../../api/authentication";
-import { setState } from "../../redux/authentication/slice";
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from "../../authentication/utils";
-import AuthenticationForm from "../../authentication/AuthenticationForm";
-import AuthenticationPageLayout from "../../authentication/AuthenticationPageLayout";
-import { getErrorsArrayFromError } from "../../shared/error";
-import Input from "../../shared/Input";
+import React, { useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { RegisterRequest, requestRegister } from '../../api/authentication';
+import { setState } from '../../redux/authentication/slice';
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
+import AuthenticationForm from '../../authentication/AuthenticationForm';
+import AuthenticationPageLayout from '../../authentication/AuthenticationPageLayout';
+import { getErrorsArrayFromError } from '../../shared/error';
+import Input from '../../shared/Input';
+import { buildLoginPath } from '../../routes';
 
 // TODO: Add tests for loading
 const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
@@ -28,7 +29,7 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
       );
 
       dispatch(setState(payload));
-      history.push("/");
+      history.push('/');
     } catch (e) {
       setErrors(getErrorsArrayFromError(e));
     }
@@ -40,25 +41,25 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
     <AuthenticationPageLayout>
       <AuthenticationForm
         onSubmit={handleSubmit(onSubmit)}
-        subTitle="Registriere dich, um die Fotos und Videos deiner Freunde zu sehen."
-        submitButtonCaption="Registrieren"
-        redirectText="Du hast ein Konto?"
-        redirectButtonText="Melde dich an"
-        redirectTo="/login"
+        subTitle='Registriere dich, um die Fotos und Videos deiner Freunde zu sehen.'
+        submitButtonCaption='Registrieren'
+        redirectText='Du hast ein Konto?'
+        redirectButtonText='Melde dich an'
+        redirectTo={buildLoginPath()}
         errors={errors}
         loading={loading}
       >
         <Controller
           control={control}
-          name="email"
+          name='email'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId={"emailInput"}
+              testId={'emailInput'}
               htmlInputProps={{
-                placeholder: "E-Mail Adresse",
+                placeholder: 'E-Mail Adresse',
                 onChange: onChange,
                 onBlur: onBlur,
-                value: value || "",
+                value: value || '',
               }}
               innerRef={ref}
             />
@@ -67,15 +68,15 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
 
         <Controller
           control={control}
-          name="fullName"
+          name='fullName'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId="fullNameInput"
+              testId='fullNameInput'
               htmlInputProps={{
-                placeholder: "Vollständiger Name",
+                placeholder: 'Vollständiger Name',
                 onChange: onChange,
                 onBlur: onBlur,
-                value: value || "",
+                value: value || '',
               }}
               innerRef={ref}
             />
@@ -84,15 +85,15 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
 
         <Controller
           control={control}
-          name="username"
+          name='username'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId="usernameInput"
+              testId='usernameInput'
               htmlInputProps={{
-                placeholder: "Benutzername",
+                placeholder: 'Benutzername',
                 onChange: onChange,
                 onBlur: onBlur,
-                value: value || "",
+                value: value || '',
               }}
               innerRef={ref}
             />
@@ -101,16 +102,16 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
 
         <Controller
           control={control}
-          name="password"
+          name='password'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId="passwordInput"
+              testId='passwordInput'
               htmlInputProps={{
-                type: "password",
-                placeholder: "Passwort",
+                type: 'password',
+                placeholder: 'Passwort',
                 onChange: onChange,
                 onBlur: onBlur,
-                value: value || "",
+                value: value || '',
               }}
               innerRef={ref}
             />

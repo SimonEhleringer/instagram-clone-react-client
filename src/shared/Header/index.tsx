@@ -11,6 +11,11 @@ import {
 } from 'react-icons/bs';
 import HeaderLink from './HeaderLink';
 import AddNewPostLink from './AddNewPostLink';
+import {
+  buildIndexPath,
+  buildMyProfilePath,
+  buildSuggestionsPath,
+} from '../../routes';
 
 interface HeaderProps {}
 // TODO: Add tests (Maybe add tests with integration for App component)
@@ -25,7 +30,7 @@ const Header: React.FC<HeaderProps> = () => {
             <HeaderLink
               Icon={BsHouseDoor}
               ActiveIcon={BsHouseDoorFill}
-              to='/'
+              to={buildIndexPath()}
             />
 
             <AddNewPostLink />
@@ -33,12 +38,12 @@ const Header: React.FC<HeaderProps> = () => {
             <HeaderLink
               Icon={BsHeart}
               ActiveIcon={BsHeartFill}
-              to='/suggestions'
+              to={buildSuggestionsPath()}
             />
             <HeaderLink
               Icon={BsPerson}
               ActiveIcon={BsPersonFill}
-              to='/profiles/me'
+              to={buildMyProfilePath()}
             />
           </div>
         </div>

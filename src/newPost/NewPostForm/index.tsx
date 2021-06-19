@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { addPost } from '../../api/mePost';
 import { PostRequestDto } from '../../api/sharedDtos';
 import { ReduxState } from '../../config/store';
+import { buildIndexPath } from '../../routes';
 import Button from '../../shared/Button';
 import { getErrorsArrayFromError } from '../../shared/error';
 import Errors from '../../shared/Errors';
@@ -32,7 +33,7 @@ const NewPostForm = () => {
     try {
       await addPost(request);
 
-      history.push('/');
+      history.push(buildIndexPath());
     } catch (e) {
       setErrors(getErrorsArrayFromError(e));
     }

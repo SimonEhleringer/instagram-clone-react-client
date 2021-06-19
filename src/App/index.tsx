@@ -11,6 +11,15 @@ import { CloudinaryContext } from 'cloudinary-react';
 import NewPostPage from '../pages/NewPostPage';
 import MyProfilePage from '../pages/MyProfilePage';
 import UserProfilePage from '../pages/UserProfilePage';
+import {
+  indexPath,
+  loginPath,
+  myProfilePath,
+  newPostPath,
+  registerPath,
+  suggestionsPath,
+  userProfilePath,
+} from '../routes';
 
 // TODO: Suggestions: Show some text when no suggestions are there
 // TODO: Maybe add padding scss variable?
@@ -21,20 +30,17 @@ const App = () => {
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
       <BrowserRouter>
         <Switch>
-          <ProtectedRoute path='/' exact component={IndexPage} />
-          <Route path='/register' component={RegisterPage} />
-          <Route path='/login' component={LoginPage} />
+          <ProtectedRoute path={indexPath} exact component={IndexPage} />
+          <Route path={registerPath} component={RegisterPage} />
+          <Route path={loginPath} component={LoginPage} />
           <ProtectedRoute
-            path='/suggestions'
+            path={suggestionsPath}
             exact
             component={SuggestionsPage}
           />
-          <ProtectedRoute path='/new-post' component={NewPostPage} />
-          <ProtectedRoute path='/profiles/me' component={MyProfilePage} />
-          <ProtectedRoute
-            path='/profiles/:userId'
-            component={UserProfilePage}
-          />
+          <ProtectedRoute path={newPostPath} component={NewPostPage} />
+          <ProtectedRoute path={myProfilePath} component={MyProfilePage} />
+          <ProtectedRoute path={userProfilePath} component={UserProfilePage} />
         </Switch>
       </BrowserRouter>
     </CloudinaryContext>
