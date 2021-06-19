@@ -15,6 +15,7 @@ import UserProfilePage from '../pages/UserProfilePage';
 // TODO: Suggestions: Show some text when no suggestions are there
 // TODO: Maybe add padding scss variable?
 // TODO: Delete unnessecary API endpoints
+// TODO: Rename files to kebap-case
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
