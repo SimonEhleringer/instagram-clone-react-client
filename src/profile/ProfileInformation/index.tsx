@@ -26,6 +26,7 @@ const ProfileInformation: React.FC<ProfileInformationProps> = ({
         <Avatar
           widthInPx={150}
           publicProfileImageId={user.publicProfileImageId}
+          username={user.username}
         />
       </div>
 

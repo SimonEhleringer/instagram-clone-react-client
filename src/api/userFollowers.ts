@@ -4,8 +4,12 @@ import { UserResponseDto } from './meFollowed';
 // Add tests
 export const getUsersFollowers = async (userId: string) => {
   return await resourceApi.get<FollowersResponseDto>(
-    `/users/${userId}/followers`
+    buildGetUsersFollowersUrl(userId)
   );
+};
+
+export const buildGetUsersFollowersUrl = (userId: string) => {
+  return `/users/${userId}/followers`;
 };
 
 export interface FollowersResponseDto {

@@ -19,9 +19,11 @@ export const requestLogin = async (request: LoginRequest) => {
 };
 
 // TODO: Add test
-export const requestLogout = async (request: RefreshTokenRequestDto) => {
-  return await authenticationApi.post('logout', request);
+export const logout = async (request: RefreshTokenRequestDto) => {
+  return await authenticationApi.post(buildLogoutUrl(), request);
 };
+
+export const buildLogoutUrl = () => 'logout';
 
 // requests
 export type RegisterRequest = {

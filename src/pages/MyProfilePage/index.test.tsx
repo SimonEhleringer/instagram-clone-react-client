@@ -1,90 +1,246 @@
-import { render, waitFor } from "@testing-library/react";
-import { AxiosResponse } from "axios";
-import { createMemoryHistory } from "history";
-import { Provider } from "react-redux";
-import { Router, Route } from "react-router-dom";
-import MyProfilePage from ".";
-import { UserResponseDto } from "../../api/meFollowed";
-import { PostsResponseDto } from "../../api/sharedDtos";
-import { getUser } from "../../api/user";
-import { getUsersFollowed } from "../../api/userFollowed";
-import { getUsersFollowers } from "../../api/userFollowers";
-import { getUsersPosts } from "../../api/userPost";
-import { configureStore } from "../../config/store";
-import { getEmptyAxiosResponse, renderWithProviders } from "../../testUtils";
+import { UserResponseDto } from '../../api/meFollowed';
+import resourceApi from '../../config/resourceApi';
+import faker from 'faker';
+import { PostResponseDto, PostsResponseDto } from '../../api/sharedDtos';
+import {
+  buildGetUsersFollowersUrl,
+  FollowersResponseDto,
+} from '../../api/userFollowers';
+import {
+  buildGetUsersFollowedUrl,
+  FollowedResponseDto,
+} from '../../api/userFollowed';
+import { AxiosResponse } from 'axios';
+import { when } from 'jest-when';
+import { buildGetUserUrl } from '../../api/user';
+import { buildGetUsersPostsUrl } from '../../api/userPost';
+import { render } from 'react-dom';
+import { renderWithProviders } from '../../testUtils';
+import MyProfilePage from '.';
+import { Route } from 'react-router-dom';
+import { getByAltText, screen, waitFor } from '@testing-library/react';
+import { configureStore } from '../../config/store';
+import {
+  AuthenticationState,
+  initialState,
+} from '../../redux/authentication/slice';
+import userEvent from '@testing-library/user-event';
+import { buildLogoutUrl } from '../../api/authentication';
+import ProtectedRoute from '../../shared/ProtectedRoute';
+import { Switch } from 'react-router-dom';
 
-jest.mock("../../api/user.ts");
-const getUserMock = getUser as jest.MockedFunction<typeof getUser>;
+// TODO: Add to utils
+jest.mock('../../config/resourceApi.ts');
+const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
 
-jest.mock("../../api/userPost.ts");
-const getUsersPostsMock = getUsersPosts as jest.MockedFunction<
-  typeof getUsersPosts
->;
+jest.mock('cloudinary-react', () => cloudinaryMockObj);
 
-jest.mock("../../api/userFollowers.ts");
-const getUsersFollowersMock = getUsersFollowers as jest.MockedFunction<
-  typeof getUsersFollowers
->;
+const cloudinaryMockObj = {
+  Image: (props: any) => <img alt={props.alt} />,
+  Transformation: () => null,
+};
 
-jest.mock("../../api/userFollowed.ts");
-const getUsersFollowedMock = getUsersFollowed as jest.MockedFunction<
-  typeof getUsersFollowed
->;
+it('should load data and show profile when data is loaded and no errors occurred', async () => {
+  const user = buildUserResponseDto();
+  const posts = buildPostsResponseDto();
+  const followers = buildFollowersResponseDto();
+  const followed = buildFollowedResponseDto();
 
-it("nix", () => {
-  expect(true).toBe(true);
+  when(mockedResourceApi.get)
+    .calledWith(buildGetUserUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(user))
+    .calledWith(buildGetUsersPostsUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(posts))
+    .calledWith(buildGetUsersFollowersUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
+    .calledWith(buildGetUsersFollowedUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(followed));
+
+  const store = configureStore();
+
+  store.getState().authenticationState = {
+    ...initialState,
+    loggedInUserId: user.userId,
+  };
+
+  renderWithProviders(<Route path='/profiles/me' component={MyProfilePage} />, {
+    route: '/profiles/me',
+    store: store,
+  });
+
+  expect(screen.getByTestId('loader')).toBeInTheDocument();
+
+  await waitFor(() =>
+    expect(
+      screen.getByRole('heading', { name: user.username })
+    ).toBeInTheDocument()
+  );
+  expect(
+    screen.getByRole('heading', { name: user.fullName })
+  ).toBeInTheDocument();
+
+  expect(screen.getByText(/Beiträge/)).toHaveTextContent(
+    `${posts.posts.length} Beiträge`
+  );
+  expect(screen.getByText(/Abonennten/)).toHaveTextContent(
+    `${followers.followers.length} Abonennten`
+  );
+  expect(screen.getByText(/abonniert/)).toHaveTextContent(
+    `${followed.followed.length} abonniert`
+  );
+
+  expect(
+    screen.getByAltText(`${user.username}-profile-image`)
+  ).toBeInTheDocument();
+
+  posts.posts.forEach((post) => {
+    expect(screen.getByAltText(post.publicImageId)).toBeInTheDocument();
+  });
 });
 
-// it('should show loader when screen is rendered', async () => {
-//   const username = 'username';
-//   const fullName = 'fullName';
+it('should log user out when log out button is pressed', async () => {
+  const user = buildUserResponseDto();
+  const posts = buildPostsResponseDto();
+  const followers = buildFollowersResponseDto();
+  const followed = buildFollowedResponseDto();
 
-//   getUserMock.mockResolvedValueOnce(
-//     getEmptyAxiosResponse({
-//       userId: 'userId',
-//       username,
-//       fullName,
-//     })
-//   );
+  when(mockedResourceApi.get)
+    .calledWith(buildGetUserUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(user))
+    .calledWith(buildGetUsersPostsUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(posts))
+    .calledWith(buildGetUsersFollowersUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
+    .calledWith(buildGetUsersFollowedUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(followed));
 
-//   getUsersPostsMock.mockResolvedValueOnce(getEmptyAxiosResponse({ posts: [] }));
+  when(mockedResourceApi.post)
+    .calledWith(buildLogoutUrl())
+    .mockResolvedValueOnce(buildAxiosResponseWithoutData());
 
-//   getUsersFollowersMock.mockResolvedValueOnce(
-//     getEmptyAxiosResponse({
-//       followers: [
-//         {
-//           fullName: '',
-//           userId: '',
-//           username: '',
-//         },
-//       ],
-//     })
-//   );
+  const store = configureStore();
 
-//   getUsersFollowedMock.mockResolvedValueOnce(
-//     getEmptyAxiosResponse({
-//       followed: [
-//         {
-//           fullName: '',
-//           username: '',
-//           userId: '',
-//         },
-//       ],
-//     })
-//   );
+  store.getState().authenticationState = buildAuthenticationState({
+    loggedInUserId: user.userId,
+  });
 
-//   const { getByTestId, queryByTestId, getByText } = renderWithProviders(
-//     <Route path='/' component={MyProfilePage} />,
-//     {}
-//   );
+  renderWithProviders(
+    <>
+      <ProtectedRoute path='/profiles/me' component={MyProfilePage} />
+      <Route path='/login' component={MockedLoginPage} />
+    </>,
+    {
+      route: '/profiles/me',
+      store: store,
+    }
+  );
 
-//   expect(getByTestId('loader')).toBeInTheDocument();
+  const logoutButton = await screen.findByRole('button', { name: /Abmelden/ });
 
-//   await waitFor(() => expect(queryByTestId('loader')).not.toBeInTheDocument());
+  userEvent.click(logoutButton);
 
-//   expect(getByText(username)).toBeInTheDocument();
-//   expect(getByText(fullName)).toBeInTheDocument();
-//   expect(getByText('0 Posts')).toBeInTheDocument();
-//   expect(getByText('1 Abonnenten')).toBeInTheDocument();
-//   expect(getByText('1 abonniert')).toBeInTheDocument();
-// });
+  await waitFor(() =>
+    expect(screen.getByTestId('login-page')).toBeInTheDocument()
+  );
+});
+
+// TODO: Add to utils
+const buildAuthenticationState = (
+  overrides?: Partial<AuthenticationState>
+): AuthenticationState => {
+  return {
+    accessToken: faker.datatype.string(),
+    refreshToken: faker.datatype.uuid(),
+    loggedInUserId: faker.datatype.uuid(),
+    ...overrides,
+  };
+};
+
+const buildUserResponseDto = (
+  overrides?: Partial<UserResponseDto>
+): UserResponseDto => {
+  return {
+    userId: faker.datatype.uuid(),
+    fullName: faker.name.findName(),
+    username: faker.internet.userName(),
+    publicProfileImageId: faker.datatype.string(),
+    ...overrides,
+  };
+};
+
+const buildPostsResponseDto = (
+  overrides?: Partial<PostsResponseDto>
+): PostsResponseDto => {
+  return {
+    posts: makeArray(buildPostResponseDto),
+    ...overrides,
+  };
+};
+
+const buildPostResponseDto = (
+  overrides?: Partial<PostResponseDto>
+): PostResponseDto => {
+  return {
+    postId: faker.datatype.number(),
+    text: faker.lorem.paragraph(),
+    publicImageId: faker.datatype.string(),
+    creationTime: faker.date.recent(),
+    ...overrides,
+  };
+};
+
+const buildFollowersResponseDto = (
+  overrides?: Partial<FollowersResponseDto>
+): FollowersResponseDto => {
+  return {
+    followers: makeArray(buildUserResponseDto),
+    ...overrides,
+  };
+};
+
+const buildFollowedResponseDto = (
+  overrides?: Partial<FollowedResponseDto>
+): FollowedResponseDto => {
+  return {
+    followed: makeArray(buildUserResponseDto),
+    ...overrides,
+  };
+};
+
+const buildAxiosResponseWithData = <T extends unknown>(
+  data: T,
+  overrides?: Partial<AxiosResponse<T>>
+): AxiosResponse<T> => {
+  return {
+    config: {},
+    data: data,
+    headers: [],
+    status: 200,
+    statusText: 'OK',
+    ...overrides,
+  };
+};
+
+const buildAxiosResponseWithoutData = (
+  overrides?: Partial<AxiosResponse>
+): AxiosResponse => {
+  return {
+    config: {},
+    data: {},
+    headers: [],
+    status: 200,
+    statusText: 'OK',
+    ...overrides,
+  };
+};
+
+const makeArray = <T extends unknown>(
+  generator: () => T,
+  length: number = faker.datatype.number(10)
+): T[] => {
+  return Array.from({ length }, generator);
+};
+
+const MockedLoginPage: React.FC = () => (
+  <div data-testid='login-page'>Login page</div>
+);

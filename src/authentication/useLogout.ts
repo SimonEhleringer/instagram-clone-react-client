@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestLogout } from '../api/authentication';
+import { logout as requestLogout } from '../api/authentication';
 import { ReduxState } from '../config/store';
 import { initialState, setState } from '../redux/authentication/slice';
 
@@ -18,8 +18,6 @@ export const useLogout = () => {
     await requestLogout({ refreshToken });
 
     dispatch(setState(initialState));
-
-    setIsLoggingOut(false);
   };
 
   return { isLoggingOut, logout };

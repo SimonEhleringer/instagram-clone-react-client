@@ -25,8 +25,8 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
       ) : (
         <div className='profile-posts__posts'>
           {posts.map((post) => (
-            <div className='profile-posts__post'>
-              <Image publicId={post.publicImageId}>
+            <div key={post.postId} className='profile-posts__post'>
+              <Image publicId={post.publicImageId} alt={post.publicImageId}>
                 <Transformation aspectRatio='1:1' crop='lfill' width={300} />
               </Image>
             </div>

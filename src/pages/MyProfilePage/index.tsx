@@ -10,6 +10,7 @@ import { useFetchProfileInformation } from '../../profile/useFetchProfileInforma
 import NormalPageLayout from '../../shared/NormalPageLayout';
 
 // TODO: Add tests
+// TODO: Add errors -> Errors to loader
 const MyProfilePage: React.FC<RouteComponentProps> = () => {
   const { loggedInUserId } = useSelector(
     (state: ReduxState) => state.authenticationState

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import './style.scss';
 import { useDispatch } from 'react-redux';
 import { loadSuggestions } from '../../redux/suggestions/slice';
+import userEvent from '@testing-library/user-event';
 
 export interface SuggestionProps {
   suggestion: UserResponseDto;
@@ -30,7 +31,11 @@ const Suggestion: React.FC<SuggestionProps> = ({ suggestion }) => {
 
   return (
     <div className='suggestion'>
-      <Avatar publicProfileImageId={publicProfileImageId} widthInPx={44} />
+      <Avatar
+        publicProfileImageId={publicProfileImageId}
+        widthInPx={44}
+        username={username}
+      />
 
       {/* TODO: Change route for link */}
       <div className='suggestion__user-information'>

@@ -2,27 +2,22 @@ import { render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { configureStore } from './config/store';
-import { Router } from 'react-router';
+import { Router, MemoryRouter } from 'react-router';
 import { AxiosResponse } from 'axios';
 
 export const renderWithProviders = (
   ui: JSX.Element,
-  {
-    store = configureStore(),
-    route = '/',
-    history = createMemoryHistory({ initialEntries: [route] }),
-  }
+  { store = configureStore(), route = '/' }
 ) => {
   const renderResult = render(
     <Provider store={store}>
-      <Router history={history}>{ui}</Router>
+      <MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
     </Provider>
   );
 
   return {
     ...renderResult,
     store,
-    history,
   };
 };
 
