@@ -1,3 +1,3 @@
 export * from './renderers';
 export * from './builders';
-export * from './page-mocks';
+export * from './page-and-route-mocks';

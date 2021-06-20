@@ -30,10 +30,11 @@ export const buildUserResponseDto = (
 };
 
 export const buildPostsResponseDto = (
-  overrides?: Partial<PostsResponseDto>
+  overrides?: Partial<PostsResponseDto>,
+  postsLength?: number
 ): PostsResponseDto => {
   return {
-    posts: makeArray(buildPostResponseDto),
+    posts: makeArray(buildPostResponseDto, postsLength),
     ...overrides,
   };
 };
@@ -51,19 +52,21 @@ export const buildPostResponseDto = (
 };
 
 export const buildFollowersResponseDto = (
-  overrides?: Partial<FollowersResponseDto>
+  overrides?: Partial<FollowersResponseDto>,
+  followersLength?: number
 ): FollowersResponseDto => {
   return {
-    followers: makeArray(buildUserResponseDto),
+    followers: makeArray(buildUserResponseDto, followersLength),
     ...overrides,
   };
 };
 
 export const buildFollowedResponseDto = (
-  overrides?: Partial<FollowedResponseDto>
+  overrides?: Partial<FollowedResponseDto>,
+  followedLength?: number
 ): FollowedResponseDto => {
   return {
-    followed: makeArray(buildUserResponseDto),
+    followed: makeArray(buildUserResponseDto, followedLength),
     ...overrides,
   };
 };
@@ -97,7 +100,7 @@ export const buildAxiosResponseWithoutData = (
 
 export const makeArray = <T extends unknown>(
   generator: () => T,
-  length: number = faker.datatype.number(10)
+  length: number = faker.datatype.number({ min: 1, max: 10 })
 ): T[] => {
   return Array.from({ length }, generator);
 };

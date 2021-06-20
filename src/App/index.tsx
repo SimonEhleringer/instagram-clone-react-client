@@ -1,24 +1,15 @@
 import React from 'react';
-
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import IndexPage from '../pages/IndexPage';
-import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import './style.scss';
-import SuggestionsPage from '../pages/SuggestionsPage';
-import ProtectedRoute from '../shared/ProtectedRoute';
 import { CloudinaryContext } from 'cloudinary-react';
-import NewPostPage from '../pages/NewPostPage';
-import MyProfilePage from '../pages/MyProfilePage';
-import UserProfilePage from '../pages/UserProfilePage';
 import {
-  indexPath,
-  loginPath,
-  myProfilePath,
-  newPostPath,
-  registerPath,
-  suggestionsPath,
-  userProfilePath,
+  renderIndexRoute,
+  renderLoginRoute,
+  renderMyProfileRoute,
+  renderNewPostRoute,
+  renderRegisterRoute,
+  renderSuggestionsRoute,
+  renderUserProfileRoute,
 } from '../routes';
 
 // TODO: Suggestions: Show some text when no suggestions are there
@@ -30,17 +21,13 @@ const App = () => {
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
       <BrowserRouter>
         <Switch>
-          <ProtectedRoute path={indexPath} exact component={IndexPage} />
-          <Route path={registerPath} component={RegisterPage} />
-          <Route path={loginPath} component={LoginPage} />
-          <ProtectedRoute
-            path={suggestionsPath}
-            exact
-            component={SuggestionsPage}
-          />
-          <ProtectedRoute path={newPostPath} component={NewPostPage} />
-          <ProtectedRoute path={myProfilePath} component={MyProfilePage} />
-          <ProtectedRoute path={userProfilePath} component={UserProfilePage} />
+          {renderIndexRoute()}
+          {renderRegisterRoute()}
+          {renderLoginRoute()}
+          {renderSuggestionsRoute()}
+          {renderNewPostRoute()}
+          {renderMyProfileRoute()}
+          {renderUserProfileRoute()}
         </Switch>
       </BrowserRouter>
     </CloudinaryContext>

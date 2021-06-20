@@ -5,7 +5,6 @@ import { when } from 'jest-when';
 import { buildGetUserUrl } from '../../api/user';
 import { buildGetUsersPostsUrl } from '../../api/userPost';
 import {
-  MockedLoginPage,
   buildAuthenticationState,
   buildAxiosResponseWithData,
   buildAxiosResponseWithoutData,
@@ -14,16 +13,14 @@ import {
   buildPostsResponseDto,
   buildUserResponseDto,
   renderWithProviders,
+  renderMockedLoginRoute,
 } from '../../test-utils';
-import MyProfilePage from '.';
-import { Route } from 'react-router-dom';
 import { screen, waitFor } from '@testing-library/react';
 import { configureStore } from '../../config/store';
 import { initialState } from '../../redux/authentication/slice';
 import userEvent from '@testing-library/user-event';
 import { buildLogoutUrl } from '../../api/authentication';
-import ProtectedRoute from '../../shared/ProtectedRoute';
-import { buildMyProfilePath, loginPath, myProfilePath } from '../../routes';
+import { buildMyProfilePath, renderMyProfileRoute } from '../../routes';
 
 jest.mock('../../config/resourceApi.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
@@ -56,13 +53,10 @@ it('should load data and show profile when data is loaded and no errors occurred
     loggedInUserId: user.userId,
   };
 
-  renderWithProviders(
-    <Route path={myProfilePath} component={MyProfilePage} />,
-    {
-      route: buildMyProfilePath(),
-      store: store,
-    }
-  );
+  renderWithProviders(renderMyProfileRoute(), {
+    route: buildMyProfilePath(),
+    store: store,
+  });
 
   expect(screen.getByTestId('loader')).toBeInTheDocument();
 
@@ -94,6 +88,41 @@ it('should load data and show profile when data is loaded and no errors occurred
   });
 });
 
+it('should show placeholder text for posts when user has no posts', async () => {
+  const user = buildUserResponseDto();
+  const posts = buildPostsResponseDto({}, 0);
+  const followers = buildFollowersResponseDto();
+  const followed = buildFollowedResponseDto();
+
+  when(mockedResourceApi.get)
+    .calledWith(buildGetUserUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(user))
+    .calledWith(buildGetUsersPostsUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(posts))
+    .calledWith(buildGetUsersFollowersUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
+    .calledWith(buildGetUsersFollowedUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(followed));
+
+  const store = configureStore();
+
+  store.getState().authenticationState = {
+    ...initialState,
+    loggedInUserId: user.userId,
+  };
+
+  renderWithProviders(renderMyProfileRoute(), {
+    route: buildMyProfilePath(),
+    store: store,
+  });
+
+  await waitFor(() =>
+    expect(
+      screen.getByText('Noch keine Beiträge vorhanden')
+    ).toBeInTheDocument()
+  );
+});
+
 it('should log user out when log out button is pressed', async () => {
   const user = buildUserResponseDto();
   const posts = buildPostsResponseDto();
@@ -122,8 +151,8 @@ it('should log user out when log out button is pressed', async () => {
 
   renderWithProviders(
     <>
-      <ProtectedRoute path={myProfilePath} component={MyProfilePage} />
-      <Route path={loginPath} component={MockedLoginPage} />
+      {renderMyProfileRoute()}
+      {renderMockedLoginRoute()}
     </>,
     {
       route: buildMyProfilePath(),
