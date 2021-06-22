@@ -1,0 +1,27 @@
+@use 'variables';
+
+.profile-preview {
+  display: flex;
+  align-items: center;
+}
+
+.profile-preview__user-information {
+  flex-grow: 1;
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  white-space: nowrap;
+  overflow: hidden;
+
+  * {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+.profile-preview__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

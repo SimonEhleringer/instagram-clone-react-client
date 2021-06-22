@@ -1,0 +1,6 @@
+@use 'variables';
+
+.user-profile-preview__full-name {
+  color: variables.$text-secondary;
+  font-size: 85%;
+}

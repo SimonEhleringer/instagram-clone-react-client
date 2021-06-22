@@ -5,6 +5,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 export enum ButtonType {
   PrimaryContained,
   SecondaryContained,
+  PrimaryText,
 }
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
   type?: ButtonType;
 }
 
+// TODO: Maybe add tests for new button type
 const Button: React.FC<Props> = ({
   htmlInputProps,
   testId,
@@ -39,6 +41,7 @@ const Button: React.FC<Props> = ({
           ? 'button--secondary-contained'
           : ' '
       }
+      ${type === ButtonType.PrimaryText ? 'button--primary-text' : ' '}
       ${loading ? 'button--loading' : ' '}`}
     >
       {loading && (
@@ -47,7 +50,8 @@ const Button: React.FC<Props> = ({
             size='1em'
             color={`
           ${type === ButtonType.PrimaryContained ? 'white' : ''}
-          ${type === ButtonType.SecondaryContained ? 'black' : ''}`}
+          ${type === ButtonType.SecondaryContained ? 'black' : ''}
+          ${type === ButtonType.PrimaryText ? 'black' : ''}`}
           />
         </div>
       )}

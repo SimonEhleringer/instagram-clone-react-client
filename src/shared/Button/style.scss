@@ -37,6 +37,18 @@ $padding-horizontal: 0.75rem;
   }
 }
 
+.button--primary-text {
+  background-color: transparent;
+  color: variables.$primary;
+  border: none;
+  font-size: 85%;
+  padding: 0;
+
+  .button__spinner {
+    transform: none;
+  }
+}
+
 .button__spinner {
   position: absolute;
   transform: translate(-$padding-horizontal, -$padding-vertical);

@@ -1,0 +1,49 @@
+@use 'variables';
+
+.index-page__vertical-split-layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+.index-page__feed {
+  margin-right: 2rem;
+}
+
+.index-page__right {
+  flex-grow: 1;
+}
+
+.index-page__right-fixed {
+  position: sticky;
+  right: 0;
+}
+
+.index-page__my-profile-preview {
+  padding: 1.5rem 0;
+}
+
+.index-page__suggestions-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.index-page__suggestions-heading-text {
+  color: variables.$text-secondary;
+  font-weight: variables.$bold;
+}
+
+.index-page__all-suggestions-link {
+  color: variables.$text-primary;
+  font-size: 85%;
+  text-decoration: none;
+  font-weight: variables.$bold;
+}
+
+.index-page__suggestions {
+  padding: 0.5rem 0;
+}
+
+.index-page__suggestion {
+  padding: 0.5rem 0;
+}

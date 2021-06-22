@@ -1,0 +1,5 @@
+@use 'variables';
+
+.my-profile-preview__full-name {
+  color: variables.$text-secondary;
+}
