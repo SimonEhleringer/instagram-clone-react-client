@@ -1,0 +1,5 @@
+@use 'variables';
+
+.feed {
+  max-width: variables.$mobile;
+}

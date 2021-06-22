@@ -1,0 +1,11 @@
+@use 'variables';
+
+.user-profile-link {
+  font-weight: variables.$bold;
+  color: variables.$text-primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

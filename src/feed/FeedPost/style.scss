@@ -1,0 +1,31 @@
+@use 'variables';
+
+.feed-post {
+  border: 1px solid variables.$border;
+  border-radius: variables.$medium;
+  background-color: variables.$background;
+  margin-bottom: 1rem;
+}
+
+.feed-post__top {
+  padding: 1rem;
+  border-bottom: 1px solid variables.$border;
+  display: flex;
+  align-items: center;
+
+  > * {
+    margin-right: 1rem;
+  }
+}
+
+.feed-post__middle {
+  display: flex;
+
+  img {
+    width: 100%;
+  }
+}
+
+.feed-post__bottom {
+  padding: 1rem;
+}
