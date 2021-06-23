@@ -17,10 +17,12 @@ import { Link } from 'react-router-dom';
 import { buildSuggestionsPath } from '../../routes';
 
 const IndexPage = () => {
-  const [feed, setFeed] =
-    useState<FeedPostResponseDto[] | undefined>(undefined);
-  const [suggestions, setSuggestions] =
-    useState<UserResponseDto[] | undefined>(undefined);
+  const [feed, setFeed] = useState<FeedPostResponseDto[] | undefined>(
+    undefined
+  );
+  const [suggestions, setSuggestions] = useState<UserResponseDto[] | undefined>(
+    undefined
+  );
   const [me, setMe] = useState<UserResponseDto | undefined>(undefined);
 
   useEffect(() => {
@@ -51,34 +53,32 @@ const IndexPage = () => {
               <Feed feed={feed} />
             </div>
             <div className='index-page__right'>
-              <div className='index-page__right-fixed'>
-                <div className='index-page__my-profile-preview'>
-                  <MyProfilePreview me={me} avatarSizeInPx={56} />
-                </div>
+              <div className='index-page__my-profile-preview'>
+                <MyProfilePreview me={me} avatarSizeInPx={56} />
+              </div>
 
-                <div className='index-page__suggestions-heading'>
-                  <span className='index-page__suggestions-heading-text'>
-                    Vorschläge für dich
-                  </span>
-                  <Link
-                    className='index-page__all-suggestions-link'
-                    to={buildSuggestionsPath()}
-                  >
-                    Alle ansehen
-                  </Link>
-                </div>
-                <div className='index-page__suggestions'>
-                  {suggestions.map((suggestion) => (
-                    <div className='index-page__suggestion'>
-                      <UserProfilePreview
-                        user={suggestion}
-                        avatarSizeInPx={32}
-                        buttonType={ButtonType.PrimaryText}
-                        handleSuccessfulSubscription={loadSuggestions}
-                      />
-                    </div>
-                  ))}
-                </div>
+              <div className='index-page__suggestions-heading'>
+                <span className='index-page__suggestions-heading-text'>
+                  Vorschläge für dich
+                </span>
+                <Link
+                  className='index-page__all-suggestions-link'
+                  to={buildSuggestionsPath()}
+                >
+                  Alle ansehen
+                </Link>
+              </div>
+              <div className='index-page__suggestions'>
+                {suggestions.map((suggestion) => (
+                  <div className='index-page__suggestion'>
+                    <UserProfilePreview
+                      user={suggestion}
+                      avatarSizeInPx={32}
+                      buttonType={ButtonType.PrimaryText}
+                      handleSuccessfulSubscription={loadSuggestions}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>

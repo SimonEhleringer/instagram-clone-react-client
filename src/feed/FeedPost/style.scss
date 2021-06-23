@@ -1,10 +1,16 @@
 @use 'variables';
+@use 'mixins';
 
 .feed-post {
   border: 1px solid variables.$border;
   border-radius: variables.$medium;
   background-color: variables.$background;
   margin-bottom: 1rem;
+
+  @include mixins.mobile {
+    border: none;
+    margin-bottom: 0;
+  }
 }
 
 .feed-post__top {
@@ -28,4 +34,8 @@
 
 .feed-post__bottom {
   padding: 1rem;
+
+  @include mixins.mobile {
+    //border-bottom: 1px solid variables.$border;
+  }
 }

@@ -1,21 +1,29 @@
 @use 'variables';
+@use 'mixins';
 
 .index-page__vertical-split-layout {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
 }
 
 .index-page__feed {
   margin-right: 2rem;
+
+  @include mixins.tablet {
+    width: 600px;
+    margin-right: 0;
+  }
 }
 
 .index-page__right {
-  flex-grow: 1;
-}
-
-.index-page__right-fixed {
+  min-width: 300px;
   position: sticky;
-  right: 0;
+  top: 6rem;
+
+  @include mixins.tablet {
+    display: none;
+  }
 }
 
 .index-page__my-profile-preview {

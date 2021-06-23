@@ -24,7 +24,7 @@ const FeedPost: React.FC<FeedPostProps> = ({ feedPost }) => {
 
       <div className='feed-post__middle'>
         <Image publicId={feedPost.publicImageId} alt={feedPost.publicImageId}>
-          <Transformation crop='lfill' width={600} />
+          <Transformation crop='lfill' width={800} />
         </Image>
       </div>
 
