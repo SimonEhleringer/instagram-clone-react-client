@@ -4,12 +4,15 @@ import Avatar from '../../shared/Avatar';
 import { Image, Transformation } from 'cloudinary-react';
 import './style.scss';
 import UserProfileLink from '../../shared/UserProfileLink';
+import { calculateDisplayTime } from '../../shared/time';
 
 export interface FeedPostProps {
   feedPost: FeedPostResponseDto;
 }
 
 const FeedPost: React.FC<FeedPostProps> = ({ feedPost }) => {
+  console.log(calculateDisplayTime(feedPost.creationTime));
+
   return (
     <div className='feed-post'>
       <div className='feed-post__top'>

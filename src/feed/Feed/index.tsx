@@ -9,10 +9,6 @@ export interface FeedProps {
 }
 
 const Feed: React.FC<FeedProps> = ({ feed }) => {
-  useEffect(() => {
-    console.log(feed);
-  }, []);
-
   return (
     <div className='feed'>
       {feed.map((feedPost) => (
