@@ -16,6 +16,9 @@ import {
 // TODO: Maybe add padding scss variable?
 // TODO: Delete unnessecary API endpoints
 // TODO: Rename files to kebap-case
+// TODO: Add interceptor for refreshing token
+// TODO: Show errors when errors in api call apeared
+// TODO: add way to change profile image
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>

@@ -1,0 +1,27 @@
+@use 'variables';
+
+.side-bar-suggestions__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.side-bar-suggestions__heading-text {
+  color: variables.$text-secondary;
+  font-weight: variables.$bold;
+}
+
+.side-bar-suggestions__all-suggestions-link {
+  color: variables.$text-primary;
+  font-size: 85%;
+  text-decoration: none;
+  font-weight: variables.$bold;
+}
+
+.side-bar-suggestions__suggestions {
+  padding: 0.5rem 0;
+}
+
+.side-bar-suggestions__suggestion {
+  padding: 0.5rem 0;
+}

@@ -5,6 +5,8 @@ import { UserResponseDto } from '../api/meFollowed';
 import { PostResponseDto, PostsResponseDto } from '../api/sharedDtos';
 import { FollowersResponseDto } from '../api/userFollowers';
 import { FollowedResponseDto } from '../api/userFollowed';
+import { FeedPostResponseDto, FeedResponseDto } from '../api/meFeed';
+import { SuggestionsResponseDto } from '../api/meSuggestions';
 
 export const buildAuthenticationState = (
   overrides?: Partial<AuthenticationState>
@@ -51,6 +53,29 @@ export const buildPostResponseDto = (
   };
 };
 
+export const buildFeedResponseDto = (
+  overrides?: Partial<FeedResponseDto>,
+  feedLength?: number
+): FeedResponseDto => {
+  return {
+    feed: makeArray(buildFeedPostResponseDto, feedLength),
+    ...overrides,
+  };
+};
+
+export const buildFeedPostResponseDto = (
+  overrides?: Partial<FeedPostResponseDto>
+): FeedPostResponseDto => {
+  return {
+    postId: faker.datatype.number(),
+    text: faker.lorem.paragraph(),
+    publicImageId: faker.datatype.string(),
+    creationTime: faker.date.recent(),
+    creator: buildUserResponseDto(),
+    ...overrides,
+  };
+};
+
 export const buildFollowersResponseDto = (
   overrides?: Partial<FollowersResponseDto>,
   followersLength?: number
@@ -67,6 +92,16 @@ export const buildFollowedResponseDto = (
 ): FollowedResponseDto => {
   return {
     followed: makeArray(buildUserResponseDto, followedLength),
+    ...overrides,
+  };
+};
+
+export const buildSuggestionsResponseDto = (
+  overrides?: Partial<SuggestionsResponseDto>,
+  suggestionsLength?: number
+): SuggestionsResponseDto => {
+  return {
+    suggestions: makeArray(buildUserResponseDto, suggestionsLength),
     ...overrides,
   };
 };

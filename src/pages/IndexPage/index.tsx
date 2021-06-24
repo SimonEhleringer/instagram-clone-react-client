@@ -5,17 +5,15 @@ import { UserResponseDto } from '../../api/meFollowed';
 import { getSuggestions } from '../../api/meSuggestions';
 import Feed from '../../feed/Feed';
 import AppLayout from '../../shared/AppLayout';
-import { ButtonType } from '../../shared/Button';
 import Loader from '../../shared/Loader';
 import NormalPageLayout from '../../shared/NormalPageLayout';
-import UserProfilePreview from '../../shared/ProfilePreview/UserProfilePreview';
 import './style.scss';
 import MyProfilePreview from '../../shared/ProfilePreview/MyProfilePreview';
-import { getEmitHelpers } from 'typescript';
 import { getMe } from '../../api/me';
-import { Link } from 'react-router-dom';
+import SideBarSuggestions from '../../suggestions/SideBarSuggestions';
+import VerticalSplitLayout from '../../shared/VerticalSplitLayout';
+import { Redirect } from 'react-router';
 import { buildSuggestionsPath } from '../../routes';
-import { calculateTimeDiffFromNow } from '../../shared/time';
 
 const IndexPage = () => {
   const [feed, setFeed] = useState<FeedPostResponseDto[] | undefined>(
@@ -42,48 +40,34 @@ const IndexPage = () => {
     setSuggestions(suggestions);
   };
 
-  // TODO: Handle what happens if no posts are available for feed
   return (
     <AppLayout>
       {!feed || !suggestions || !me ? (
         <Loader />
       ) : (
-        <NormalPageLayout>
-          <div className='index-page__vertical-split-layout'>
-            <div className='index-page__feed'>
-              <Feed feed={feed} />
-            </div>
-            <div className='index-page__right'>
-              <div className='index-page__my-profile-preview'>
-                <MyProfilePreview me={me} avatarSizeInPx={56} />
-              </div>
-
-              <div className='index-page__suggestions-heading'>
-                <span className='index-page__suggestions-heading-text'>
-                  Vorschläge für dich
-                </span>
-                <Link
-                  className='index-page__all-suggestions-link'
-                  to={buildSuggestionsPath()}
-                >
-                  Alle ansehen
-                </Link>
-              </div>
-              <div className='index-page__suggestions'>
-                {suggestions.map((suggestion) => (
-                  <div className='index-page__suggestion'>
-                    <UserProfilePreview
-                      user={suggestion}
-                      avatarSizeInPx={32}
-                      buttonType={ButtonType.PrimaryText}
-                      handleSuccessfulSubscription={loadSuggestions}
-                    />
+        <>
+          {feed.length === 0 ? (
+            <Redirect to={buildSuggestionsPath()} />
+          ) : (
+            <NormalPageLayout>
+              <VerticalSplitLayout>
+                <div className='index-page__feed'>
+                  <Feed feed={feed} />
+                </div>
+                <div className='index-page__right'>
+                  <div className='index-page__my-profile-preview'>
+                    <MyProfilePreview me={me} avatarSizeInPx={56} />
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </NormalPageLayout>
+
+                  <SideBarSuggestions
+                    loadSuggestions={loadSuggestions}
+                    suggestions={suggestions}
+                  />
+                </div>
+              </VerticalSplitLayout>
+            </NormalPageLayout>
+          )}
+        </>
       )}
     </AppLayout>
   );
