@@ -5,17 +5,17 @@
   border: 1px solid variables.$border;
   border-radius: variables.$medium;
   background-color: variables.$background;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 
   @include mixins.mobile {
     border: none;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
   }
 }
 
 .feed-post__top {
   padding: 1rem;
-  border-bottom: 1px solid variables.$border;
+  border-bottom: 1px solid variables.$border-light;
   display: flex;
   align-items: center;
 
@@ -34,8 +34,14 @@
 
 .feed-post__bottom {
   padding: 1rem;
+}
 
-  @include mixins.mobile {
-    //border-bottom: 1px solid variables.$border;
-  }
+.feed-post__caption {
+  margin-bottom: 0.5rem;
+}
+
+.feed-post__creation-time {
+  color: variables.$text-secondary;
+  text-transform: uppercase;
+  font-size: 70%;
 }
