@@ -15,7 +15,7 @@ import { getEmitHelpers } from 'typescript';
 import { getMe } from '../../api/me';
 import { Link } from 'react-router-dom';
 import { buildSuggestionsPath } from '../../routes';
-import { calculateDisplayTime } from '../../shared/time';
+import { calculateTimeDiffFromNow } from '../../shared/time';
 
 const IndexPage = () => {
   const [feed, setFeed] = useState<FeedPostResponseDto[] | undefined>(

@@ -20,8 +20,6 @@ const AddNewPostLink = () => {
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
 
-    console.log('im handleChange');
-
     if (!file) {
       return;
     }
