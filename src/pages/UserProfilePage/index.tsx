@@ -12,7 +12,7 @@ import AppLayout from '../../shared/AppLayout';
 import Loader from '../../shared/Loader';
 import NormalPageLayout from '../../shared/NormalPageLayout';
 
-interface UserProfilePageParams {
+export interface UserProfilePageParams {
   userId: string;
 }
 
@@ -22,8 +22,9 @@ const UserProfilePage: React.FC<RouteComponentProps<UserProfilePageParams>> = ({
   const { user, posts, followers, followed, reloadProfileInformation } =
     useFetchProfileInformation(match.params.userId);
 
-  const [loggedInUsersFollowed, setLoggedInUsersFollowed] =
-    useState<UserResponseDto[] | undefined>(undefined);
+  const [loggedInUsersFollowed, setLoggedInUsersFollowed] = useState<
+    UserResponseDto[] | undefined
+  >(undefined);
 
   const loadLoggedInUsersFollowed = useCallback(() => {
     getLoggedInUsersFollowed().then((val) =>

@@ -19,6 +19,7 @@ import {
 // TODO: Add interceptor for refreshing token
 // TODO: Show errors when errors in api call apeared
 // TODO: add way to change profile image
+// TODO: Fix all warnings
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>

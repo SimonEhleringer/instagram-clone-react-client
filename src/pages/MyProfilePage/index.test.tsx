@@ -25,6 +25,8 @@ import { buildMyProfilePath, renderMyProfileRoute } from '../../routes';
 jest.mock('../../config/resourceApi.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
 
+jest.mock('../../config/authenticationApi.ts');
+
 jest.mock(
   'cloudinary-react',
   () => require('../../test-utils/mock-objects/cloudinary').default
@@ -138,10 +140,6 @@ it('should log user out when log out button is pressed', async () => {
     .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
     .calledWith(buildGetUsersFollowedUrl(user.userId))
     .mockResolvedValueOnce(buildAxiosResponseWithData(followed));
-
-  when(mockedResourceApi.post)
-    .calledWith(buildLogoutUrl())
-    .mockResolvedValueOnce(buildAxiosResponseWithoutData());
 
   const store = configureStore();
 

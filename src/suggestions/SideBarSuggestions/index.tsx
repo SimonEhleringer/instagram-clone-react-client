@@ -30,7 +30,10 @@ const SideBarSuggestions: React.FC<SideBarSuggestionsProps> = ({
       </div>
       <div className='side-bar-suggestions__suggestions'>
         {suggestions.map((suggestion) => (
-          <div className='side-bar-suggestions__suggestion'>
+          <div
+            key={suggestion.userId}
+            className='side-bar-suggestions__suggestion'
+          >
             <UserProfilePreview
               user={suggestion}
               avatarSizeInPx={32}

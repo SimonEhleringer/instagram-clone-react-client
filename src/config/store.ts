@@ -26,6 +26,7 @@ export const configureStore = () => {
 };
 
 export type ReduxState = ReturnType<typeof reducer>;
+export type StoreType = ReturnType<typeof configureStore>;
 
 const applicationStore = configureStore();
 
