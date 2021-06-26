@@ -21,10 +21,19 @@ const slice = createSlice({
       state.refreshToken = refreshToken;
       state.loggedInUserId = loggedInUserId;
     },
+    setAccessAndRefreshToken(
+      state,
+      action: PayloadAction<{ accessToken: string; refreshToken: string }>
+    ) {
+      const { accessToken, refreshToken } = action.payload;
+
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+    },
   },
 });
 
-export const { setState } = slice.actions;
+export const { setState, setAccessAndRefreshToken } = slice.actions;
 export const authenticationReducer = slice.reducer;
 
 // types

@@ -25,6 +25,15 @@ export const logout = async (request: RefreshTokenRequestDto) => {
 
 export const buildLogoutUrl = () => 'logout';
 
+export const refresh = (request: RefreshTokenRequestDto) => {
+  return authenticationApi.post<AccessAndRefreshTokenResponse>(
+    buildRefreshUrl(),
+    request
+  );
+};
+
+export const buildRefreshUrl = () => '/refreshAccessToken';
+
 // requests
 export type RegisterRequest = {
   email: string;

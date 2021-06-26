@@ -17,7 +17,7 @@ const SuggestionsList: React.FC<SuggestionsListProps> = ({ suggestions }) => {
     <div className='suggestions-list'>
       {suggestions.map((suggestion, index) => {
         return (
-          <div className='suggestions-list__suggestion'>
+          <div key={suggestion.userId} className='suggestions-list__suggestion'>
             <UserProfilePreview
               key={index}
               user={suggestion}
