@@ -139,3 +139,7 @@ export const makeArray = <T extends unknown>(
 ): T[] => {
   return Array.from({ length }, generator);
 };
+
+export const buildMockedCloudinaryImageSource = (
+  publicProfileImageId: string
+) => `'https://mocked-cloudinary/${publicProfileImageId}`;

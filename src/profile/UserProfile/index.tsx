@@ -74,12 +74,15 @@ const UserProfile: React.FC<UserProfileProps> = ({
     );
   };
 
+  const renderAvatar = (avatar: JSX.Element) => <>{avatar}</>;
+
   return (
     <Profile
       user={user}
       posts={posts}
       followers={followers}
       followed={followed}
+      renderAvatar={renderAvatar}
       renderButton={renderButton}
     />
   );

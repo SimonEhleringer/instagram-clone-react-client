@@ -6,47 +6,28 @@ import HeaderLink from '../HeaderLink';
 import './style.scss';
 import { setSelectedImageDataUri } from '../../../redux/newPost/slice';
 import { buildNewPostPath } from '../../../routes';
+import { useReadFileFromEvent } from '../../hooks/useReadFileFromEvent';
+import { useHiddenImageInput } from '../../hooks/useHiddenImageInput';
+import InvisibleButton from '../../InvisibleButton';
 
 const AddNewPostLink = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { readFileFromEvent } = useReadFileFromEvent();
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { fileInput, pretendClickOnFileInput } = useHiddenImageInput(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      readFileFromEvent(e, (dataUri) => {
+        dispatch(setSelectedImageDataUri(dataUri));
 
-  const handleButtonClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-
-    if (!file) {
-      return;
+        history.push(buildNewPostPath());
+      });
     }
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      if (typeof reader.result !== 'string') {
-        return;
-      }
-
-      dispatch(setSelectedImageDataUri(reader.result));
-
-      history.push(buildNewPostPath());
-    };
-  };
+  );
 
   return (
-    <button onClick={handleButtonClick} className='add-new-post-link__button'>
-      <input
-        data-testid='fileInput'
-        ref={fileInputRef}
-        type='file'
-        accept='image/png, image/jpeg'
-        className='add-new-post-link__file-input'
-        onChange={handleFileInputChange}
-      />
+    <InvisibleButton onClick={() => pretendClickOnFileInput()}>
+      {fileInput}
 
       <div className='add-new-post-link__prevent-click' />
       <HeaderLink
@@ -54,7 +35,7 @@ const AddNewPostLink = () => {
         ActiveIcon={BsPlusCircleFill}
         to={buildNewPostPath()}
       />
-    </button>
+    </InvisibleButton>
   );
 };
 

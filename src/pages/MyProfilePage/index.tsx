@@ -16,9 +16,8 @@ const MyProfilePage: React.FC<RouteComponentProps> = () => {
     (state: ReduxState) => state.authenticationState
   );
 
-  const { user, posts, followers, followed } = useFetchProfileInformation(
-    loggedInUserId!
-  );
+  const { user, posts, followers, followed, reloadProfileInformation } =
+    useFetchProfileInformation(loggedInUserId!);
 
   return (
     <AppLayout>
@@ -31,6 +30,7 @@ const MyProfilePage: React.FC<RouteComponentProps> = () => {
             posts={posts}
             followers={followers}
             followed={followed}
+            reloadProfileInformation={reloadProfileInformation}
           />
         </NormalPageLayout>
       )}

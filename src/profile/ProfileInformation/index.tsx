@@ -10,6 +10,7 @@ interface ProfileInformationProps {
   posts: PostResponseDto[];
   followers: UserResponseDto[];
   followed: UserResponseDto[];
+  renderAvatar: (avatar: JSX.Element) => JSX.Element;
   renderButton: () => JSX.Element;
 }
 
@@ -18,16 +19,19 @@ const ProfileInformation: React.FC<ProfileInformationProps> = ({
   posts,
   followers,
   followed,
+  renderAvatar,
   renderButton,
 }) => {
   return (
     <div className='profile-information'>
       <div className='profile-information__image'>
-        <Avatar
-          widthInPx={150}
-          publicProfileImageId={user.publicProfileImageId}
-          username={user.username}
-        />
+        {renderAvatar(
+          <Avatar
+            widthInPx={150}
+            publicProfileImageId={user.publicProfileImageId}
+            username={user.username}
+          />
+        )}
       </div>
 
       <div className='profile-information__details'>

@@ -14,13 +14,20 @@ import {
   buildUserResponseDto,
   renderWithProviders,
   renderMockedLoginRoute,
+  buildMockedCloudinaryImageSource,
 } from '../../test-utils';
-import { screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { configureStore } from '../../config/store';
 import { initialState } from '../../redux/authentication/slice';
 import userEvent from '@testing-library/user-event';
-import { buildLogoutUrl } from '../../api/authentication';
+import faker from 'faker';
 import { buildMyProfilePath, renderMyProfileRoute } from '../../routes';
+import {
+  buildChangeProfileImageUrl,
+  ProfileImageRequestDto,
+} from '../../api/meProfileImage';
+import { UserResponseDto } from '../../api/meFollowed';
+import { buildGetMeUrl } from '../../api/me';
 
 jest.mock('../../config/resourceApi.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
@@ -165,4 +172,124 @@ it('should log user out when log out button is pressed', async () => {
   await waitFor(() =>
     expect(screen.getByTestId('login-page')).toBeInTheDocument()
   );
+});
+
+it('should pretent click on hidden input when profile image is pressed', () => {
+  const user = buildUserResponseDto();
+  const posts = buildPostsResponseDto();
+  const followers = buildFollowersResponseDto();
+  const followed = buildFollowedResponseDto();
+
+  when(mockedResourceApi.get)
+    .calledWith(buildGetUserUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(user))
+    .calledWith(buildGetUsersPostsUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(posts))
+    .calledWith(buildGetUsersFollowersUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
+    .calledWith(buildGetUsersFollowedUrl(user.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(followed));
+
+  const store = configureStore();
+
+  store.getState().authenticationState = {
+    ...initialState,
+    loggedInUserId: user.userId,
+  };
+
+  renderWithProviders(renderMyProfileRoute(), {
+    route: buildMyProfilePath(),
+    store: store,
+  });
+
+  const fileInputClick = jest.spyOn(
+    screen.getByTestId('hiddenFileInput'),
+    'click'
+  );
+
+  userEvent.click(screen.getByTestId('invisibleButton'));
+
+  expect(fileInputClick).toHaveBeenCalled();
+});
+
+it('should upload new profile image and show it when new image is selected', async () => {
+  const user = buildUserResponseDto();
+  const posts = buildPostsResponseDto();
+  const followers = buildFollowersResponseDto();
+  const followed = buildFollowedResponseDto();
+
+  when(mockedResourceApi.get)
+    .calledWith(buildGetUserUrl(user.userId))
+    .mockResolvedValue(buildAxiosResponseWithData(user))
+    .calledWith(buildGetUsersPostsUrl(user.userId))
+    .mockResolvedValue(buildAxiosResponseWithData(posts))
+    .calledWith(buildGetUsersFollowersUrl(user.userId))
+    .mockResolvedValue(buildAxiosResponseWithData(followers))
+    .calledWith(buildGetUsersFollowedUrl(user.userId))
+    .mockResolvedValue(buildAxiosResponseWithData(followed));
+
+  const store = configureStore();
+
+  store.getState().authenticationState = {
+    ...initialState,
+    loggedInUserId: user.userId,
+  };
+
+  renderWithProviders(renderMyProfileRoute(), {
+    route: buildMyProfilePath(),
+    store: store,
+  });
+
+  const imageBlob = 'imageDataUri';
+  const image = new File([imageBlob], 'image.png', { type: 'image/png' });
+  const imageDataUri = 'data:image/png;base64,aW1hZ2VEYXRhVXJp';
+
+  const newUser: UserResponseDto = {
+    ...user,
+    publicProfileImageId: faker.datatype.string(),
+  };
+
+  const profileImageRequestDto: ProfileImageRequestDto = {
+    imageDataUri,
+  };
+
+  mockedResourceApi.post.mockResolvedValue(buildAxiosResponseWithData(newUser));
+
+  // when(mockedResourceApi.post)
+  //   .calledWith(buildChangeProfileImageUrl(), profileImageRequestDto)
+  //   .mockResolvedValue(buildAxiosResponseWithData(newUser));
+
+  when(mockedResourceApi.get)
+    .calledWith(buildGetUserUrl(newUser.userId))
+    .mockResolvedValueOnce(buildAxiosResponseWithData(newUser));
+
+  const test = screen.getByTestId('hiddenFileInput');
+
+  console.log(test);
+
+  fireEvent.change(test, {
+    target: {
+      files: [image],
+    },
+  });
+
+  const profileImage = screen.queryByAltText(
+    `${newUser.username}-profile-image`
+  );
+
+  await waitFor(() =>
+    expect(profileImage).toHaveAttribute(
+      'src',
+      buildMockedCloudinaryImageSource(newUser.publicProfileImageId!)
+    )
+  );
+
+  // expect(
+  //   await screen.findByAltText(`${newUser.username}-profile-image`)
+  // ).toHaveAttribute(
+  //   'src',
+  //   buildMockedCloudinaryImageSource(newUser.publicProfileImageId!)
+  // );
+
+  expect(mockedResourceApi.post).toHaveBeenCalled();
 });

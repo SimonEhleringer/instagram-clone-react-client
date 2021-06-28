@@ -9,10 +9,12 @@ import { getUsersPosts } from '../api/userPost';
 export const useFetchProfileInformation = (userId: string) => {
   const [user, setUser] = useState<UserResponseDto | undefined>(undefined);
   const [posts, setPosts] = useState<PostResponseDto[] | undefined>(undefined);
-  const [followed, setFollowed] =
-    useState<UserResponseDto[] | undefined>(undefined);
-  const [followers, setFollowers] =
-    useState<UserResponseDto[] | undefined>(undefined);
+  const [followed, setFollowed] = useState<UserResponseDto[] | undefined>(
+    undefined
+  );
+  const [followers, setFollowers] = useState<UserResponseDto[] | undefined>(
+    undefined
+  );
 
   const reloadProfileInformation = useCallback(() => {
     getUser(userId).then((value) => setUser(value.data));
