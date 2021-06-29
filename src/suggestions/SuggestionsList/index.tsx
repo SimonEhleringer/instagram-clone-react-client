@@ -1,34 +1,42 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { UserResponseDto } from '../../api/meFollowed';
 import { ButtonType } from '../../shared/Button';
 import './style.scss';
-import { loadSuggestions } from '../../redux/suggestions/slice';
 import UserProfilePreview from '../../shared/ProfilePreview/UserProfilePreview';
+import ResponsiveHeading from '../../shared/ResponsiveHeading';
 
 interface SuggestionsListProps {
   suggestions: UserResponseDto[];
+  loadSuggestions: () => void;
 }
 
-const SuggestionsList: React.FC<SuggestionsListProps> = ({ suggestions }) => {
-  const dispatch = useDispatch();
-
+const SuggestionsList: React.FC<SuggestionsListProps> = ({
+  suggestions,
+  loadSuggestions,
+}) => {
   return (
-    <div className='suggestions-list'>
-      {suggestions.map((suggestion, index) => {
-        return (
-          <div key={suggestion.userId} className='suggestions-list__suggestion'>
-            <UserProfilePreview
-              key={index}
-              user={suggestion}
-              avatarSizeInPx={44}
-              buttonType={ButtonType.PrimaryContained}
-              handleSuccessfulSubscription={() => dispatch(loadSuggestions())}
-            />
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <ResponsiveHeading>Vorschläge für dich</ResponsiveHeading>
+
+      <div className='suggestions-list__content-wrapper'>
+        {suggestions.map((suggestion, index) => {
+          return (
+            <div
+              key={suggestion.userId}
+              className='suggestions-list__suggestion'
+            >
+              <UserProfilePreview
+                key={index}
+                user={suggestion}
+                avatarSizeInPx={44}
+                buttonType={ButtonType.PrimaryContained}
+                handleSuccessfulSubscription={() => loadSuggestions()}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

@@ -1,149 +1,141 @@
 import { Route, Router } from 'react-router';
 import SuggestionsPage from '.';
 import {
+  buildGetSuggestionsUrl,
   getSuggestions,
   SuggestionsResponseDto,
 } from '../../api/meSuggestions';
 import { AxiosResponse } from 'axios';
 import { Provider } from 'react-redux';
-import { render, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import { configureStore } from '../../config/store';
-import { UserResponseDto } from '../../api/meFollowed';
-import { buildSuggestionsPath, suggestionsPath } from '../../routes';
+import { configureStore, StoreType } from '../../config/store';
+import { buildAddFollowUrl, UserResponseDto } from '../../api/meFollowed';
+import {
+  buildSuggestionsPath,
+  renderSuggestionsRoute,
+  suggestionsPath,
+} from '../../routes';
+import {
+  buildAuthenticationState,
+  buildAxiosResponseWithData,
+  buildMockedCloudinaryImageSource,
+  buildSuggestionsResponseDto,
+  buildUserResponseDto,
+  renderMockedUserProfileRoute,
+  renderWithProviders,
+} from '../../test-utils';
+import resourceApi from '../../config/resourceApi';
+import { when } from 'jest-when';
+import { initialState } from '../../redux/authentication/slice';
+import userEvent from '@testing-library/user-event';
 
-jest.mock('../../api/meSuggestions.ts');
-jest.mock('../../shared/Avatar', () => () => <div />);
+jest.mock('../../config/resourceApi.ts');
+const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
 
-const getSuggestionsMock = getSuggestions as jest.MockedFunction<
-  typeof getSuggestions
->;
+jest.mock(
+  'cloudinary-react',
+  () => require('../../test-utils/mock-objects/cloudinary').default
+);
 
-const initialRoute = suggestionsPath;
+let suggestions: SuggestionsResponseDto;
+let store: StoreType;
 
-it('should show loading animation on startup when no suggestions are present', () => {
-  const suggestionsResponse: AxiosResponse<SuggestionsResponseDto> = {
-    config: {},
-    data: { suggestions: [] },
-    headers: [],
-    status: 1,
-    statusText: '',
-  };
+beforeEach(() => {
+  suggestions = buildSuggestionsResponseDto();
 
-  getSuggestionsMock.mockResolvedValueOnce(suggestionsResponse);
+  when(mockedResourceApi.get)
+    .calledWith(buildGetSuggestionsUrl())
+    .mockResolvedValue(buildAxiosResponseWithData(suggestions));
 
-  const { getByTestId } = render(
-    <Provider store={configureStore()}>
-      <Router history={createMemoryHistory({ initialEntries: [initialRoute] })}>
-        <Route path={initialRoute} component={SuggestionsPage} />
-      </Router>
-    </Provider>
-  );
-
-  const loaderEl = getByTestId('loader');
-
-  expect(loaderEl).toBeInTheDocument();
+  store = configureStore();
+  store.getState().authenticationState = buildAuthenticationState();
 });
 
-it('should show loading animation on startup when some suggestions are present', async () => {
-  const store = configureStore();
+it('should load data and show suggestions when no errors occured', async () => {
+  renderWithProviders(renderSuggestionsRoute(), {
+    route: buildSuggestionsPath(),
+    store,
+  });
 
-  const fullName = 'fullName';
-  const username = 'username';
+  expect(screen.getByTestId('loader')).toBeInTheDocument();
 
-  store.getState().suggestionsState = {
-    isLoading: false,
-    suggestions: [
-      {
-        userId: 'userId',
-        fullName,
-        username,
-        publicProfileImageId: 'publicProfileImageId',
-      },
-      {
-        userId: 'userId2',
-        fullName: 'fullName2',
-        username: 'username2',
-        publicProfileImageId: 'publicProfileImageId2',
-      },
-    ],
-  };
+  const buttons = await screen.findAllByRole('button', { name: 'Abonnieren' });
 
-  const suggestionsResponse: AxiosResponse<SuggestionsResponseDto> = {
-    config: {},
-    data: {
-      suggestions: [
-        {
-          fullName: 'fullName3',
-          userId: 'userId3',
-          username: 'username3',
-          publicProfileImageId: 'publicProfileImageId3',
-        },
-      ],
-    },
-    headers: [],
-    status: 1,
-    statusText: '',
-  };
+  expect(buttons.length).toBe(suggestions.suggestions.length);
 
-  getSuggestionsMock.mockResolvedValueOnce(suggestionsResponse);
+  suggestions.suggestions.forEach((suggestion) => {
+    expect(
+      screen.getByAltText(`${suggestion.username}-profile-image`)
+    ).toHaveAttribute(
+      'src',
+      buildMockedCloudinaryImageSource(suggestion.publicProfileImageId!)
+    );
 
-  const { getByTestId, queryByText } = render(
-    <Provider store={store}>
-      <Router history={createMemoryHistory({ initialEntries: [initialRoute] })}>
-        <Route path={initialRoute} component={SuggestionsPage} />
-      </Router>
-    </Provider>
-  );
+    expect(
+      screen.getByRole('link', { name: suggestion.username })
+    ).toBeInTheDocument();
 
-  const loaderEl = getByTestId('loader');
-
-  expect(loaderEl).toBeInTheDocument();
-  expect(queryByText(fullName)).not.toBeInTheDocument();
-  expect(queryByText(username)).not.toBeInTheDocument();
+    expect(screen.getByText(suggestion.fullName)).toBeInTheDocument();
+  });
 });
 
-it('should show suggestions when suggestions are loaded', async () => {
-  const firstSuggestion: UserResponseDto = {
-    fullName: 'firstFullName',
-    userId: 'firstUserId',
-    username: 'firstUserName',
-    publicProfileImageId: 'firstPublicProfileImageId',
-  };
+it('should subscribe to user and reload suggestions when subscribe button is pressed', async () => {
+  renderWithProviders(renderSuggestionsRoute(), {
+    route: buildSuggestionsPath(),
+    store,
+  });
 
-  const secondSuggestion: UserResponseDto = {
-    fullName: 'secondFullName',
-    userId: 'secondUserId',
-    username: 'secondUsername',
-    publicProfileImageId: 'secondPublicProfileImageid',
-  };
+  const buttons = await screen.findAllByRole('button', { name: 'Abonnieren' });
 
-  const suggestionsResponse: AxiosResponse<SuggestionsResponseDto> = {
-    config: {},
-    data: {
-      suggestions: [firstSuggestion, secondSuggestion],
-    },
-    headers: [],
-    status: 1,
-    statusText: '',
-  };
+  suggestions.suggestions.forEach((suggestion) => {
+    expect(
+      screen.getByRole('link', { name: suggestion.username })
+    ).toBeInTheDocument();
+  });
 
-  getSuggestionsMock.mockResolvedValueOnce(suggestionsResponse);
+  const suggestionToSubscribe = suggestions.suggestions[0];
 
-  const { getByText, queryByTestId } = render(
-    <Provider store={configureStore()}>
-      <Router history={createMemoryHistory({ initialEntries: [initialRoute] })}>
-        <Route path={initialRoute} component={SuggestionsPage} />
-      </Router>
-    </Provider>
+  const newSuggestions = suggestions.suggestions.filter(
+    (suggestion) => suggestion !== suggestionToSubscribe
   );
+
+  when(mockedResourceApi.get)
+    .calledWith(buildGetSuggestionsUrl())
+    .mockResolvedValue(buildAxiosResponseWithData(newSuggestions));
+
+  userEvent.click(buttons[0]);
 
   await waitFor(() =>
-    expect(getByText(firstSuggestion.fullName)).toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: suggestionToSubscribe.username })
+    ).not.toBeInTheDocument()
   );
-  expect(getByText(firstSuggestion.username)).toBeInTheDocument();
-  expect(getByText(secondSuggestion.fullName)).toBeInTheDocument();
-  expect(getByText(secondSuggestion.username)).toBeInTheDocument();
 
-  expect(queryByTestId('loader')).not.toBeInTheDocument();
+  expect(mockedResourceApi.post).toHaveBeenCalledWith(
+    buildAddFollowUrl(suggestionToSubscribe.userId)
+  );
+});
+
+it('should show users profile when link is pressed', async () => {
+  renderWithProviders(
+    <>
+      {renderSuggestionsRoute()} {renderMockedUserProfileRoute()}
+    </>,
+    {
+      route: buildSuggestionsPath(),
+      store,
+    }
+  );
+
+  const suggestionToShowProfile = suggestions.suggestions[0];
+
+  userEvent.click(
+    await screen.findByRole('link', { name: suggestionToShowProfile.username })
+  );
+
+  expect(screen.getByTestId('user-profile-page')).toBeInTheDocument();
+  expect(screen.getByTestId('userId')).toHaveTextContent(
+    suggestionToShowProfile.userId
+  );
 });

@@ -21,6 +21,7 @@ import {
 // TODO: Fix all warnings
 // TODO: Images loading
 // TODO: Add redux persist
+// TODO: Clean up public folder
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
