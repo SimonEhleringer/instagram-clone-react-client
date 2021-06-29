@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { UserResponseDto } from '../../api/meFollowed';
 import { PostResponseDto } from '../../api/sharedDtos';
 import Profile from '../Profile';
@@ -6,9 +6,9 @@ import Button, { ButtonType } from '../../shared/Button';
 import { useLogout } from '../../authentication/useLogout';
 import { changeProfileImage } from '../../api/meProfileImage';
 import { useReadFileFromEvent } from '../../shared/hooks/useReadFileFromEvent';
-import { useHiddenImageInput } from '../../shared/hooks/useHiddenImageInput';
 import InvisibleButton from '../../shared/InvisibleButton';
-import { useRef } from 'react';
+import HiddenImageInput from '../../shared/HiddenImageInput';
+import { useHiddenInput } from '../../shared/hooks/useHiddenInput';
 
 export interface MyProfileProps {
   user: UserResponseDto;
@@ -25,27 +25,7 @@ const MyProfile: React.FC<MyProfileProps> = ({
   const { isLoggingOut, logout } = useLogout();
   const { readFileFromEvent } = useReadFileFromEvent();
 
-  // const { fileInput, pretendClickOnFileInput } = useHiddenImageInput(
-  //   (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     readFileFromEvent(e, async (dataUri) => {
-  //       console.log('im change');
-
-  //       await changeProfileImage({ imageDataUri: dataUri });
-
-  //       reloadProfileInformation();
-  //     });
-  //   }
-  // );
-
-  const test = (e: React.ChangeEvent<HTMLInputElement>) => {
-    readFileFromEvent(e, (dataUri) => {
-      console.log('im change');
-
-      changeProfileImage({ imageDataUri: dataUri }).then(() =>
-        reloadProfileInformation()
-      );
-    });
-  };
+  const { fileInputRef, pretendClickOnFileInput } = useHiddenInput();
 
   const renderButton = () => {
     const handleButtonClick = () => {
@@ -65,16 +45,22 @@ const MyProfile: React.FC<MyProfileProps> = ({
     );
   };
 
-  const test2 = useRef<HTMLInputElement>(null);
-
   const renderAvatar = (avatar: JSX.Element) => {
-    return (
-      <InvisibleButton
-        onClick={() => /*pretendClickOnFileInput()*/ test2.current?.click()}
-      >
-        {/* {fileInput} */}
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      readFileFromEvent(e, async (dataUri) => {
+        await changeProfileImage({ imageDataUri: dataUri });
 
-        <input type='file' onChange={test} data-testid='hiddenFiInput' />
+        reloadProfileInformation();
+      });
+    };
+
+    return (
+      <InvisibleButton onClick={() => pretendClickOnFileInput()}>
+        <HiddenImageInput
+          ref={fileInputRef}
+          data-testid='changeProfileImageHiddenFileInput'
+          onChange={handleInputChange}
+        />
 
         {avatar}
       </InvisibleButton>

@@ -13,11 +13,7 @@ const InvisibleButton: React.FC<InvisibleButtonProps> = ({
   ...rest
 }) => {
   return (
-    <button
-      className='invisible-button'
-      {...rest}
-      data-testid='invisibleButton'
-    >
+    <button className='invisible-button' {...rest}>
       {children}
     </button>
   );
