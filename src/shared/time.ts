@@ -47,10 +47,10 @@ export const getDisplayTimeDiffFromNowString = (date: Date) => {
 export const getDisplayTimeDiffString = (diff: number, diffType: diffType) => {
   const map = new Map<diffType, { singular: string; plural: string }>();
 
-  map.set('years', { singular: 'Jahr', plural: 'Jahre' });
-  map.set('months', { singular: 'Monat', plural: 'Monate' });
+  map.set('years', { singular: 'Jahr', plural: 'Jahren' });
+  map.set('months', { singular: 'Monat', plural: 'Monaten' });
   map.set('weeks', { singular: 'Woche', plural: 'Wochen' });
-  map.set('days', { singular: 'Tag', plural: 'Tage' });
+  map.set('days', { singular: 'Tag', plural: 'Tagen' });
   map.set('hours', { singular: 'Stunde', plural: 'Stunden' });
   map.set('minutes', { singular: 'Minute', plural: 'Minuten' });
 

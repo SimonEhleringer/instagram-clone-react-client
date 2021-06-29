@@ -18,11 +18,8 @@ import {
 // TODO: Rename files to kebap-case
 // TODO: Test interceptors
 // TODO: Show errors when errors in api call apeared
-// TODO: add way to change profile image
 // TODO: Fix all warnings
 // TODO: Images loading
-// TODO: Feed: Last post has too much margin
-// TODO: Display text for post creation time not correct (days wrong plural)
 // TODO: Add redux persist
 const App = () => {
   return (

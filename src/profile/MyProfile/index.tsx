@@ -18,6 +18,7 @@ export interface MyProfileProps {
   reloadProfileInformation: () => void;
 }
 
+// TODO: Add loader to profile image (for changing profile image)
 const MyProfile: React.FC<MyProfileProps> = ({
   reloadProfileInformation,
   ...rest
