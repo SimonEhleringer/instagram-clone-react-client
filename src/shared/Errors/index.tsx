@@ -2,13 +2,12 @@ import React from 'react';
 import './style.scss';
 
 interface Props {
-  testId: string;
   errors: string[];
 }
 
-const Errors: React.FC<Props> = ({ testId, errors }) => {
+const Errors: React.FC<Props> = ({ errors }) => {
   return (
-    <div data-testid={testId}>
+    <div>
       {errors.map((error, index) => {
         const top = errors.length >= 2 && index === 0;
         const bottom = errors.length >= 2 && index === errors.length - 1;

@@ -1,5 +1,6 @@
 @use 'mixins';
 
-.input {
+.textarea {
   @include mixins.input;
+  resize: none;
 }

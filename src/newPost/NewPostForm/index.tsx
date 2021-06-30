@@ -8,6 +8,7 @@ import Button from '../../shared/Button';
 import { getErrorsArrayFromError } from '../../shared/error';
 import Errors from '../../shared/Errors';
 import './style.scss';
+import Textarea from '../../shared/Textarea';
 
 export interface NewPostFormProps {
   imageDataUri: string;
@@ -40,10 +41,9 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ imageDataUri }) => {
   };
 
   return (
-    <div className='new-post-form' data-testid='newPostForm'>
-      <div className='new-post-form__caption-input-container'>
-        <textarea
-          className='new-post-form__caption-input'
+    <div className='new-post-form'>
+      <div className='new-post-form__caption-input'>
+        <Textarea
           placeholder='Bildunterschrift verfassen ...'
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
@@ -63,7 +63,7 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ imageDataUri }) => {
       <div className='new-post-form__bottom-section'>
         {errors.length > 0 && (
           <div className='new-post-form__errors'>
-            <Errors errors={errors} testId='errors' />
+            <Errors errors={errors} />
           </div>
         )}
 
