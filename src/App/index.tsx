@@ -15,7 +15,6 @@ import {
 // TODO: Check for accessibility
 // TODO: Profile image on profile page: has white background (but only sometimes?)
 // TODO: When post caption is multiline it is not displayed correctly
-// TODO: Refactor Inputs (I created a mixin for inputs)
 // TODO: Suggestions: Show some text when no suggestions are there
 // TODO: Maybe add padding scss variable?
 // TODO: Delete unnessecary API endpoints

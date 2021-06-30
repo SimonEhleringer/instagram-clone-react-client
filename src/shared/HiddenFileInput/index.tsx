@@ -7,6 +7,7 @@ export interface HiddenFileInputProps
     HTMLInputElement
   > {}
 
+// TODO: data-testid should be passed only as props
 const HiddenFileInput = React.forwardRef<
   HTMLInputElement,
   HiddenImageInputProps

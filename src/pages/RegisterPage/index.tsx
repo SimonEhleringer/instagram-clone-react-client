@@ -54,14 +54,12 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
           name='email'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId={'emailInput'}
-              htmlInputProps={{
-                placeholder: 'E-Mail Adresse',
-                onChange: onChange,
-                onBlur: onBlur,
-                value: value || '',
-              }}
-              innerRef={ref}
+              data-testId={'emailInput'}
+              placeholder='E-Mail Adresse'
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value || ''}
+              ref={ref}
             />
           )}
         />
@@ -71,14 +69,12 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
           name='fullName'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId='fullNameInput'
-              htmlInputProps={{
-                placeholder: 'Vollständiger Name',
-                onChange: onChange,
-                onBlur: onBlur,
-                value: value || '',
-              }}
-              innerRef={ref}
+              data-testId='fullNameInput'
+              placeholder={'Vollständiger Name'}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value || ''}
+              ref={ref}
             />
           )}
         />
@@ -88,14 +84,12 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
           name='username'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId='usernameInput'
-              htmlInputProps={{
-                placeholder: 'Benutzername',
-                onChange: onChange,
-                onBlur: onBlur,
-                value: value || '',
-              }}
-              innerRef={ref}
+              data-testId='usernameInput'
+              placeholder='Benutzername'
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value || ''}
+              ref={ref}
             />
           )}
         />
@@ -105,15 +99,13 @@ const RegisterPage: React.FC<RouteComponentProps> = ({ history }) => {
           name='password'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId='passwordInput'
-              htmlInputProps={{
-                type: 'password',
-                placeholder: 'Passwort',
-                onChange: onChange,
-                onBlur: onBlur,
-                value: value || '',
-              }}
-              innerRef={ref}
+              data-testId='passwordInput'
+              type='password'
+              placeholder='Passwort'
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value || ''}
+              ref={ref}
             />
           )}
         />

@@ -54,14 +54,12 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
           name='usernameOrEmail'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId='usernameOrEmailInput'
-              htmlInputProps={{
-                placeholder: 'Benutzername oder E-Mail Adresse',
-                onChange: onChange,
-                onBlur: onBlur,
-                value: value || '',
-              }}
-              innerRef={ref}
+              date-testId='usernameOrEmailInput'
+              placeholder='Benutzername oder E-Mail Adresse'
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value || ''}
+              ref={ref}
             />
           )}
         />
@@ -71,15 +69,13 @@ const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {
           name='password'
           render={({ field: { onChange, onBlur, value, ref } }) => (
             <Input
-              testId='passwordInput'
-              htmlInputProps={{
-                placeholder: 'Passwort',
-                onChange: onChange,
-                onBlur: onBlur,
-                value: value || '',
-                type: 'password',
-              }}
-              innerRef={ref}
+              data-testId='passwordInput'
+              placeholder='Passwort'
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value || ''}
+              type={'password'}
+              ref={ref}
             />
           )}
         />

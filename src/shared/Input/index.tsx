@@ -1,24 +1,14 @@
-import React, { FC } from "react";
-import "./style.scss";
+import React, { FC } from 'react';
+import './style.scss';
 
-interface Props {
-  testId: string;
-  htmlInputProps: React.DetailedHTMLProps<
+interface InputProps
+  extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
-  >;
-  innerRef?: React.LegacyRef<HTMLInputElement>;
-}
+  > {}
 
-const Input: FC<Props> = ({ testId, htmlInputProps, innerRef }) => {
-  return (
-    <input
-      className="input"
-      ref={innerRef}
-      {...htmlInputProps}
-      data-testid={testId}
-    />
-  );
-};
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  return <input className='input' ref={ref} {...props} />;
+});
 
 export default Input;
