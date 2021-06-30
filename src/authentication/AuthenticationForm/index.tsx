@@ -16,7 +16,6 @@ export interface AuthenticationFormProps {
   loading: boolean;
 }
 
-// TODO: give input margin: margin: 0.25rem 0;
 // TODO: Add tests for loading
 const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   onSubmit,

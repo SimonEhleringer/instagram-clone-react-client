@@ -1,161 +1,42 @@
-import { AxiosError, AxiosRequestConfig } from 'axios';
-
-import * as testModule from './error';
-
-describe('isAxiosError', () => {
-  it('should return true when error is axios error', () => {
-    const config: AxiosRequestConfig = {};
-
-    const error: AxiosError = {
-      config,
-      isAxiosError: true,
-      message: 'error',
-      name: 'name',
-      toJSON: () => {
-        return {};
-      },
-    };
-
-    const expected = true;
-
-    const actual = testModule.isAxiosError(error);
-
-    expect(actual).toBe(expected);
-  });
-
-  it('should return false when error is not an axios error', () => {
-    const error: Error = {
-      message: 'error',
-      name: 'name',
-    };
-
-    const expected = false;
-
-    const actual = testModule.isAxiosError(error);
-
-    expect(actual).toBe(expected);
-  });
-});
-
-describe('isErrorResponse', () => {
-  it('should return true when error is error response', () => {
-    const errorResponse: testModule.ErrorResponseDto = {
-      errors: ['error'],
-    };
-
-    const expected = true;
-
-    const actual = testModule.isErrorResponse(errorResponse);
-
-    expect(actual).toBe(expected);
-  });
-
-  it('should return false when error is not an error response', () => {
-    const error: Error = {
-      message: 'error',
-      name: 'name',
-    };
-
-    const expected = false;
-
-    const actual = testModule.isErrorResponse(error);
-
-    expect(actual).toBe(expected);
-  });
-});
+import { buildAxiosError, buildErrorResponseDto } from '../test-utils';
+import { getErrorsArrayFromError } from './error';
+import faker from 'faker';
 
 describe('getErrorsArrayFromError', () => {
-  it('should return errors from error response when error is axios error of errors response', () => {
-    const config: AxiosRequestConfig = {};
+  it('should return errors from error response DTO in axios error when error is axios error of error response DTO', () => {
+    const errorResponseDto = buildErrorResponseDto({}, 3);
+    const axiosError = buildAxiosError(errorResponseDto);
 
-    const errorResponse: testModule.ErrorResponseDto = {
-      errors: ['error in error response'],
-    };
+    const errorsArray = getErrorsArrayFromError(axiosError);
 
-    const axiosError: AxiosError<testModule.ErrorResponseDto> = {
-      config,
-      isAxiosError: true,
-      message: 'message',
-      name: 'name',
-      toJSON: () => {
-        return {};
-      },
-      response: {
-        config,
-        data: errorResponse,
-        headers: [],
-        status: 400,
-        statusText: '',
-      },
-    };
-
-    jest.spyOn(testModule, 'isAxiosError').mockReturnValue(true);
-    jest.spyOn(testModule, 'isErrorResponse').mockReturnValue(true);
-
-    const errorsArray = testModule.getErrorsArrayFromError(axiosError);
-
-    expect(errorsArray).toBe(errorResponse.errors);
+    expect(errorsArray).toBe(errorResponseDto.errors);
   });
 
   it('should return error message from axios error when error is axios error but not of errors response', () => {
-    const message = 'error message in axios error';
+    const message = faker.lorem.sentence(10);
+    const axiosError = buildAxiosError({}, { message });
 
-    const axiosError: AxiosError = {
-      config: {},
-      isAxiosError: true,
-      message,
-      name: 'name',
-      toJSON: () => {
-        return {};
-      },
-      response: {
-        config: {},
-        data: {},
-        headers: [],
-        status: 1,
-        statusText: '',
-      },
-    };
-
-    jest.spyOn(testModule, 'isAxiosError').mockReturnValue(true);
-    jest.spyOn(testModule, 'isErrorResponse').mockReturnValue(false);
-
-    const errorsArray = testModule.getErrorsArrayFromError(axiosError);
+    const errorsArray = getErrorsArrayFromError(axiosError);
 
     expect(errorsArray.length).toBe(1);
     expect(errorsArray[0]).toBe(message);
   });
 
   it('should return error message from axios error when error is axios error but has no response object', () => {
-    const message = 'error message in axios error';
+    const message = faker.lorem.sentence(10);
+    const axiosError = buildAxiosError({}, { response: undefined, message });
 
-    const axiosError: AxiosError = {
-      config: {},
-      isAxiosError: true,
-      message,
-      name: 'name',
-      toJSON: () => {
-        return {};
-      },
-    };
-
-    const errorsArray = testModule.getErrorsArrayFromError(axiosError);
-
-    jest.spyOn(testModule, 'isAxiosError').mockReturnValue(true);
+    const errorsArray = getErrorsArrayFromError(axiosError);
 
     expect(errorsArray.length).toBe(1);
     expect(errorsArray[0]).toBe(message);
   });
 
   it('should return error message from error when error is not an axios error', () => {
-    const message = 'error message in error';
+    const message = faker.lorem.sentence(10);
+    const error = new Error(message);
 
-    const error: Error = {
-      message,
-      name: 'name',
-    };
-
-    const errorsArray = testModule.getErrorsArrayFromError(error);
+    const errorsArray = getErrorsArrayFromError(error);
 
     expect(errorsArray.length).toBe(1);
     expect(errorsArray[0]).toBe(message);
