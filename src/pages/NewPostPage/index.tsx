@@ -1,18 +1,24 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { ReduxState } from '../../config/store';
-import NewPostForm from '../../newPost/NewPostForm';
-import AppLayout from '../../shared/AppLayout';
-import SlimPageLayout from '../../shared/SlimPageLayout';
-import ResponsiveHeading from '../../shared/ResponsiveHeading';
+import React from "react";
+import NewPostForm from "../../newPost/NewPostForm";
+import AppLayout from "../../shared/AppLayout";
+import SlimPageLayout from "../../shared/SlimPageLayout";
+import ResponsiveHeading from "../../shared/ResponsiveHeading";
+import { RouteComponentProps } from "react-router-dom";
+import { StaticContext } from "react-router";
 
-const NewPostPage = () => {
+export interface NewPostPageState {
+  selectedImageDataUri: string;
+}
+
+const NewPostPage: React.FC<
+  RouteComponentProps<{}, StaticContext, NewPostPageState>
+> = ({ location }) => {
   return (
     <AppLayout>
       <SlimPageLayout>
         <ResponsiveHeading>Neuer Beitrag</ResponsiveHeading>
 
-        <NewPostForm />
+        <NewPostForm imageDataUri={location.state.selectedImageDataUri} />
       </SlimPageLayout>
     </AppLayout>
   );

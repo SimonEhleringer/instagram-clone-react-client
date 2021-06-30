@@ -1,28 +1,28 @@
-import React, { useRef } from 'react';
-import { BsPlusCircle, BsPlusCircleFill } from 'react-icons/bs';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
-import HeaderLink from '../HeaderLink';
-import './style.scss';
-import { setSelectedImageDataUri } from '../../../redux/newPost/slice';
-import { buildNewPostPath } from '../../../routes';
-import { useReadFileFromEvent } from '../../hooks/useReadFileFromEvent';
-import InvisibleButton from '../../InvisibleButton';
-import HiddenImageInput from '../../HiddenImageInput';
-import { useHiddenInput } from '../../hooks/useHiddenInput';
+import React from "react";
+import { BsPlusCircle, BsPlusCircleFill } from "react-icons/bs";
+import { useHistory } from "react-router";
+import HeaderLink from "../HeaderLink";
+import "./style.scss";
+import { buildNewPostPath, buildNewPostPathname } from "../../../routes";
+import { useReadFileFromEvent } from "../../hooks/useReadFileFromEvent";
+import InvisibleButton from "../../InvisibleButton";
+import HiddenImageInput from "../../HiddenImageInput";
+import { useHiddenInput } from "../../hooks/useHiddenInput";
+import { NewPostPageState } from "../../../pages/NewPostPage";
 
 const AddNewPostLink = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const { readFileFromEvent } = useReadFileFromEvent();
 
   const { fileInputRef, pretendClickOnFileInput } = useHiddenInput();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     readFileFromEvent(e, (dataUri) => {
-      dispatch(setSelectedImageDataUri(dataUri));
+      const state: NewPostPageState = {
+        selectedImageDataUri: dataUri,
+      };
 
-      history.push(buildNewPostPath());
+      history.push(buildNewPostPath(state));
     });
   };
 
@@ -30,11 +30,11 @@ const AddNewPostLink = () => {
     <InvisibleButton onClick={() => pretendClickOnFileInput()}>
       <HiddenImageInput ref={fileInputRef} onChange={handleInputChange} />
 
-      <div className='add-new-post-link__prevent-click' />
+      <div className="add-new-post-link__prevent-click" />
       <HeaderLink
         Icon={BsPlusCircle}
         ActiveIcon={BsPlusCircleFill}
-        to={buildNewPostPath()}
+        to={buildNewPostPathname()}
       />
     </InvisibleButton>
   );

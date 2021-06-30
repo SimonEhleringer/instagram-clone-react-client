@@ -1,7 +1,7 @@
 @use 'variables';
 @use 'mixins';
 
-.suggestions-list__content-wrapper {
+.suggestions-list {
   border: 1px solid variables.$border;
   background-color: variables.$background;
   border-radius: variables.$medium;

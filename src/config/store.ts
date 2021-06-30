@@ -1,11 +1,9 @@
-import { combineReducers, createStore } from 'redux';
-import { authenticationReducer } from '../redux/authentication/slice';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { newPostReducer } from '../redux/newPost/slice';
+import { combineReducers, createStore } from "redux";
+import { authenticationReducer } from "../redux/authentication/slice";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 export const reducer = combineReducers({
   authenticationState: authenticationReducer,
-  newPostState: newPostReducer,
 });
 
 export const configureStore = () => {
