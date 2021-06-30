@@ -13,7 +13,7 @@ import {
 } from '../../api/authentication';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
-import { ErrorResponse } from '../../shared/error';
+import { ErrorResponseDto } from '../../shared/error';
 import RegisterPage from '.';
 import { configureStore } from '../../config/store';
 import { buildRegisterPath, registerPath } from '../../routes';
@@ -144,13 +144,13 @@ it('should call API and display errors when API call failed', async () => {
   const fullNameInputEl = getByTestId('fullNameInput');
   const passwordEl = getByTestId('passwordInput');
 
-  const apiResponseData: ErrorResponse = {
+  const apiResponseData: ErrorResponseDto = {
     errors: ['error'],
   };
 
   const apiResponseConfig: AxiosRequestConfig = {};
 
-  const apiResponse: AxiosResponse<ErrorResponse> = {
+  const apiResponse: AxiosResponse<ErrorResponseDto> = {
     data: apiResponseData,
     config: apiResponseConfig,
     headers: [],

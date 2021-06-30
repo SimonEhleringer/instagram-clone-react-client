@@ -1,7 +1,7 @@
-import React from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
-import "./style.scss";
-import { CloudinaryContext } from "cloudinary-react";
+import React from 'react';
+import { BrowserRouter, Switch } from 'react-router-dom';
+import './style.scss';
+import { CloudinaryContext } from 'cloudinary-react';
 import {
   renderIndexRoute,
   renderLoginRoute,
@@ -10,8 +10,9 @@ import {
   renderRegisterRoute,
   renderSuggestionsRoute,
   renderUserProfileRoute,
-} from "../routes";
+} from '../routes';
 
+// TODO: Check for accessibility
 // TODO: Profile image on profile page: has white background (but only sometimes?)
 // TODO: When post caption is multiline it is not displayed correctly
 // TODO: Refactor Inputs (I created a mixin for inputs)

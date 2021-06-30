@@ -39,7 +39,7 @@ describe('isAxiosError', () => {
 
 describe('isErrorResponse', () => {
   it('should return true when error is error response', () => {
-    const errorResponse: testModule.ErrorResponse = {
+    const errorResponse: testModule.ErrorResponseDto = {
       errors: ['error'],
     };
 
@@ -68,11 +68,11 @@ describe('getErrorsArrayFromError', () => {
   it('should return errors from error response when error is axios error of errors response', () => {
     const config: AxiosRequestConfig = {};
 
-    const errorResponse: testModule.ErrorResponse = {
+    const errorResponse: testModule.ErrorResponseDto = {
       errors: ['error in error response'],
     };
 
-    const axiosError: AxiosError<testModule.ErrorResponse> = {
+    const axiosError: AxiosError<testModule.ErrorResponseDto> = {
       config,
       isAxiosError: true,
       message: 'message',

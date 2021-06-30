@@ -173,6 +173,7 @@ it('should upload new profile image and show it when new image is selected', asy
     store: store,
   });
 
+  // TODO: Use builder
   const imageBlob = 'imageDataUri';
   const image = new File([imageBlob], 'image.png', { type: 'image/png' });
   const imageDataUri = 'data:image/png;base64,aW1hZ2VEYXRhVXJp';

@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import * as thisModule from './error';
 
-export type ErrorResponse = {
+export type ErrorResponseDto = {
   errors: string[];
 };
 
@@ -9,8 +9,10 @@ export const isAxiosError = (error: Error): error is AxiosError => {
   return (error as AxiosError).isAxiosError !== undefined;
 };
 
-export const isErrorResponse = (response: any): response is ErrorResponse => {
-  return (response as ErrorResponse).errors !== undefined;
+export const isErrorResponse = (
+  response: any
+): response is ErrorResponseDto => {
+  return (response as ErrorResponseDto).errors !== undefined;
 };
 
 export const getErrorsArrayFromError = (e: Error) => {
@@ -18,7 +20,7 @@ export const getErrorsArrayFromError = (e: Error) => {
     return [e.message];
   }
 
-  const axiosError = e as AxiosError<ErrorResponse>;
+  const axiosError = e as AxiosError<ErrorResponseDto>;
 
   if (
     !axiosError.response ||

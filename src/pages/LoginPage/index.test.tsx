@@ -14,7 +14,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
 import { Route, Router } from 'react-router';
 import { createMemoryHistory } from 'history';
-import { ErrorResponse } from '../../shared/error';
+import { ErrorResponseDto } from '../../shared/error';
 import LoginPage from './index';
 import { configureStore } from '../../config/store';
 import { buildLoginPath, loginPath } from '../../routes';
@@ -163,13 +163,13 @@ const getMockedSuccessfulAxiosResponse = () => {
 };
 
 const getMockedFailedAxiosResponse = () => {
-  const data: ErrorResponse = {
+  const data: ErrorResponseDto = {
     errors: ['error'],
   };
 
   const config: AxiosRequestConfig = {};
 
-  const response: AxiosResponse<ErrorResponse> = {
+  const response: AxiosResponse<ErrorResponseDto> = {
     data,
     status: 400,
     statusText: '',

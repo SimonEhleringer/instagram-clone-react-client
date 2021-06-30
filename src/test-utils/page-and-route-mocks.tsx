@@ -1,11 +1,18 @@
 import { useParams } from 'react-router-dom';
 import { UserProfilePageParams } from '../pages/UserProfilePage';
 import {
+  renderIndexRoute,
   renderLoginRoute,
   renderMyProfileRoute,
   renderSuggestionsRoute,
   renderUserProfileRoute,
 } from '../routes';
+
+export const MockedIndexPage: React.FC = () => (
+  <div data-testid='index-page'>IndexPage</div>
+);
+
+export const renderMockedIndexRoute = () => renderIndexRoute(MockedIndexPage);
 
 export const MockedLoginPage: React.FC = () => (
   <div data-testid='login-page'>LoginPage</div>

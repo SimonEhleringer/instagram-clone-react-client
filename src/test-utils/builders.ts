@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { AuthenticationState } from '../redux/authentication/slice';
 import faker from 'faker';
 import { UserResponseDto } from '../api/meFollowed';
@@ -7,6 +7,8 @@ import { FollowersResponseDto } from '../api/userFollowers';
 import { FollowedResponseDto } from '../api/userFollowed';
 import { FeedPostResponseDto, FeedResponseDto } from '../api/meFeed';
 import { SuggestionsResponseDto } from '../api/meSuggestions';
+import { config } from 'node:process';
+import { ErrorResponseDto } from '../shared/error';
 
 export const buildAuthenticationState = (
   overrides?: Partial<AuthenticationState>
@@ -106,6 +108,16 @@ export const buildSuggestionsResponseDto = (
   };
 };
 
+export const buildErrorResponseDto = (
+  overrides?: Partial<ErrorResponseDto>,
+  errorsLength?: number
+): ErrorResponseDto => {
+  return {
+    errors: makeArray(() => faker.lorem.sentence(10), errorsLength),
+    ...overrides,
+  };
+};
+
 export const buildAxiosResponseWithData = <T extends unknown>(
   data: T,
   overrides?: Partial<AxiosResponse<T>>
@@ -133,11 +145,42 @@ export const buildAxiosResponseWithoutData = (
   };
 };
 
+export const buildAxiosError = <T extends unknown>(
+  data: T,
+  overrides?: Partial<AxiosError<T>>
+): AxiosError<T> => {
+  return {
+    config: {},
+    isAxiosError: true,
+    message: faker.lorem.sentence(10),
+    name: faker.datatype.string(),
+    toJSON: () => {
+      return {};
+    },
+    response: {
+      config: {},
+      data: data,
+      headers: [],
+      status: 400,
+      statusText: 'Bad Request',
+    },
+    ...overrides,
+  };
+};
+
 export const makeArray = <T extends unknown>(
   generator: () => T,
   length: number = faker.datatype.number({ min: 1, max: 10 })
 ): T[] => {
   return Array.from({ length }, generator);
+};
+
+export const buildMockedImage = () => {
+  const imageBlob = 'someImage';
+  const image = new File([imageBlob], 'image.png', { type: 'image/png' });
+  const imageDataUri = 'data:image/png;base64,c29tZUltYWdl';
+
+  return { imageBlob, image, imageDataUri };
 };
 
 export const buildMockedCloudinaryImageSource = (
