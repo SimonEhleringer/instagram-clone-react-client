@@ -1,6 +1,6 @@
-import React from 'react';
-import './style.scss';
-import ClipLoader from 'react-spinners/ClipLoader';
+import React from "react";
+import "./style.scss";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export enum ButtonType {
   PrimaryContained,
@@ -8,50 +8,47 @@ export enum ButtonType {
   PrimaryText,
 }
 
-interface Props {
-  testId?: string;
-  loaderTestId?: string;
-  loading: boolean;
-  htmlInputProps?: React.DetailedHTMLProps<
+export interface ButtonProps
+  extends React.DetailedHTMLProps<
     React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
-  >;
-  type?: ButtonType;
+  > {
+  isLoading?: boolean;
+  buttonType?: ButtonType;
+  loaderDataTestId?: string;
 }
 
-// TODO: Maybe add tests for new button type
-const Button: React.FC<Props> = ({
-  htmlInputProps,
-  testId,
-  loaderTestId,
-  loading,
+// TODO: use variables for Loader color
+const Button: React.FC<ButtonProps> = ({
+  isLoading = false,
+  buttonType = ButtonType.PrimaryContained,
+  loaderDataTestId = "buttonLoader",
   children,
-  type = ButtonType.PrimaryContained,
+  ...rest
 }) => {
   return (
     <button
-      {...htmlInputProps}
-      data-testid={testId}
-      className={`button 
-      ${
-        type === ButtonType.PrimaryContained ? 'button--primary-contained' : ' '
-      }
-      ${
-        type === ButtonType.SecondaryContained
-          ? 'button--secondary-contained'
-          : ' '
-      }
-      ${type === ButtonType.PrimaryText ? 'button--primary-text' : ' '}
-      ${loading ? 'button--loading' : ' '}`}
+      className={`button ${
+        buttonType === ButtonType.PrimaryContained
+          ? "button--primary-contained"
+          : ""
+      } ${
+        buttonType === ButtonType.SecondaryContained
+          ? "button--secondary-contained"
+          : ""
+      } ${
+        buttonType === ButtonType.PrimaryText ? "button--primary-text" : " "
+      } ${isLoading ? "button--loading" : ""}`}
+      {...rest}
     >
-      {loading && (
-        <div className='button__spinner' data-testid={loaderTestId}>
+      {isLoading && (
+        <div className="button__spinner" data-testid={loaderDataTestId}>
           <ClipLoader
-            size='1em'
+            size="1em"
             color={`
-          ${type === ButtonType.PrimaryContained ? 'white' : ''}
-          ${type === ButtonType.SecondaryContained ? 'black' : ''}
-          ${type === ButtonType.PrimaryText ? 'black' : ''}`}
+          ${buttonType === ButtonType.PrimaryContained ? "white" : ""}
+          ${buttonType === ButtonType.SecondaryContained ? "black" : ""}
+          ${buttonType === ButtonType.PrimaryText ? "black" : ""}`}
           />
         </div>
       )}

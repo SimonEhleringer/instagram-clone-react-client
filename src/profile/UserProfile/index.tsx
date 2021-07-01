@@ -1,9 +1,9 @@
-import React from 'react';
-import { addFollow, deleteFollow, UserResponseDto } from '../../api/meFollowed';
-import { PostResponseDto } from '../../api/sharedDtos';
-import Profile from '../Profile';
-import Button, { ButtonType } from '../../shared/Button';
-import { useState } from 'react';
+import React from "react";
+import { addFollow, deleteFollow, UserResponseDto } from "../../api/meFollowed";
+import { PostResponseDto } from "../../api/sharedDtos";
+import Profile from "../Profile";
+import Button, { ButtonType } from "../../shared/Button";
+import { useState } from "react";
 
 export interface UserProfileProps {
   user: UserResponseDto;
@@ -52,20 +52,16 @@ const UserProfile: React.FC<UserProfileProps> = ({
       <>
         {doesLoggedInUserFollowUser ? (
           <Button
-            loading={isUnfollowButtonLoading}
-            htmlInputProps={{
-              onClick: handleUnfollowButtonClick,
-            }}
-            type={ButtonType.SecondaryContained}
+            isLoading={isUnfollowButtonLoading}
+            onClick={handleUnfollowButtonClick}
+            buttonType={ButtonType.SecondaryContained}
           >
             Nicht mehr folgen
           </Button>
         ) : (
           <Button
-            loading={isFollowButtonLoading}
-            htmlInputProps={{
-              onClick: handleFollowButtonClick,
-            }}
+            isLoading={isFollowButtonLoading}
+            onClick={handleFollowButtonClick}
           >
             Abonnieren
           </Button>
