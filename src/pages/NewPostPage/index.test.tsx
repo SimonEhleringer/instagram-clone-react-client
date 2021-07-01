@@ -12,9 +12,11 @@ import {
   buildErrorResponseDto,
   buildMockedImage,
   renderMockedIndexRoute,
+  renderMockedLoginRoute,
   renderWithProviders,
 } from '../../test-utils';
 import faker from 'faker';
+import { initialState } from '../../redux/authentication/slice';
 
 jest.mock('../../config/resourceApi.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
@@ -24,6 +26,20 @@ let store: StoreType;
 beforeEach(() => {
   store = configureStore();
   store.getState().authenticationState = buildAuthenticationState();
+});
+
+it('should redirect to login page when user is not logged in', () => {
+  store.getState().authenticationState = { ...initialState };
+  const { imageDataUri } = buildMockedImage();
+
+  renderWithProviders(
+    <>
+      {renderNewPostRoute()} {renderMockedLoginRoute()}
+    </>,
+    { route: buildNewPostPath({ selectedImageDataUri: imageDataUri }), store }
+  );
+
+  expect(screen.getByTestId('login-page')).toBeInTheDocument();
 });
 
 it('should upload post and redirect to index page when button was pressed and API call was successful', async () => {

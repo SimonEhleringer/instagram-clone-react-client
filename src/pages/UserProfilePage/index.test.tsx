@@ -5,7 +5,9 @@ import {
   buildAddFollowUrl,
   buildDeleteFollowUrl,
   buildGetLoggedInUsersFollowedUrl,
+  UserResponseDto,
 } from '../../api/meFollowed';
+import { PostsResponseDto } from '../../api/sharedDtos';
 import { buildGetUserUrl } from '../../api/user';
 import {
   buildGetUsersFollowedUrl,
@@ -17,7 +19,8 @@ import {
 } from '../../api/userFollowers';
 import { buildGetUsersPostsUrl } from '../../api/userPost';
 import resourceApi from '../../config/resourceApi';
-import { configureStore } from '../../config/store';
+import { configureStore, StoreType } from '../../config/store';
+import { initialState } from '../../redux/authentication/slice';
 import { buildUserProfilePath, renderUserProfileRoute } from '../../routes';
 import {
   buildAuthenticationState,
@@ -27,6 +30,7 @@ import {
   buildFollowersResponseDto,
   buildPostsResponseDto,
   buildUserResponseDto,
+  renderMockedLoginRoute,
   renderWithProviders,
 } from '../../test-utils';
 
@@ -38,32 +42,56 @@ jest.mock(
   () => require('../../test-utils/mock-objects/cloudinary').default
 );
 
-it('should load data and show profile when data is loaded', async () => {
-  const loggedInUser = buildUserResponseDto();
-  const loggedInUsersFollowed = buildFollowedResponseDto();
+let loggedInUser: UserResponseDto;
+let loggedInUsersFollowed: FollowedResponseDto;
+let user: UserResponseDto;
+let posts: PostsResponseDto;
+let followers: FollowersResponseDto;
+let followed: FollowedResponseDto;
 
-  const user = buildUserResponseDto();
-  const posts = buildPostsResponseDto();
-  const followers = buildFollowersResponseDto();
-  const followed = buildFollowedResponseDto();
+let store: StoreType;
+
+beforeEach(() => {
+  loggedInUser = buildUserResponseDto();
+  loggedInUsersFollowed = buildFollowedResponseDto();
+
+  user = buildUserResponseDto();
+  posts = buildPostsResponseDto();
+  followers = buildFollowersResponseDto();
+  followed = buildFollowedResponseDto();
 
   when(mockedResourceApi.get)
     .calledWith(buildGetUserUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(user))
+    .mockResolvedValue(buildAxiosResponseWithData(user))
     .calledWith(buildGetUsersPostsUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(posts))
+    .mockResolvedValue(buildAxiosResponseWithData(posts))
     .calledWith(buildGetUsersFollowersUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
+    .mockResolvedValue(buildAxiosResponseWithData(followers))
     .calledWith(buildGetUsersFollowedUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(followed))
+    .mockResolvedValue(buildAxiosResponseWithData(followed))
     .calledWith(buildGetLoggedInUsersFollowedUrl())
-    .mockResolvedValueOnce(buildAxiosResponseWithData(loggedInUsersFollowed));
+    .mockResolvedValue(buildAxiosResponseWithData(loggedInUsersFollowed));
 
-  const store = configureStore();
+  store = configureStore();
   store.getState().authenticationState = buildAuthenticationState({
     loggedInUserId: loggedInUser.userId,
   });
+});
 
+it('should redirect to login page when user is not logged in', () => {
+  store.getState().authenticationState = { ...initialState };
+
+  renderWithProviders(
+    <>
+      {renderUserProfileRoute()} {renderMockedLoginRoute()}
+    </>,
+    { route: buildUserProfilePath(user.userId), store }
+  );
+
+  expect(screen.getByTestId('login-page')).toBeInTheDocument();
+});
+
+it('should load data and show profile when data is loaded', async () => {
   renderWithProviders(renderUserProfileRoute(), {
     route: buildUserProfilePath(user.userId),
     store,
@@ -101,30 +129,11 @@ it('should load data and show profile when data is loaded', async () => {
 });
 
 it('should show posts placeholder when user has no posts', async () => {
-  const loggedInUser = buildUserResponseDto();
-  const loggedInUsersFollowed = buildFollowedResponseDto();
-
-  const user = buildUserResponseDto();
-  const posts = buildPostsResponseDto({}, 0);
-  const followers = buildFollowersResponseDto();
-  const followed = buildFollowedResponseDto();
+  posts = buildPostsResponseDto({}, 0);
 
   when(mockedResourceApi.get)
-    .calledWith(buildGetUserUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(user))
     .calledWith(buildGetUsersPostsUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(posts))
-    .calledWith(buildGetUsersFollowersUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
-    .calledWith(buildGetUsersFollowedUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(followed))
-    .calledWith(buildGetLoggedInUsersFollowedUrl())
-    .mockResolvedValueOnce(buildAxiosResponseWithData(loggedInUsersFollowed));
-
-  const store = configureStore();
-  store.getState().authenticationState = buildAuthenticationState({
-    loggedInUserId: loggedInUser.userId,
-  });
+    .mockResolvedValueOnce(buildAxiosResponseWithData(posts));
 
   renderWithProviders(renderUserProfileRoute(), {
     route: buildUserProfilePath(user.userId),
@@ -139,31 +148,6 @@ it('should show posts placeholder when user has no posts', async () => {
 });
 
 it('should show follow button when logged in user does not follow user and show unfollow button when follow button is pressed', async () => {
-  const loggedInUser = buildUserResponseDto();
-  const loggedInUsersFollowed = buildFollowedResponseDto();
-
-  const user = buildUserResponseDto();
-  const posts = buildPostsResponseDto();
-  const followers = buildFollowersResponseDto();
-  const followed = buildFollowedResponseDto();
-
-  when(mockedResourceApi.get)
-    .calledWith(buildGetUserUrl(user.userId))
-    .mockResolvedValue(buildAxiosResponseWithData(user))
-    .calledWith(buildGetUsersPostsUrl(user.userId))
-    .mockResolvedValue(buildAxiosResponseWithData(posts))
-    .calledWith(buildGetUsersFollowersUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
-    .calledWith(buildGetUsersFollowedUrl(user.userId))
-    .mockResolvedValue(buildAxiosResponseWithData(followed))
-    .calledWith(buildGetLoggedInUsersFollowedUrl())
-    .mockResolvedValueOnce(buildAxiosResponseWithData(loggedInUsersFollowed));
-
-  const store = configureStore();
-  store.getState().authenticationState = buildAuthenticationState({
-    loggedInUserId: loggedInUser.userId,
-  });
-
   renderWithProviders(renderUserProfileRoute(), {
     route: buildUserProfilePath(user.userId),
     store,
@@ -209,33 +193,8 @@ it('should show follow button when logged in user does not follow user and show 
 });
 
 it('should showun follow button when logged in user follow user and show follow button when unfollow button is pressed', async () => {
-  const loggedInUser = buildUserResponseDto();
-  const loggedInUsersFollowed = buildFollowedResponseDto();
-
-  const user = buildUserResponseDto();
-  const posts = buildPostsResponseDto();
-  const followers = buildFollowersResponseDto();
-  const followed = buildFollowedResponseDto();
-
   followers.followers.push(loggedInUser);
   loggedInUsersFollowed.followed.push(user);
-
-  when(mockedResourceApi.get)
-    .calledWith(buildGetUserUrl(user.userId))
-    .mockResolvedValue(buildAxiosResponseWithData(user))
-    .calledWith(buildGetUsersPostsUrl(user.userId))
-    .mockResolvedValue(buildAxiosResponseWithData(posts))
-    .calledWith(buildGetUsersFollowersUrl(user.userId))
-    .mockResolvedValueOnce(buildAxiosResponseWithData(followers))
-    .calledWith(buildGetUsersFollowedUrl(user.userId))
-    .mockResolvedValue(buildAxiosResponseWithData(followed))
-    .calledWith(buildGetLoggedInUsersFollowedUrl())
-    .mockResolvedValueOnce(buildAxiosResponseWithData(loggedInUsersFollowed));
-
-  const store = configureStore();
-  store.getState().authenticationState = buildAuthenticationState({
-    loggedInUserId: loggedInUser.userId,
-  });
 
   renderWithProviders(renderUserProfileRoute(), {
     route: buildUserProfilePath(user.userId),

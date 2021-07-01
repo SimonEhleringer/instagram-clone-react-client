@@ -10,6 +10,7 @@ import {
 } from '../../api/meSuggestions';
 import resourceApi from '../../config/resourceApi';
 import { configureStore, StoreType } from '../../config/store';
+import { initialState } from '../../redux/authentication/slice';
 import { buildIndexPath, renderIndexRoute } from '../../routes';
 import { getDisplayTimeDiffFromNowString } from '../../shared/time';
 import {
@@ -58,6 +59,19 @@ beforeEach(() => {
   store.getState().authenticationState = buildAuthenticationState({
     loggedInUserId: loggedInUser.userId,
   });
+});
+
+it('should redirect to login page when user is not logged in', () => {
+  store.getState().authenticationState = { ...initialState };
+
+  renderWithProviders(
+    <>
+      {renderIndexRoute()} {renderMockedLoginRoute()}
+    </>,
+    { route: buildIndexPath(), store }
+  );
+
+  expect(screen.getByTestId('login-page')).toBeInTheDocument();
 });
 
 it('should load data and show page when data is loaded', async () => {

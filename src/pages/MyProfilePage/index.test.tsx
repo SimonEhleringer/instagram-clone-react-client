@@ -71,6 +71,19 @@ beforeEach(() => {
   };
 });
 
+it('should redirect to login page when user is not logged in', () => {
+  store.getState().authenticationState = { ...initialState };
+
+  renderWithProviders(
+    <>
+      {renderMyProfileRoute()} {renderMockedLoginRoute()}
+    </>,
+    { route: buildMyProfilePath(), store }
+  );
+
+  expect(screen.getByTestId('login-page')).toBeInTheDocument();
+});
+
 it('should load data and show profile when data is loaded and no errors occurred', async () => {
   renderWithProviders(renderMyProfileRoute(), {
     route: buildMyProfilePath(),

@@ -6,26 +6,16 @@ import { buildLoginPath } from '../../routes';
 
 interface ProtectedRouteProps extends RouteProps {}
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
-  component,
-  children,
-  ...rest
-}: any) => {
+const ProtectedRoute: React.FC<ProtectedRouteProps> = (props) => {
   const loggedInUserId = useSelector(
     (state: ReduxState) => state.authenticationState.loggedInUserId
   );
 
-  const renderRouteComponent = (props: any) => {
-    const componentToRender = component ? component : children;
+  if (!loggedInUserId) {
+    return <Redirect to={buildLoginPath()} />;
+  }
 
-    return !loggedInUserId ? (
-      <Redirect to={buildLoginPath()} />
-    ) : (
-      React.createElement(componentToRender, props)
-    );
-  };
-
-  return <Route {...rest} render={renderRouteComponent} />;
+  return <Route {...props} />;
 };
 
 export default ProtectedRoute;

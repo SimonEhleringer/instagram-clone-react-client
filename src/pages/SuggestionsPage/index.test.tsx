@@ -22,6 +22,7 @@ import {
   buildMockedCloudinaryImageSource,
   buildSuggestionsResponseDto,
   buildUserResponseDto,
+  renderMockedLoginRoute,
   renderMockedUserProfileRoute,
   renderWithProviders,
 } from '../../test-utils';
@@ -50,6 +51,19 @@ beforeEach(() => {
 
   store = configureStore();
   store.getState().authenticationState = buildAuthenticationState();
+});
+
+it('should redirect to login page when user is not logged in', () => {
+  store.getState().authenticationState = { ...initialState };
+
+  renderWithProviders(
+    <>
+      {renderSuggestionsRoute()} {renderMockedLoginRoute()}
+    </>,
+    { route: buildSuggestionsPath(), store }
+  );
+
+  expect(screen.getByTestId('login-page')).toBeInTheDocument();
 });
 
 it('should load data and show suggestions when no errors occured', async () => {
