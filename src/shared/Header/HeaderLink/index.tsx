@@ -7,13 +7,19 @@ export interface HeaderLinkProps {
   Icon: IconType;
   ActiveIcon: IconType;
   to: string;
+  dataTestId: string;
 }
 
-const HeaderLink: React.FC<HeaderLinkProps> = ({ Icon, ActiveIcon, to }) => {
+const HeaderLink: React.FC<HeaderLinkProps> = ({
+  Icon,
+  ActiveIcon,
+  to,
+  dataTestId,
+}) => {
   const size = 24;
 
   return (
-    <>
+    <div data-testid={dataTestId}>
       <NavLink
         data-testid='normalLink'
         exact
@@ -33,7 +39,7 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ Icon, ActiveIcon, to }) => {
       >
         <ActiveIcon size={size} />
       </NavLink>
-    </>
+    </div>
   );
 };
 

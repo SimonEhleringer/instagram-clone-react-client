@@ -31,6 +31,7 @@ const Header: React.FC<HeaderProps> = () => {
               Icon={BsHouseDoor}
               ActiveIcon={BsHouseDoorFill}
               to={buildIndexPath()}
+              dataTestId='indexPageLink'
             />
 
             <AddNewPostLink />
@@ -39,11 +40,13 @@ const Header: React.FC<HeaderProps> = () => {
               Icon={BsHeart}
               ActiveIcon={BsHeartFill}
               to={buildSuggestionsPath()}
+              dataTestId='suggestionsPageLink'
             />
             <HeaderLink
               Icon={BsPerson}
               ActiveIcon={BsPersonFill}
               to={buildMyProfilePath()}
+              dataTestId='profilePageLink'
             />
           </div>
         </div>

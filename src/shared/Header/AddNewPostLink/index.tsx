@@ -1,14 +1,14 @@
-import React from "react";
-import { BsPlusCircle, BsPlusCircleFill } from "react-icons/bs";
-import { useHistory } from "react-router";
-import HeaderLink from "../HeaderLink";
-import "./style.scss";
-import { buildNewPostPath, buildNewPostPathname } from "../../../routes";
-import { useReadFileFromEvent } from "../../hooks/useReadFileFromEvent";
-import InvisibleButton from "../../InvisibleButton";
-import HiddenImageInput from "../../HiddenImageInput";
-import { useHiddenInput } from "../../hooks/useHiddenInput";
-import { NewPostPageState } from "../../../pages/NewPostPage";
+import React from 'react';
+import { BsPlusCircle, BsPlusCircleFill } from 'react-icons/bs';
+import { useHistory } from 'react-router';
+import HeaderLink from '../HeaderLink';
+import './style.scss';
+import { buildNewPostPath, buildNewPostPathname } from '../../../routes';
+import { useReadFileFromEvent } from '../../hooks/useReadFileFromEvent';
+import InvisibleButton from '../../InvisibleButton';
+import HiddenImageInput from '../../HiddenImageInput';
+import { useHiddenInput } from '../../hooks/useHiddenInput';
+import { NewPostPageState } from '../../../pages/NewPostPage';
 
 const AddNewPostLink = () => {
   const history = useHistory();
@@ -30,11 +30,12 @@ const AddNewPostLink = () => {
     <InvisibleButton onClick={() => pretendClickOnFileInput()}>
       <HiddenImageInput ref={fileInputRef} onChange={handleInputChange} />
 
-      <div className="add-new-post-link__prevent-click" />
+      <div className='add-new-post-link__prevent-click' />
       <HeaderLink
         Icon={BsPlusCircle}
         ActiveIcon={BsPlusCircleFill}
         to={buildNewPostPathname()}
+        dataTestId='newPostPageLink'
       />
     </InvisibleButton>
   );
