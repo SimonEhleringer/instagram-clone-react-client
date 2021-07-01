@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router";
-import Loader from "../../shared/Loader";
-import AppLayout from "../../shared/AppLayout";
-import SuggestionsList from "../../suggestions/SuggestionsList";
-import SlimPageLayout from "../../shared/SlimPageLayout";
+import React, { useCallback, useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router';
+import PageLoader from '../../shared/PageLoader';
+import AppLayout from '../../shared/AppLayout';
+import SuggestionsList from '../../suggestions/SuggestionsList';
+import SlimPageLayout from '../../shared/SlimPageLayout';
 
-import { UserResponseDto } from "../../api/meFollowed";
-import { getSuggestions } from "../../api/meSuggestions";
-import ResponsiveHeading from "../../shared/ResponsiveHeading";
+import { UserResponseDto } from '../../api/meFollowed';
+import { getSuggestions } from '../../api/meSuggestions';
+import ResponsiveHeading from '../../shared/ResponsiveHeading';
 
 const SuggestionsPage: React.FC<RouteComponentProps> = () => {
   const [suggestions, setSuggestions] = useState<UserResponseDto[] | undefined>(
@@ -25,7 +25,7 @@ const SuggestionsPage: React.FC<RouteComponentProps> = () => {
   return (
     <AppLayout>
       {!suggestions ? (
-        <Loader />
+        <PageLoader />
       ) : (
         <SlimPageLayout>
           <ResponsiveHeading>Vorschläge für dich</ResponsiveHeading>

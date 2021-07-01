@@ -1,6 +1,6 @@
-import React from "react";
-import "./style.scss";
-import ClipLoader from "react-spinners/ClipLoader";
+import React from 'react';
+import './style.scss';
+import Loader from '../Loader';
 
 export enum ButtonType {
   PrimaryContained,
@@ -22,7 +22,7 @@ export interface ButtonProps
 const Button: React.FC<ButtonProps> = ({
   isLoading = false,
   buttonType = ButtonType.PrimaryContained,
-  loaderDataTestId = "buttonLoader",
+  loaderDataTestId = 'buttonLoader',
   children,
   ...rest
 }) => {
@@ -30,25 +30,25 @@ const Button: React.FC<ButtonProps> = ({
     <button
       className={`button ${
         buttonType === ButtonType.PrimaryContained
-          ? "button--primary-contained"
-          : ""
+          ? 'button--primary-contained'
+          : ''
       } ${
         buttonType === ButtonType.SecondaryContained
-          ? "button--secondary-contained"
-          : ""
+          ? 'button--secondary-contained'
+          : ''
       } ${
-        buttonType === ButtonType.PrimaryText ? "button--primary-text" : " "
-      } ${isLoading ? "button--loading" : ""}`}
+        buttonType === ButtonType.PrimaryText ? 'button--primary-text' : ' '
+      } ${isLoading ? 'button--loading' : ''}`}
       {...rest}
     >
       {isLoading && (
-        <div className="button__spinner" data-testid={loaderDataTestId}>
-          <ClipLoader
-            size="1em"
+        <div className='button__spinner' data-testid={loaderDataTestId}>
+          <Loader
+            size='1em'
             color={`
-          ${buttonType === ButtonType.PrimaryContained ? "white" : ""}
-          ${buttonType === ButtonType.SecondaryContained ? "black" : ""}
-          ${buttonType === ButtonType.PrimaryText ? "black" : ""}`}
+          ${buttonType === ButtonType.PrimaryContained ? 'white' : ''}
+          ${buttonType === ButtonType.SecondaryContained ? 'black' : ''}
+          ${buttonType === ButtonType.PrimaryText ? 'black' : ''}`}
           />
         </div>
       )}

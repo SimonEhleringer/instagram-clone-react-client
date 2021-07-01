@@ -9,7 +9,7 @@ import {
 import { useFetchProfileInformation } from '../../profile/useFetchProfileInformation';
 import UserProfile from '../../profile/UserProfile';
 import AppLayout from '../../shared/AppLayout';
-import Loader from '../../shared/Loader';
+import PageLoader from '../../shared/PageLoader';
 import NormalPageLayout from '../../shared/NormalPageLayout';
 
 export interface UserProfilePageParams {
@@ -45,7 +45,7 @@ const UserProfilePage: React.FC<RouteComponentProps<UserProfilePageParams>> = ({
   return (
     <AppLayout>
       {!user || !posts || !followers || !followed || !loggedInUsersFollowed ? (
-        <Loader />
+        <PageLoader />
       ) : (
         <NormalPageLayout>
           <UserProfile

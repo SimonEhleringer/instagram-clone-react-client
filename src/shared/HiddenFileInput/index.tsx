@@ -1,5 +1,4 @@
 import React from 'react';
-import { HiddenImageInputProps } from '../HiddenImageInput';
 
 export interface HiddenFileInputProps
   extends React.DetailedHTMLProps<
@@ -7,20 +6,11 @@ export interface HiddenFileInputProps
     HTMLInputElement
   > {}
 
-// TODO: data-testid should be passed only as props
 const HiddenFileInput = React.forwardRef<
   HTMLInputElement,
-  HiddenImageInputProps
+  HiddenFileInputProps
 >((props, ref) => {
-  return (
-    <input
-      data-testid='hiddenFileInput'
-      type='file'
-      style={{ display: 'none' }}
-      {...props}
-      ref={ref}
-    />
-  );
+  return <input type='file' style={{ display: 'none' }} {...props} ref={ref} />;
 });
 
 export default HiddenFileInput;

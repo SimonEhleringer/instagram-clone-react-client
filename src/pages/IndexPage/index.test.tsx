@@ -63,7 +63,7 @@ beforeEach(() => {
 it('should load data and show page when data is loaded', async () => {
   renderWithProviders(renderIndexRoute(), { route: buildIndexPath(), store });
 
-  expect(screen.getByTestId('loader')).toBeInTheDocument();
+  expect(screen.getByTestId('pageLoader')).toBeInTheDocument();
 
   await waitFor(() =>
     expect(

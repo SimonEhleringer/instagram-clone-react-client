@@ -58,7 +58,7 @@ it('should load data and show suggestions when no errors occured', async () => {
     store,
   });
 
-  expect(screen.getByTestId('loader')).toBeInTheDocument();
+  expect(screen.getByTestId('pageLoader')).toBeInTheDocument();
 
   const buttons = await screen.findAllByRole('button', { name: 'Abonnieren' });
 

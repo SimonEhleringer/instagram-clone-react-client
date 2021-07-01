@@ -69,7 +69,7 @@ it('should load data and show profile when data is loaded', async () => {
     store,
   });
 
-  expect(screen.getByTestId('loader')).toBeInTheDocument();
+  expect(screen.getByTestId('pageLoader')).toBeInTheDocument();
 
   await waitFor(() =>
     expect(

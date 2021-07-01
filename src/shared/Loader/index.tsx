@@ -1,23 +1,13 @@
 import React from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
-import './style.scss';
 
-interface LoaderProps {
-  loading?: boolean;
+export interface LoaderProps {
+  color: string;
+  size: string;
 }
 
-const Loader: React.FC<LoaderProps> = ({ loading = true, children }) => {
-  return (
-    <>
-      {loading ? (
-        <div data-testid='loader' className='loader'>
-          <ClipLoader color='#8e8e8e' size='4rem' />
-        </div>
-      ) : (
-        children
-      )}
-    </>
-  );
+const Loader: React.FC<LoaderProps> = ({ color, size }) => {
+  return <ClipLoader color={color} size={size} />;
 };
 
 export default Loader;

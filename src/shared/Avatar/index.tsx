@@ -7,7 +7,6 @@ export interface AvatarProps {
   username: string;
 }
 
-// TODO: Maybe add manual mock for automatically mocking Image component from cloudinary?
 const Avatar: React.FC<AvatarProps> = ({
   publicProfileImageId,
   widthInPx,

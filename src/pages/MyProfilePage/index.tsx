@@ -2,7 +2,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../../shared/AppLayout';
 
-import Loader from '../../shared/Loader';
+import PageLoader from '../../shared/PageLoader';
 import { ReduxState } from '../../config/store';
 import { useSelector } from 'react-redux';
 import MyProfile from '../../profile/MyProfile';
@@ -22,7 +22,7 @@ const MyProfilePage: React.FC<RouteComponentProps> = () => {
   return (
     <AppLayout>
       {!user || !posts || !followers || !followed ? (
-        <Loader />
+        <PageLoader />
       ) : (
         <NormalPageLayout>
           <MyProfile

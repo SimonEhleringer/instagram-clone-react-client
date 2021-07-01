@@ -5,7 +5,7 @@ import { UserResponseDto } from '../../api/meFollowed';
 import { getSuggestions } from '../../api/meSuggestions';
 import Feed from '../../feed/Feed';
 import AppLayout from '../../shared/AppLayout';
-import Loader from '../../shared/Loader';
+import PageLoader from '../../shared/PageLoader';
 import NormalPageLayout from '../../shared/NormalPageLayout';
 import './style.scss';
 import MyProfilePreview from '../../shared/ProfilePreview/MyProfilePreview';
@@ -43,7 +43,7 @@ const IndexPage = () => {
   return (
     <AppLayout>
       {!feed || !suggestions || !me ? (
-        <Loader />
+        <PageLoader />
       ) : (
         <>
           {feed.length === 0 ? (
