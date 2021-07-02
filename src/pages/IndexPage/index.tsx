@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { FeedPostResponseDto, getFeed } from '../../api/meFeed';
-import { UserResponseDto } from '../../api/meFollowed';
-import { getSuggestions } from '../../api/meSuggestions';
-import Feed from '../../feed/Feed';
-import AppLayout from '../../shared/AppLayout';
-import PageLoader from '../../shared/PageLoader';
-import NormalPageLayout from '../../shared/NormalPageLayout';
-import './style.scss';
-import MyProfilePreview from '../../shared/ProfilePreview/MyProfilePreview';
-import { getMe } from '../../api/me';
-import SideBarSuggestions from '../../suggestions/SideBarSuggestions';
-import VerticalSplitLayout from '../../shared/VerticalSplitLayout';
-import { Redirect } from 'react-router';
-import { buildSuggestionsPath } from '../../routes';
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { FeedPostResponseDto, getFeed } from "../../api/meFeed";
+import { UserResponseDto } from "../../api/meFollowed";
+import { getSuggestions } from "../../api/meSuggestions";
+import Feed from "../../feed/Feed";
+import PageLoader from "../../shared/PageLoader";
+import NormalPageLayout from "../../shared/NormalPageLayout";
+import "./style.scss";
+import MyProfilePreview from "../../shared/ProfilePreview/MyProfilePreview";
+import { getMe } from "../../api/me";
+import SideBarSuggestions from "../../suggestions/SideBarSuggestions";
+import VerticalSplitLayout from "../../shared/VerticalSplitLayout";
+import { Redirect } from "react-router";
+import { buildSuggestionsPath } from "../../routes";
 
 const IndexPage = () => {
   const [feed, setFeed] = useState<FeedPostResponseDto[] | undefined>(
@@ -41,7 +40,7 @@ const IndexPage = () => {
   };
 
   return (
-    <AppLayout>
+    <>
       {!feed || !suggestions || !me ? (
         <PageLoader />
       ) : (
@@ -51,11 +50,11 @@ const IndexPage = () => {
           ) : (
             <NormalPageLayout>
               <VerticalSplitLayout>
-                <div className='index-page__feed'>
+                <div className="index-page__feed">
                   <Feed feed={feed} />
                 </div>
-                <div className='index-page__right'>
-                  <div className='index-page__my-profile-preview'>
+                <div className="index-page__right">
+                  <div className="index-page__my-profile-preview">
                     <MyProfilePreview me={me} avatarSizeInPx={56} />
                   </div>
 
@@ -69,7 +68,7 @@ const IndexPage = () => {
           )}
         </>
       )}
-    </AppLayout>
+    </>
   );
 };
 

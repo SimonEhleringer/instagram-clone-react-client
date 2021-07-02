@@ -1,16 +1,8 @@
-import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
-import './style.scss';
-import { CloudinaryContext } from 'cloudinary-react';
-import {
-  renderIndexRoute,
-  renderLoginRoute,
-  renderMyProfileRoute,
-  renderNewPostRoute,
-  renderRegisterRoute,
-  renderSuggestionsRoute,
-  renderUserProfileRoute,
-} from '../routes';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "./style.scss";
+import { CloudinaryContext } from "cloudinary-react";
+import { Routes } from "../routes";
 
 // TODO: Check for accessibility
 // TODO: Profile image on profile page: has white background (but only sometimes?)
@@ -29,15 +21,21 @@ const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
       <BrowserRouter>
-        <Switch>
-          {renderIndexRoute()}
-          {renderRegisterRoute()}
+        <Routes />
+        {/* <Switch>
           {renderLoginRoute()}
-          {renderSuggestionsRoute()}
-          {renderNewPostRoute()}
-          {renderMyProfileRoute()}
-          {renderUserProfileRoute()}
-        </Switch>
+          {renderRegisterRoute()}
+          <Route>
+            <Header />
+            <Switch>
+              {renderIndexRoute()}
+              {renderSuggestionsRoute()}
+              {renderNewPostRoute()}
+              {renderMyProfileRoute()}
+              {renderUserProfileRoute()}
+            </Switch>
+          </Route>
+        </Switch> */}
       </BrowserRouter>
     </CloudinaryContext>
   );

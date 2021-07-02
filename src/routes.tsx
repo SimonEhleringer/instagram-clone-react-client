@@ -8,6 +8,8 @@ import NewPostPage, { NewPostPageState } from "./pages/NewPostPage";
 import MyProfilePage from "./pages/MyProfilePage";
 import UserProfilePage from "./pages/UserProfilePage";
 import React from "react";
+import { Switch } from "react-router-dom";
+import Header from "./shared/Header";
 
 export const indexPath = "/";
 export const buildIndexPath = () => "/";
@@ -56,3 +58,22 @@ export const buildUserProfilePath = (userId: string) => `/profiles/${userId}`;
 export const renderUserProfileRoute = (
   component: React.ComponentType<any> = UserProfilePage
 ) => <ProtectedRoute path={userProfilePath} component={component} />;
+
+export const Routes = () => {
+  return (
+    <Switch>
+      {renderLoginRoute()}
+      {renderRegisterRoute()}
+      <Route>
+        <Header />
+        <Switch>
+          {renderIndexRoute()}
+          {renderSuggestionsRoute()}
+          {renderNewPostRoute()}
+          {renderMyProfileRoute()}
+          {renderUserProfileRoute()}
+        </Switch>
+      </Route>
+    </Switch>
+  );
+};
