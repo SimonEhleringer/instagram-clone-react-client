@@ -21,7 +21,8 @@ import { buildGetUsersPostsUrl } from '../../api/userPost';
 import resourceApi from '../../config/resourceApi';
 import { configureStore, StoreType } from '../../config/store';
 import { initialState } from '../../redux/authentication/slice';
-import { buildUserProfilePath, renderUserProfileRoute } from '../../routes';
+import { buildUserProfilePath } from '../../routes/path';
+import { renderUserProfileRoute } from '../../routes/renderers';
 import {
   buildAuthenticationState,
   buildAxiosResponseWithData,

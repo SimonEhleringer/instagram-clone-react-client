@@ -3,7 +3,7 @@ import { BsPlusCircle, BsPlusCircleFill } from 'react-icons/bs';
 import { useHistory } from 'react-router';
 import HeaderLink from '../HeaderLink';
 import './style.scss';
-import { buildNewPostPath, buildNewPostPathname } from '../../../routes';
+import { buildNewPostPath, buildNewPostPathname } from '../../../routes/path';
 import { useReadFileFromEvent } from '../../hooks/useReadFileFromEvent';
 import InvisibleButton from '../../InvisibleButton';
 import HiddenImageInput from '../../HiddenImageInput';
@@ -28,7 +28,11 @@ const AddNewPostLink = () => {
 
   return (
     <InvisibleButton onClick={() => pretendClickOnFileInput()}>
-      <HiddenImageInput ref={fileInputRef} onChange={handleInputChange} />
+      <HiddenImageInput
+        ref={fileInputRef}
+        onChange={handleInputChange}
+        data-testid='hiddenNewPostInput'
+      />
 
       <div className='add-new-post-link__prevent-click' />
       <HeaderLink

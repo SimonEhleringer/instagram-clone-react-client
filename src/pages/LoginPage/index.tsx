@@ -9,7 +9,7 @@ import AuthenticationForm from '../../authentication/AuthenticationForm';
 import AuthenticationPageLayout from '../../authentication/AuthenticationPageLayout';
 import { getErrorsArrayFromError } from '../../shared/error';
 import Input from '../../shared/Input';
-import { buildRegisterPath } from '../../routes';
+import { buildRegisterPath } from '../../routes/path';
 
 // TODO: Add tests for loading
 const LoginPage: React.FC<RouteComponentProps> = ({ history }) => {

@@ -17,7 +17,7 @@ import { createMemoryHistory } from 'history';
 import { ErrorResponseDto } from '../../shared/error';
 import LoginPage from './index';
 import { configureStore } from '../../config/store';
-import { buildLoginPath, loginPath } from '../../routes';
+import { buildLoginPath, loginPath } from '../../routes/path';
 
 jest.mock('../../api/authentication.ts');
 const requestLoginMock = requestLogin as jest.MockedFunction<

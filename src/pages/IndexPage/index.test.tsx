@@ -11,7 +11,8 @@ import {
 import resourceApi from '../../config/resourceApi';
 import { configureStore, StoreType } from '../../config/store';
 import { initialState } from '../../redux/authentication/slice';
-import { buildIndexPath, renderIndexRoute } from '../../routes';
+import { buildIndexPath } from '../../routes/path';
+import { renderIndexRoute } from '../../routes/renderers';
 import { getDisplayTimeDiffFromNowString } from '../../shared/time';
 import {
   buildAuthenticationState,

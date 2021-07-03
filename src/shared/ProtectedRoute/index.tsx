@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, RouteProps } from 'react-router';
 import { ReduxState } from '../../config/store';
-import { buildLoginPath } from '../../routes';
+import { buildLoginPath } from '../../routes/path';
 
 interface ProtectedRouteProps extends RouteProps {}
 

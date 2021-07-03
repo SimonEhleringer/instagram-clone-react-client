@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { UserResponseDto } from '../../api/meFollowed';
-import { buildSuggestionsPath } from '../../routes';
+import { buildSuggestionsPath } from '../../routes/path';
 import { ButtonType } from '../../shared/Button';
 import UserProfilePreview from '../../shared/ProfilePreview/UserProfilePreview';
 import './style.scss';

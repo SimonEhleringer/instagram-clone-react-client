@@ -15,10 +15,10 @@ import {
   buildIndexPath,
   buildMyProfilePath,
   buildSuggestionsPath,
-} from '../../routes';
+} from '../../routes/path';
 
 interface HeaderProps {}
-// TODO: Add tests (Maybe add tests with integration for App component)
+
 const Header: React.FC<HeaderProps> = () => {
   return (
     <div className='header__page-padding'>
@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = () => {
               Icon={BsPerson}
               ActiveIcon={BsPersonFill}
               to={buildMyProfilePath()}
-              dataTestId='profilePageLink'
+              dataTestId='myProfilePageLink'
             />
           </div>
         </div>

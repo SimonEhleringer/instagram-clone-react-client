@@ -11,11 +11,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { configureStore, StoreType } from '../../config/store';
 import { buildAddFollowUrl, UserResponseDto } from '../../api/meFollowed';
-import {
-  buildSuggestionsPath,
-  renderSuggestionsRoute,
-  suggestionsPath,
-} from '../../routes';
+import { buildSuggestionsPath, suggestionsPath } from '../../routes/path';
+import { renderSuggestionsRoute } from '../../routes/renderers';
 import {
   buildAuthenticationState,
   buildAxiosResponseWithData,

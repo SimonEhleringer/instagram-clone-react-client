@@ -5,7 +5,8 @@ import { buildAddPostUrl } from '../../api/mePost';
 import { PostRequestDto } from '../../api/sharedDtos';
 import resourceApi from '../../config/resourceApi';
 import { configureStore, StoreType } from '../../config/store';
-import { buildNewPostPath, renderNewPostRoute } from '../../routes';
+import { buildNewPostPath } from '../../routes/path';
+import { renderNewPostRoute } from '../../routes/renderers';
 import {
   buildAuthenticationState,
   buildAxiosError,
@@ -40,6 +41,20 @@ it('should redirect to login page when user is not logged in', () => {
   );
 
   expect(screen.getByTestId('login-page')).toBeInTheDocument();
+});
+
+it('should show image preview when route was given the data uri', () => {
+  const { imageDataUri } = buildMockedImage();
+
+  renderWithProviders(renderNewPostRoute(), {
+    route: buildNewPostPath({ selectedImageDataUri: imageDataUri }),
+    store,
+  });
+
+  expect(screen.getByAltText('selectedImagePreview')).toHaveAttribute(
+    'src',
+    imageDataUri
+  );
 });
 
 it('should upload post and redirect to index page when button was pressed and API call was successful', async () => {

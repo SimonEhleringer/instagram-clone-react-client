@@ -1,8 +1,8 @@
-import { render } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { configureStore, StoreType } from "../config/store";
-import { MemoryRouter } from "react-router";
-import { buildIndexPath } from "../routes";
+import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { configureStore, StoreType } from '../config/store';
+import { MemoryRouter } from 'react-router';
+import { buildIndexPath } from '../routes/path';
 
 export const renderWithProviders = (
   ui: JSX.Element,

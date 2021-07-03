@@ -1,8 +1,37 @@
-import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "./style.scss";
-import { CloudinaryContext } from "cloudinary-react";
-import { Routes } from "../routes";
+import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import './style.scss';
+import { CloudinaryContext } from 'cloudinary-react';
+import {
+  renderIndexRoute,
+  renderLoginRoute,
+  renderMyProfileRoute,
+  renderNewPostRoute,
+  renderRegisterRoute,
+  renderSuggestionsRoute,
+  renderUserProfileRoute,
+} from '../routes/renderers';
+import Header from '../shared/Header';
+
+// TODO: Maybe put in extra file and tests also
+export const Routes = () => {
+  return (
+    <Switch>
+      {renderLoginRoute()}
+      {renderRegisterRoute()}
+      <Route>
+        <Header />
+        <Switch>
+          {renderIndexRoute()}
+          {renderSuggestionsRoute()}
+          {renderNewPostRoute()}
+          {renderMyProfileRoute()}
+          {renderUserProfileRoute()}
+        </Switch>
+      </Route>
+    </Switch>
+  );
+};
 
 // TODO: Check for accessibility
 // TODO: Profile image on profile page: has white background (but only sometimes?)
@@ -17,25 +46,13 @@ import { Routes } from "../routes";
 // TODO: Images loading
 // TODO: Add redux persist
 // TODO: Clean up public folder
+// TODO: Add test for image preview on new post page
+// TODO: Delete tests on pages for redirect to login page
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>
       <BrowserRouter>
         <Routes />
-        {/* <Switch>
-          {renderLoginRoute()}
-          {renderRegisterRoute()}
-          <Route>
-            <Header />
-            <Switch>
-              {renderIndexRoute()}
-              {renderSuggestionsRoute()}
-              {renderNewPostRoute()}
-              {renderMyProfileRoute()}
-              {renderUserProfileRoute()}
-            </Switch>
-          </Route>
-        </Switch> */}
       </BrowserRouter>
     </CloudinaryContext>
   );

@@ -1,38 +1,119 @@
-import App from ".";
-import { Routes } from "../routes";
+import { fireEvent, screen } from '@testing-library/react';
+import { Routes } from '.';
+import { configureStore, StoreType } from '../config/store';
+import { initialState } from '../redux/authentication/slice';
 import {
-  renderMockedIndexRoute,
-  renderMockedLoginRoute,
-  renderMockedMyProfileRoute,
-  renderMockedNewPostRoute,
-  renderMockedRegisterRoute,
-  renderMockedSuggestionsRoute,
-  renderMockedUserProfileRoute,
+  buildIndexPath,
+  buildMyProfilePath,
+  buildNewPostPath,
+  buildNewPostPathname,
+  buildSuggestionsPath,
+  buildUserProfilePath,
+} from '../routes/path';
+import {
+  buildAuthenticationState,
+  buildMockedImage,
+  MockedIndexPage,
+  MockedLoginPage,
+  MockedMyProfilePage,
+  MockedNewPostPage,
+  MockedRegisterPage,
+  MockedSuggestionsPage,
+  MockedUserProfilePage,
   renderWithProviders,
-} from "../test-utils";
+} from '../test-utils';
+import faker from 'faker';
+import userEvent from '@testing-library/user-event';
 
-jest.mock("../routes.tsx", () => {
+jest.mock('../routes/renderers.tsx', () => {
+  const actual = jest.requireActual('../routes/renderers.tsx');
+
   return {
-    renderIndexRoute: renderMockedIndexRoute,
-    renderRegisterRoute: renderMockedRegisterRoute,
-    renderLoginRoute: renderMockedLoginRoute,
-    renderSuggestionsRoute: renderMockedSuggestionsRoute,
-    renderNewPostRoute: renderMockedNewPostRoute,
-    renderMyProfileRoute: renderMockedMyProfileRoute,
-    renderUserProfileRoute: renderMockedUserProfileRoute,
+    renderIndexRoute: () => actual.renderIndexRoute(MockedIndexPage),
+    renderRegisterRoute: () => actual.renderRegisterRoute(MockedRegisterPage),
+    renderLoginRoute: () => actual.renderLoginRoute(MockedLoginPage),
+    renderSuggestionsRoute: () =>
+      actual.renderSuggestionsRoute(MockedSuggestionsPage),
+    renderNewPostRoute: () => actual.renderNewPostRoute(MockedNewPostPage),
+    renderMyProfileRoute: () =>
+      actual.renderMyProfileRoute(MockedMyProfilePage),
+    renderUserProfileRoute: () =>
+      actual.renderUserProfileRoute(MockedUserProfilePage),
   };
 });
 
-it("render login route when user is not logged in", () => {
-  renderWithProviders(<Routes />, {});
+let store: StoreType;
+
+beforeEach(() => {
+  store = configureStore();
+  store.getState().authenticationState = buildAuthenticationState();
 });
 
-/*
+it.each([
+  [buildIndexPath()],
+  [buildSuggestionsPath()],
+  [buildNewPostPathname()],
+  [buildMyProfilePath()],
+  [buildUserProfilePath(faker.datatype.uuid())],
+])(
+  'should render login route when user is not logged in and route is "%s"',
+  (route) => {
+    store.getState().authenticationState = { ...initialState };
 
-- render login, when user not logged in
-  - test with all protected routes 
+    renderWithProviders(<Routes />, {
+      route,
+      store,
+    });
 
-- render index route when user is logged in
-- render all routes that are accessibly threw header
+    expect(screen.getByTestId('login-page')).toBeInTheDocument();
+  }
+);
 
-*/
+it.each([
+  [buildIndexPath(), 'index-page'],
+  [buildSuggestionsPath(), 'suggestions-page'],
+  [
+    buildNewPostPath({ selectedImageDataUri: buildMockedImage().imageDataUri }),
+    'new-post-page',
+  ],
+  [buildMyProfilePath(), 'my-profile-page'],
+  [buildUserProfilePath(faker.datatype.uuid()), 'user-profile-page'],
+])(
+  'should render "%s" route when user is logged in',
+  (route, mockedPageTestId) => {
+    renderWithProviders(<Routes />, {
+      route,
+      store,
+    });
+
+    expect(screen.getByTestId(mockedPageTestId)).toBeInTheDocument();
+  }
+);
+
+it('should navigate throw all routes when routes in header are pressed successively', async () => {
+  renderWithProviders(<Routes />, {
+    store,
+  });
+
+  const { image } = buildMockedImage();
+
+  fireEvent.change(screen.getByTestId('hiddenNewPostInput'), {
+    target: {
+      files: [image],
+    },
+  });
+
+  expect(await screen.findByTestId('new-post-page')).toBeInTheDocument();
+
+  userEvent.click(screen.getByTestId('suggestionsPageLink'));
+
+  expect(screen.getByTestId('suggestions-page')).toBeInTheDocument();
+
+  userEvent.click(screen.getByTestId('myProfilePageLink'));
+
+  expect(screen.getByTestId('my-profile-page')).toBeInTheDocument();
+
+  userEvent.click(screen.getByTestId('indexPageLink'));
+
+  expect(screen.getByTestId('index-page')).toBeInTheDocument();
+});

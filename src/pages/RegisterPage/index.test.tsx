@@ -16,7 +16,7 @@ import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../..
 import { ErrorResponseDto } from '../../shared/error';
 import RegisterPage from '.';
 import { configureStore } from '../../config/store';
-import { buildRegisterPath, registerPath } from '../../routes';
+import { buildRegisterPath, registerPath } from '../../routes/path';
 
 jest.mock('../../api/authentication.ts');
 const requestRegisterMock = requestRegister as jest.MockedFunction<
