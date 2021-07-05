@@ -6,19 +6,20 @@ import "./style.scss";
 import Errors from "../../shared/Errors";
 
 export interface AuthenticationFormProps {
-  onSubmit: () => void;
+  handleSubmit: () => void;
   subTitle?: string;
   submitButtonCaption: string;
   redirectText: string;
   redirectButtonText: string;
   redirectTo: string;
   errors: string[];
-  loading: boolean;
+  isLoading: boolean;
 }
 
 // TODO: Add tests for loading
+// TODO: Remove Data test ids
 const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
-  onSubmit,
+  handleSubmit,
   subTitle,
   submitButtonCaption,
   redirectText,
@@ -26,13 +27,13 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   redirectTo,
   children,
   errors,
-  loading,
+  isLoading,
 }) => {
   return (
     <form
       data-testid="authentication-form"
       className="authentication-form"
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     >
       <div className="authentication-form__box">
         <img
@@ -58,7 +59,7 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           {children}
 
           <div className="authentication-form__submit-button">
-            <Button type={"submit"} isLoading={loading}>
+            <Button type={"submit"} isLoading={isLoading}>
               {submitButtonCaption}
             </Button>
           </div>

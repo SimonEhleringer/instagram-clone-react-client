@@ -1,23 +1,23 @@
-import { fireEvent, render } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import React from 'react';
-import { Router } from 'react-router';
-import AuthenticationForm, { AuthenticationFormProps } from '.';
+import { fireEvent, render } from "@testing-library/react";
+import { createMemoryHistory } from "history";
+import React from "react";
+import { Router } from "react-router";
+import AuthenticationForm, { AuthenticationFormProps } from ".";
 
 const history = createMemoryHistory();
 
-it('should redirect when link is pressed', () => {
-  const redirectButtonText = 'redirectButtonText';
-  const redirectTo = '/redirectTo';
+it("should redirect when link is pressed", () => {
+  const redirectButtonText = "redirectButtonText";
+  const redirectTo = "/redirectTo";
 
   const { getByText } = renderComponent({
     errors: [],
-    onSubmit: () => {},
+    handleSubmit: () => {},
     redirectButtonText,
-    redirectText: '',
+    redirectText: "",
     redirectTo,
-    submitButtonCaption: '',
-    loading: false,
+    submitButtonCaption: "",
+    isLoading: false,
   });
 
   const linkEl = getByText(redirectButtonText);
@@ -27,38 +27,38 @@ it('should redirect when link is pressed', () => {
   expect(history.location.pathname).toBe(redirectTo);
 });
 
-it('should render texts and children', () => {
-  const errorText = 'errorText';
+it("should render texts and children", () => {
+  const errorText = "errorText";
   const errors = [errorText];
 
-  const redirectButtonText = 'redirectButtonText';
-  const redirectText = 'redirectText';
-  const submitButtonCaption = 'submitButtonCaption';
-  const subTitle = 'subTitle';
+  const redirectButtonText = "redirectButtonText";
+  const redirectText = "redirectText";
+  const submitButtonCaption = "submitButtonCaption";
+  const subTitle = "subTitle";
 
-  const innerText = 'inner text';
-  const children = <div data-testid='children'>{innerText}</div>;
+  const innerText = "inner text";
+  const children = <div data-testid="children">{innerText}</div>;
 
   const { getByTestId } = renderComponent(
     {
       errors,
-      onSubmit: () => {},
+      handleSubmit: () => {},
       redirectButtonText,
       redirectText,
-      redirectTo: '',
+      redirectTo: "",
       submitButtonCaption,
       subTitle,
-      loading: false,
+      isLoading: false,
     },
     children
   );
 
-  const errorsEl = getByTestId('errors');
-  const redirectTextEl = getByTestId('redirectText');
-  const buttonEl = getByTestId('button');
-  const subTitleEl = getByTestId('subTitle');
+  const errorsEl = getByTestId("errors");
+  const redirectTextEl = getByTestId("redirectText");
+  const buttonEl = getByTestId("button");
+  const subTitleEl = getByTestId("subTitle");
 
-  const childrenEl = getByTestId('children');
+  const childrenEl = getByTestId("children");
 
   expect(errorsEl.hasChildNodes()).toBe(true);
   expect(errorsEl.childNodes[0].textContent).toBe(errorText);
@@ -70,20 +70,20 @@ it('should render texts and children', () => {
   expect(childrenEl.textContent).toBe(innerText);
 });
 
-it('should call submit handler when submit event is fired', () => {
+it("should call submit handler when submit event is fired", () => {
   const onSubmitMock = jest.fn();
 
   const { getByTestId } = renderComponent({
     errors: [],
-    onSubmit: onSubmitMock,
-    redirectButtonText: '',
-    redirectText: '',
-    redirectTo: '',
-    submitButtonCaption: '',
-    loading: false,
+    handleSubmit: onSubmitMock,
+    redirectButtonText: "",
+    redirectText: "",
+    redirectTo: "",
+    submitButtonCaption: "",
+    isLoading: false,
   });
 
-  const authenticationFormEl = getByTestId('authentication-form');
+  const authenticationFormEl = getByTestId("authentication-form");
 
   fireEvent.submit(authenticationFormEl);
 

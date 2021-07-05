@@ -1,37 +1,25 @@
-import jwtDecode, { JwtPayload } from 'jwt-decode';
-import { AccessTokenParseError, getUserIdFromAccessToken } from './accessToken';
+import { AccessTokenParseError, getUserIdFromAccessToken } from "./accessToken";
 
-jest.mock('jwt-decode');
-const jwtDecodeMock = jwtDecode as jest.MockedFunction<typeof jwtDecode>;
+describe("getUserIdFromAccessToken", () => {
+  it("should parse JWT and return users ID", () => {
+    // sub: dde9efb4-327e-4906-be48-036e7daecd80
+    // secret: ABC
+    const accessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGU5ZWZiNC0zMjdlLTQ5MDYtYmU0OC0wMzZlN2RhZWNkODAifQ.v9sVHDE2nrdrjmCrpLG1ZGiNX1Zax5fAPGpsJbwCkyI";
 
-describe('getUserIdFromAccessToken', () => {
-  it('should parse JWT and return users ID', () => {
-    const accessToken = 'accessToken';
+    const expectedUserId = "dde9efb4-327e-4906-be48-036e7daecd80";
 
-    const expected = 'userId';
+    const userId = getUserIdFromAccessToken(accessToken);
 
-    const jwtPayload: JwtPayload = {
-      sub: expected,
-    };
-
-    jwtDecodeMock.mockReturnValue(jwtPayload);
-
-    const actual = getUserIdFromAccessToken(accessToken);
-
-    expect(actual).toBe(expected);
-    expect(jwtDecodeMock).toBeCalledWith(accessToken);
+    expect(userId).toBe(expectedUserId);
   });
 
-  it('should throw when no ID is returned', () => {
-    const accessToken = 'accessToken';
-
-    const jwtPayload: JwtPayload = {};
-
-    jwtDecodeMock.mockReturnValue(jwtPayload);
+  it("should throw when access token does not contain a user ID", () => {
+    const accessToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.CYY-KIKrF1-WEW_v6KU2z5I7aZrKjfv10ygYGqQCRyc";
 
     expect(() => getUserIdFromAccessToken(accessToken)).toThrow(
       AccessTokenParseError
     );
-    expect(jwtDecodeMock).toBeCalledWith(accessToken);
   });
 });
