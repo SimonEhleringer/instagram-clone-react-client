@@ -1,212 +1,93 @@
+import { screen, waitFor } from '@testing-library/react';
+import { buildRegisterUrl, RegisterRequest } from '../../api/authentication';
+import { buildRegisterPath } from '../../routes/path';
+import authenticationApi from '../../config/authenticationApi';
 import {
-  AuthenticationState,
-  initialState,
-} from '../../redux/authentication/slice';
-import { createMemoryHistory } from 'history';
-import { fireEvent, render, waitFor } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { Route, Router } from 'react-router';
-import {
-  AccessAndRefreshTokenResponse,
-  RegisterRequest,
-  requestRegister,
-} from '../../api/authentication';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
-import { ErrorResponseDto } from '../../shared/error';
-import RegisterPage from '.';
-import { configureStore } from '../../config/store';
-import { buildRegisterPath, registerPath } from '../../routes/path';
+  buildAccessAndRefreshTokenResponseDto,
+  buildAxiosError,
+  buildAxiosResponseWithData,
+  buildErrorResponseDto,
+  renderMockedIndexRoute,
+  renderMockedLoginRoute,
+  renderWithProviders,
+} from '../../test-utils';
+import { renderRegisterRoute } from '../../routes/renderers';
+import faker from 'faker';
+import userEvent from '@testing-library/user-event';
+import { when } from 'jest-when';
 
-jest.mock('../../api/authentication.ts');
-const requestRegisterMock = requestRegister as jest.MockedFunction<
-  typeof requestRegister
+jest.mock('../../config/authenticationApi.ts');
+const mockedAuthenticationApi = authenticationApi as jest.Mocked<
+  typeof authenticationApi
 >;
 
-jest.mock('../../authentication/utils.ts');
-const convertAccessAndRefreshTokenResponseToAuthenticationStateMock =
-  convertAccessAndRefreshTokenResponseToAuthenticationState as jest.MockedFunction<
-    typeof convertAccessAndRefreshTokenResponseToAuthenticationState
-  >;
-
-it('should call API and update state when API call was successful', async () => {
-  const history = createMemoryHistory({
-    initialEntries: [buildRegisterPath()],
-  });
-  const store = configureStore();
-
-  const { getByTestId } = render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Route path={registerPath} component={RegisterPage} />
-      </Router>
-    </Provider>
+it('should redirect to index route when register button was pressed and API call was successful', async () => {
+  renderWithProviders(
+    <>
+      {renderRegisterRoute()}
+      {renderMockedIndexRoute()}
+    </>,
+    { route: buildRegisterPath() }
   );
 
-  const authenticationFormEl = getByTestId('authentication-form');
-  const emailInputEl = getByTestId('emailInput');
-  const usernameInputEl = getByTestId('usernameInput');
-  const fullNameInputEl = getByTestId('fullNameInput');
-  const passwordEl = getByTestId('passwordInput');
+  const email = faker.internet.email();
+  const fullName = faker.name.findName();
+  const username = faker.internet.userName();
+  const password = faker.internet.password();
 
-  const apiResponseData: AccessAndRefreshTokenResponse = {
-    accessToken: 'accessToken',
-    refreshToken: 'refreshToken',
-  };
+  userEvent.type(screen.getByPlaceholderText('E-Mail Adresse'), email);
+  userEvent.type(screen.getByPlaceholderText('Vollständiger Name'), fullName);
+  userEvent.type(screen.getByPlaceholderText('Benutzername'), username);
+  userEvent.type(screen.getByPlaceholderText('Passwort'), password);
 
-  const apiConfig: AxiosRequestConfig = {};
-
-  const apiResponse: AxiosResponse<AccessAndRefreshTokenResponse> = {
-    data: apiResponseData,
-    config: apiConfig,
-    headers: [],
-    status: 200,
-    statusText: '',
-  };
-
-  requestRegisterMock.mockResolvedValue(apiResponse);
-
-  const authenticationState: AuthenticationState = {
-    accessToken: 'accessToken',
-    refreshToken: 'refreshToken',
-    loggedInUserId: 'loggedInUserId',
-  };
-
-  convertAccessAndRefreshTokenResponseToAuthenticationStateMock.mockReturnValue(
-    authenticationState
-  );
-
-  const email = 'email';
-  const username = 'username';
-  const fullName = 'fullName';
-  const password = 'password';
-
-  fireEvent.change(emailInputEl, {
-    target: {
-      value: email,
-    },
-  });
-
-  fireEvent.change(usernameInputEl, {
-    target: {
-      value: username,
-    },
-  });
-
-  fireEvent.change(fullNameInputEl, {
-    target: {
-      value: fullName,
-    },
-  });
-
-  fireEvent.change(passwordEl, {
-    target: {
-      value: password,
-    },
-  });
-
-  const formData: RegisterRequest = {
+  const request: RegisterRequest = {
     email,
     fullName,
-    password,
     username,
+    password,
   };
 
-  fireEvent.submit(authenticationFormEl);
+  when(mockedAuthenticationApi.post)
+    .calledWith(buildRegisterUrl(), request)
+    .mockResolvedValue(
+      buildAxiosResponseWithData(buildAccessAndRefreshTokenResponseDto())
+    );
 
-  await waitFor(() =>
-    expect(requestRegisterMock).toHaveBeenLastCalledWith(formData)
-  );
-  expect(
-    convertAccessAndRefreshTokenResponseToAuthenticationStateMock
-  ).toHaveBeenCalledWith(apiResponseData);
-  expect(store.getState().authenticationState).toEqual(authenticationState);
-  expect(history.location.pathname).toBe('/');
+  userEvent.click(screen.getByRole('button', { name: 'Registrieren' }));
+
+  expect(await screen.findByTestId('index-page')).toBeInTheDocument();
 });
 
-it('should call API and display errors when API call failed', async () => {
-  const history = createMemoryHistory({
-    initialEntries: [buildRegisterPath()],
-  });
-  const store = configureStore();
-
-  const { getByTestId } = render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Route path={registerPath} component={RegisterPage} />
-      </Router>
-    </Provider>
-  );
-
-  const authenticationFormEl = getByTestId('authentication-form');
-  const emailInputEl = getByTestId('emailInput');
-  const usernameInputEl = getByTestId('usernameInput');
-  const fullNameInputEl = getByTestId('fullNameInput');
-  const passwordEl = getByTestId('passwordInput');
-
-  const apiResponseData: ErrorResponseDto = {
-    errors: ['error'],
-  };
-
-  const apiResponseConfig: AxiosRequestConfig = {};
-
-  const apiResponse: AxiosResponse<ErrorResponseDto> = {
-    data: apiResponseData,
-    config: apiResponseConfig,
-    headers: [],
-    status: 400,
-    statusText: '',
-  };
-
-  requestRegisterMock.mockRejectedValue(apiResponse);
-
-  const email = 'email';
-  const username = 'username';
-  const fullName = 'fullName';
-  const password = 'password';
-
-  fireEvent.change(emailInputEl, {
-    target: {
-      value: email,
-    },
+it('should show errors when register button was pressed and API call was not successful', async () => {
+  renderWithProviders(renderRegisterRoute(), {
+    route: buildRegisterPath(),
   });
 
-  fireEvent.change(usernameInputEl, {
-    target: {
-      value: username,
-    },
-  });
+  const errorResponeDto = buildErrorResponseDto();
 
-  fireEvent.change(fullNameInputEl, {
-    target: {
-      value: fullName,
-    },
-  });
+  when(mockedAuthenticationApi.post)
+    .calledWith(buildRegisterUrl(), expect.anything())
+    .mockRejectedValue(buildAxiosError(errorResponeDto));
 
-  fireEvent.change(passwordEl, {
-    target: {
-      value: password,
-    },
-  });
-
-  const formData: RegisterRequest = {
-    email,
-    fullName,
-    password,
-    username,
-  };
-
-  fireEvent.submit(authenticationFormEl);
+  userEvent.click(screen.getByRole('button', { name: 'Registrieren' }));
 
   await waitFor(() =>
-    expect(requestRegisterMock).toHaveBeenCalledWith(formData)
+    errorResponeDto.errors.forEach((error) =>
+      expect(screen.getByText(error)).toBeInTheDocument()
+    )
   );
-  expect(
-    convertAccessAndRefreshTokenResponseToAuthenticationStateMock
-  ).not.toHaveBeenCalled();
-  expect(store.getState().authenticationState).toEqual(initialState);
-  expect(history.location.pathname).toBe(registerPath);
+});
 
-  const errorsEl = getByTestId('errors');
-  expect(errorsEl.childElementCount).toBe(1);
+it('should redirect to register page when link to reigster page was pressed', async () => {
+  renderWithProviders(
+    <>
+      {renderRegisterRoute()}
+      {renderMockedLoginRoute()}
+    </>,
+    { route: buildRegisterPath() }
+  );
+
+  userEvent.click(screen.getByRole('link', { name: 'Melde dich an' }));
+
+  expect(await screen.findByTestId('login-page')).toBeInTheDocument();
 });

@@ -1,181 +1,93 @@
-import React from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { getByPlaceholderText, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { configureStore, StoreType } from '../../config/store';
+import { buildLoginPath } from '../../routes/path';
+import { renderLoginRoute } from '../../routes/renderers';
 import {
-  AuthenticationState,
-  initialState,
-} from '../../redux/authentication/slice';
-import { Provider } from 'react-redux';
-import {
-  AccessAndRefreshTokenResponse,
-  LoginRequest,
-  requestLogin,
-} from '../../api/authentication';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../../authentication/utils';
-import { Route, Router } from 'react-router';
-import { createMemoryHistory } from 'history';
-import { ErrorResponseDto } from '../../shared/error';
-import LoginPage from './index';
-import { configureStore } from '../../config/store';
-import { buildLoginPath, loginPath } from '../../routes/path';
+  buildAccessAndRefreshTokenResponseDto,
+  buildAxiosError,
+  buildAxiosResponseWithData,
+  buildErrorResponseDto,
+  renderMockedIndexRoute,
+  renderMockedRegisterRoute,
+  renderWithProviders,
+} from '../../test-utils';
+import faker from 'faker';
+import authenticationApi from '../../config/authenticationApi';
+import { when } from 'jest-when';
+import { buildLoginUrl, LoginRequest } from '../../api/authentication';
 
-jest.mock('../../api/authentication.ts');
-const requestLoginMock = requestLogin as jest.MockedFunction<
-  typeof requestLogin
+jest.mock('../../config/authenticationApi.ts');
+const mockedAuthenticationApi = authenticationApi as jest.Mocked<
+  typeof authenticationApi
 >;
 
-jest.mock('../../authentication/utils.ts');
-const convertAccessAndRefreshTokenResponseToAuthenticationStateMock =
-  convertAccessAndRefreshTokenResponseToAuthenticationState as jest.MockedFunction<
-    typeof convertAccessAndRefreshTokenResponseToAuthenticationState
-  >;
-
-it('should call API and update store when API returns no error', async () => {
-  const store = configureStore();
-  const history = createMemoryHistory({ initialEntries: [buildLoginPath()] });
-
-  const { getByTestId } = render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Route path={loginPath} component={LoginPage} />
-      </Router>
-    </Provider>
+it('should redirect to index page when login button was pressed and API call was successful', async () => {
+  renderWithProviders(
+    <>
+      {renderLoginRoute()}
+      {renderMockedIndexRoute()}
+    </>,
+    {
+      route: buildLoginPath(),
+    }
   );
 
-  const formEl = getByTestId('authentication-form');
-  const usernameOrEmailInputEl = getByTestId('usernameOrEmailInput');
-  const passwordInputEl = getByTestId('passwordInput');
+  const username = faker.internet.userName();
+  const password = faker.internet.password();
 
-  const apiResponse = getMockedSuccessfulAxiosResponse();
-
-  requestLoginMock.mockResolvedValue(apiResponse);
-
-  const authenticationState: AuthenticationState = {
-    loggedInUserId: 'loggedInUserId',
-    accessToken: 'accessToken',
-    refreshToken: 'refreshToken',
-  };
-
-  convertAccessAndRefreshTokenResponseToAuthenticationStateMock.mockReturnValue(
-    authenticationState
+  userEvent.type(
+    screen.getByPlaceholderText('Benutzername oder E-Mail Adresse'),
+    username
   );
+  userEvent.type(screen.getByPlaceholderText('Passwort'), password);
 
-  const usernameOrEmail = 'usernameOrEmail';
-  const password = 'password';
-
-  fireEvent.change(usernameOrEmailInputEl, {
-    target: {
-      value: usernameOrEmail,
-    },
-  });
-
-  fireEvent.change(passwordInputEl, {
-    target: {
-      value: password,
-    },
-  });
-
-  const formData: LoginRequest = {
-    usernameOrEmail,
+  const requestDto: LoginRequest = {
+    usernameOrEmail: username,
     password,
   };
 
-  fireEvent.submit(formEl);
+  when(mockedAuthenticationApi.post)
+    .calledWith(buildLoginUrl(), requestDto)
+    .mockResolvedValue(
+      buildAxiosResponseWithData(buildAccessAndRefreshTokenResponseDto())
+    );
 
-  await waitFor(() => expect(requestLoginMock).toHaveBeenCalledWith(formData));
-  expect(
-    convertAccessAndRefreshTokenResponseToAuthenticationStateMock
-  ).toHaveBeenCalledWith(apiResponse.data);
-  expect(store.getState().authenticationState).toEqual(authenticationState);
-  expect(history.location.pathname).toBe('/');
+  userEvent.click(screen.getByRole('button', { name: 'Anmelden' }));
+
+  expect(await screen.findByTestId('index-page')).toBeInTheDocument();
 });
 
-it('should call API and set errors when API returns an error', async () => {
-  const store = configureStore();
-  const history = createMemoryHistory({ initialEntries: [buildLoginPath()] });
+it('should show errors when login button was pressed and API call was not successful', async () => {
+  renderWithProviders(<>{renderLoginRoute()}</>, {
+    route: buildLoginPath(),
+  });
 
-  const { getByTestId } = render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Route path={loginPath} component={LoginPage} />
-      </Router>
-    </Provider>
+  const errorResponeDto = buildErrorResponseDto();
+
+  when(mockedAuthenticationApi.post)
+    .calledWith(buildLoginUrl(), expect.anything())
+    .mockRejectedValue(buildAxiosError(errorResponeDto));
+
+  userEvent.click(screen.getByRole('button', { name: 'Anmelden' }));
+
+  await waitFor(() =>
+    errorResponeDto.errors.forEach((error) =>
+      expect(screen.getByText(error)).toBeInTheDocument()
+    )
+  );
+});
+
+it('should redirect to register page when link to reigster page was pressed', async () => {
+  renderWithProviders(
+    <>
+      {renderLoginRoute()}
+      {renderMockedRegisterRoute()}
+    </>,
+    { route: buildLoginPath() }
   );
 
-  const formEl = getByTestId('authentication-form');
-  const usernameOrEmailInputEl = getByTestId('usernameOrEmailInput');
-  const passwordInputEl = getByTestId('passwordInput');
+  userEvent.click(screen.getByRole('link', { name: 'Registrieren' }));
 
-  const apiResponse = getMockedFailedAxiosResponse();
-
-  requestLoginMock.mockRejectedValue(apiResponse);
-
-  const usernameOrEmail = 'usernameOrEmail';
-  const password = 'password';
-
-  fireEvent.change(usernameOrEmailInputEl, {
-    target: {
-      value: usernameOrEmail,
-    },
-  });
-
-  fireEvent.change(passwordInputEl, {
-    target: {
-      value: password,
-    },
-  });
-
-  const formData: LoginRequest = {
-    usernameOrEmail,
-    password,
-  };
-
-  fireEvent.submit(formEl);
-
-  await waitFor(() => expect(requestLoginMock).toHaveBeenCalledWith(formData));
-  expect(
-    convertAccessAndRefreshTokenResponseToAuthenticationStateMock
-  ).not.toHaveBeenCalled();
-  expect(store.getState().authenticationState).toEqual(initialState);
-  expect(history.location.pathname).toBe(loginPath);
-
-  const errorsEl = getByTestId('errors');
-  expect(errorsEl.childElementCount).toBe(1);
+  expect(await screen.findByTestId('register-page')).toBeInTheDocument();
 });
-
-const getMockedSuccessfulAxiosResponse = () => {
-  const data: AccessAndRefreshTokenResponse = {
-    accessToken: 'accessToken',
-    refreshToken: 'refreshToken',
-  };
-
-  const config: AxiosRequestConfig = {};
-
-  const response: AxiosResponse<AccessAndRefreshTokenResponse> = {
-    data,
-    status: 200,
-    statusText: '',
-    config,
-    headers: [],
-  };
-
-  return response;
-};
-
-const getMockedFailedAxiosResponse = () => {
-  const data: ErrorResponseDto = {
-    errors: ['error'],
-  };
-
-  const config: AxiosRequestConfig = {};
-
-  const response: AxiosResponse<ErrorResponseDto> = {
-    data,
-    status: 400,
-    statusText: '',
-    config,
-    headers: [],
-  };
-
-  return response;
-};

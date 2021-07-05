@@ -1,23 +1,28 @@
-import React, { useEffect } from "react";
-import { useCallback } from "react";
-import { useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useCallback } from 'react';
+import { useState } from 'react';
+import {
+  RouteComponentProps,
+  useHistory,
+  useLocation,
+  useRouteMatch,
+} from 'react-router-dom';
 import {
   getLoggedInUsersFollowed,
   UserResponseDto,
-} from "../../api/meFollowed";
-import { useFetchProfileInformation } from "../../profile/useFetchProfileInformation";
-import UserProfile from "../../profile/UserProfile";
-import PageLoader from "../../shared/PageLoader";
-import NormalPageLayout from "../../shared/NormalPageLayout";
+} from '../../api/meFollowed';
+import { useFetchProfileInformation } from '../../profile/useFetchProfileInformation';
+import UserProfile from '../../profile/UserProfile';
+import PageLoader from '../../shared/PageLoader';
+import NormalPageLayout from '../../shared/NormalPageLayout';
 
 export interface UserProfilePageParams {
   userId: string;
 }
 
-const UserProfilePage: React.FC<RouteComponentProps<UserProfilePageParams>> = ({
-  match,
-}) => {
+const UserProfilePage: React.FC = () => {
+  const match = useRouteMatch<UserProfilePageParams>();
+
   const { user, posts, followers, followed, reloadProfileInformation } =
     useFetchProfileInformation(match.params.userId);
 

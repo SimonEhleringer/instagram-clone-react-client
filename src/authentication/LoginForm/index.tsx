@@ -1,14 +1,18 @@
-import React, { useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import AuthenticationForm from "../../authentication/AuthenticationForm";
-import Input from "../../shared/Input";
-import { buildLoginPath, buildRegisterPath } from "../../routes/path";
-import { useDispatch } from "react-redux";
-import { LoginRequest, requestLogin } from "../../api/authentication";
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from "../utils";
-import { setState } from "../../redux/authentication/slice";
-import { useHistory } from "react-router-dom";
-import { getErrorsArrayFromError } from "../../shared/error";
+import React, { useState } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import AuthenticationForm from '../../authentication/AuthenticationForm';
+import Input from '../../shared/Input';
+import {
+  buildIndexPath,
+  buildLoginPath,
+  buildRegisterPath,
+} from '../../routes/path';
+import { useDispatch } from 'react-redux';
+import { LoginRequest, requestLogin } from '../../api/authentication';
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../utils';
+import { setState } from '../../redux/authentication/slice';
+import { useHistory } from 'react-router-dom';
+import { getErrorsArrayFromError } from '../../shared/error';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -31,7 +35,7 @@ const LoginForm = () => {
         );
 
       dispatch(setState(authenticationState));
-      history.push(buildLoginPath());
+      history.push(buildIndexPath());
     } catch (e) {
       setErrors(getErrorsArrayFromError(e));
     }
@@ -42,23 +46,23 @@ const LoginForm = () => {
   return (
     <AuthenticationForm
       handleSubmit={handleSubmit(onSubmit)}
-      submitButtonCaption="Anmelden"
-      redirectText="Du hast kein Konto?"
-      redirectButtonText="Registrieren"
+      submitButtonCaption='Anmelden'
+      redirectText='Du hast kein Konto?'
+      redirectButtonText='Registrieren'
       redirectTo={buildRegisterPath()}
       errors={errors}
       isLoading={loading}
     >
       <Controller
         control={control}
-        name="usernameOrEmail"
+        name='usernameOrEmail'
         render={({ field: { onChange, onBlur, value, ref } }) => (
           <Input
-            date-testId="usernameOrEmailInput"
-            placeholder="Benutzername oder E-Mail Adresse"
+            date-testId='usernameOrEmailInput'
+            placeholder='Benutzername oder E-Mail Adresse'
             onChange={onChange}
             onBlur={onBlur}
-            value={value || ""}
+            value={value || ''}
             ref={ref}
           />
         )}
@@ -66,15 +70,15 @@ const LoginForm = () => {
 
       <Controller
         control={control}
-        name="password"
+        name='password'
         render={({ field: { onChange, onBlur, value, ref } }) => (
           <Input
-            data-testId="passwordInput"
-            placeholder="Passwort"
+            data-testId='passwordInput'
+            placeholder='Passwort'
             onChange={onChange}
             onBlur={onBlur}
-            value={value || ""}
-            type={"password"}
+            value={value || ''}
+            type={'password'}
             ref={ref}
           />
         )}

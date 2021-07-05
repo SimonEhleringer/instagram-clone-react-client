@@ -1,5 +1,5 @@
-import { useParams } from 'react-router-dom';
-import { NewPostPageType } from '../pages/NewPostPage';
+import { useLocation, useParams } from 'react-router-dom';
+import { NewPostPageState } from '../pages/NewPostPage';
 import { UserProfilePageParams } from '../pages/UserProfilePage';
 import {
   renderIndexRoute,
@@ -15,29 +15,33 @@ export const MockedIndexPage: React.FC = () => (
   <div data-testid='index-page'>IndexPage</div>
 );
 
-export const renderMockedIndexRoute = () => renderIndexRoute(MockedIndexPage);
+export const renderMockedIndexRoute = () =>
+  renderIndexRoute(<MockedIndexPage />);
 
 export const MockedRegisterPage: React.FC = () => (
-  <div data-testid='login-page'>LoginPage</div>
+  <div data-testid='register-page'>RegisterPage</div>
 );
 
 export const renderMockedRegisterRoute = () =>
-  renderRegisterRoute(MockedRegisterPage);
+  renderRegisterRoute(<MockedRegisterPage />);
 
 export const MockedLoginPage: React.FC = () => (
   <div data-testid='login-page'>LoginPage</div>
 );
 
-export const renderMockedLoginRoute = () => renderLoginRoute(MockedLoginPage);
+export const renderMockedLoginRoute = () =>
+  renderLoginRoute(<MockedLoginPage />);
 
 export const MockedSuggestionsPage: React.FC = () => (
   <div data-testid='suggestions-page'>SuggestionsPage</div>
 );
 
 export const renderMockedSuggestionsRoute = () =>
-  renderSuggestionsRoute(MockedSuggestionsPage);
+  renderSuggestionsRoute(<MockedSuggestionsPage />);
 
-export const MockedNewPostPage: NewPostPageType = ({ location }) => {
+export const MockedNewPostPage: React.FC = () => {
+  const location = useLocation<NewPostPageState>();
+
   return (
     <div data-testid='new-post-page'>
       <div data-testid='selectedImageDataUri'>
@@ -48,14 +52,14 @@ export const MockedNewPostPage: NewPostPageType = ({ location }) => {
 };
 
 export const renderMockedNewPostRoute = () =>
-  renderNewPostRoute(MockedNewPostPage);
+  renderNewPostRoute(<MockedNewPostPage />);
 
 export const MockedMyProfilePage: React.FC = () => (
   <div data-testid='my-profile-page'>MyProfilePage</div>
 );
 
 export const renderMockedMyProfileRoute = () =>
-  renderMyProfileRoute(MockedMyProfilePage);
+  renderMyProfileRoute(<MockedMyProfilePage />);
 
 export const MockedUserProfilePage: React.FC = () => {
   const params = useParams<UserProfilePageParams>();
@@ -68,4 +72,4 @@ export const MockedUserProfilePage: React.FC = () => {
 };
 
 export const renderMockedUserProfileRoute = () =>
-  renderUserProfileRoute(MockedUserProfilePage);
+  renderUserProfileRoute(<MockedUserProfilePage />);

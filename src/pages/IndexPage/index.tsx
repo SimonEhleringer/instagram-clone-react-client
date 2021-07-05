@@ -14,7 +14,7 @@ import VerticalSplitLayout from '../../shared/VerticalSplitLayout';
 import { Redirect } from 'react-router';
 import { buildSuggestionsPath } from '../../routes/path';
 
-const IndexPage = () => {
+const IndexPage: React.FC = () => {
   const [feed, setFeed] = useState<FeedPostResponseDto[] | undefined>(
     undefined
   );

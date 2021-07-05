@@ -7,7 +7,7 @@ import SuggestionsPage from '../pages/SuggestionsPage';
 import NewPostPage from '../pages/NewPostPage';
 import MyProfilePage from '../pages/MyProfilePage';
 import UserProfilePage from '../pages/UserProfilePage';
-import React from 'react';
+import React, { FC } from 'react';
 import {
   indexPath,
   loginPath,
@@ -18,30 +18,36 @@ import {
   userProfilePath,
 } from './path';
 
-export const renderIndexRoute = (
-  component: React.ComponentType<any> = IndexPage
-) => <ProtectedRoute path={indexPath} exact component={component} />;
+export const renderIndexRoute = (route: JSX.Element = <IndexPage />) => (
+  <ProtectedRoute path={indexPath} exact>
+    {route}
+  </ProtectedRoute>
+);
 
-export const renderRegisterRoute = (
-  component: React.ComponentType<any> = RegisterPage
-) => <Route path={registerPath} component={component} />;
+export const renderRegisterRoute = (route: JSX.Element = <RegisterPage />) => (
+  <Route path={registerPath}>{route}</Route>
+);
 
-export const renderLoginRoute = (
-  component: React.ComponentType<any> = LoginPage
-) => <Route path={loginPath} component={component} />;
+export const renderLoginRoute = (route: JSX.Element = <LoginPage />) => (
+  <Route path={loginPath}>{route}</Route>
+);
 
 export const renderSuggestionsRoute = (
-  component: React.ComponentType<any> = SuggestionsPage
-) => <ProtectedRoute path={suggestionsPath} exact component={component} />;
+  route: JSX.Element = <SuggestionsPage />
+) => (
+  <ProtectedRoute path={suggestionsPath} exact>
+    {route}
+  </ProtectedRoute>
+);
 
-export const renderNewPostRoute = (
-  component: React.ComponentType<any> = NewPostPage
-) => <ProtectedRoute path={newPostPath} component={component} />;
+export const renderNewPostRoute = (route: JSX.Element = <NewPostPage />) => (
+  <ProtectedRoute path={newPostPath}>{route}</ProtectedRoute>
+);
 
 export const renderMyProfileRoute = (
-  component: React.ComponentType<any> = MyProfilePage
-) => <ProtectedRoute path={myProfilePath} component={component} />;
+  route: JSX.Element = <MyProfilePage />
+) => <ProtectedRoute path={myProfilePath}>{route}</ProtectedRoute>;
 
 export const renderUserProfileRoute = (
-  component: React.ComponentType<any> = UserProfilePage
-) => <ProtectedRoute path={userProfilePath} component={component} />;
+  route: JSX.Element = <UserProfilePage />
+) => <ProtectedRoute path={userProfilePath}>{route}</ProtectedRoute>;

@@ -4,19 +4,23 @@ import { RefreshTokenRequestDto } from './sharedDtos';
 
 export const requestRegister = async (request: RegisterRequest) => {
   const response: AxiosResponse<AccessAndRefreshTokenResponse> =
-    await authenticationApi.post('register', {
+    await authenticationApi.post(buildRegisterUrl(), {
       ...request,
     });
 
   return response;
 };
 
+export const buildRegisterUrl = () => '/register';
+
 export const requestLogin = async (request: LoginRequest) => {
   const response: AxiosResponse<AccessAndRefreshTokenResponse> =
-    await authenticationApi.post('login', { ...request });
+    await authenticationApi.post(buildLoginUrl(), request);
 
   return response;
 };
+
+export const buildLoginUrl = () => '/login';
 
 // TODO: Add test
 export const logout = async (request: RefreshTokenRequestDto) => {

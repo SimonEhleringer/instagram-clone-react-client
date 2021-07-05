@@ -9,6 +9,10 @@ import { FeedPostResponseDto, FeedResponseDto } from '../api/meFeed';
 import { SuggestionsResponseDto } from '../api/meSuggestions';
 import { config } from 'node:process';
 import { ErrorResponseDto } from '../shared/error';
+import {
+  AccessAndRefreshTokenResponse,
+  AccessAndRefreshTokenResponse as AccessAndRefreshTokenResponseDto,
+} from '../api/authentication';
 
 export const buildAuthenticationState = (
   overrides?: Partial<AuthenticationState>
@@ -168,6 +172,16 @@ export const buildAxiosError = <T extends unknown>(
   };
 };
 
+export const buildAccessAndRefreshTokenResponseDto = (
+  overrides?: Partial<AccessAndRefreshTokenResponse>
+): AccessAndRefreshTokenResponseDto => {
+  return {
+    accessToken: buildJwtTokenWithUserIdAsSubject().jwtToken,
+    refreshToken: faker.datatype.uuid(),
+    ...overrides,
+  };
+};
+
 export const makeArray = <T extends unknown>(
   generator: () => T,
   length: number = faker.datatype.number({ min: 1, max: 10 })
@@ -186,3 +200,17 @@ export const buildMockedImage = () => {
 export const buildMockedCloudinaryImageSource = (
   publicProfileImageId: string
 ) => `'https://mocked-cloudinary/${publicProfileImageId}`;
+
+// Sub: dde9efb4-327e-4906-be48-036e7daecd80
+// Secret: ABC
+export const buildJwtTokenWithUserIdAsSubject = () => {
+  return {
+    userId: 'dde9efb4-327e-4906-be48-036e7daecd80',
+    jwtToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGU5ZWZiNC0zMjdlLTQ5MDYtYmU0OC0wMzZlN2RhZWNkODAifQ.v9sVHDE2nrdrjmCrpLG1ZGiNX1Zax5fAPGpsJbwCkyI',
+  };
+};
+
+// Secret: ABC
+export const buildJwtTokenWithoutSubject = () =>
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.CYY-KIKrF1-WEW_v6KU2z5I7aZrKjfv10ygYGqQCRyc';

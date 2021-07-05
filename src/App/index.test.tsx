@@ -29,16 +29,17 @@ jest.mock('../routes/renderers.tsx', () => {
   const actual = jest.requireActual('../routes/renderers.tsx');
 
   return {
-    renderIndexRoute: () => actual.renderIndexRoute(MockedIndexPage),
-    renderRegisterRoute: () => actual.renderRegisterRoute(MockedRegisterPage),
-    renderLoginRoute: () => actual.renderLoginRoute(MockedLoginPage),
+    renderIndexRoute: () => actual.renderIndexRoute(<MockedIndexPage />),
+    renderRegisterRoute: () =>
+      actual.renderRegisterRoute(<MockedRegisterPage />),
+    renderLoginRoute: () => actual.renderLoginRoute(<MockedLoginPage />),
     renderSuggestionsRoute: () =>
-      actual.renderSuggestionsRoute(MockedSuggestionsPage),
-    renderNewPostRoute: () => actual.renderNewPostRoute(MockedNewPostPage),
+      actual.renderSuggestionsRoute(<MockedSuggestionsPage />),
+    renderNewPostRoute: () => actual.renderNewPostRoute(<MockedNewPostPage />),
     renderMyProfileRoute: () =>
-      actual.renderMyProfileRoute(MockedMyProfilePage),
+      actual.renderMyProfileRoute(<MockedMyProfilePage />),
     renderUserProfileRoute: () =>
-      actual.renderUserProfileRoute(MockedUserProfilePage),
+      actual.renderUserProfileRoute(<MockedUserProfilePage />),
   };
 });
 
