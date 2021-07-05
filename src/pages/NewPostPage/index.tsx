@@ -1,5 +1,5 @@
 import React from 'react';
-import NewPostForm from '../../newPost/NewPostForm';
+import NewPostForm from '../../new-post/NewPostForm';
 import SlimPageLayout from '../../shared/SlimPageLayout';
 import ResponsiveHeading from '../../shared/ResponsiveHeading';
 import { RouteComponentProps, useLocation } from 'react-router-dom';

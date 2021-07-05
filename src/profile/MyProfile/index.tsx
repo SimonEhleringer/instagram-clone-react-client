@@ -1,14 +1,13 @@
-import React, { useRef } from "react";
-import { UserResponseDto } from "../../api/meFollowed";
-import { PostResponseDto } from "../../api/sharedDtos";
-import Profile from "../Profile";
-import Button, { ButtonType } from "../../shared/Button";
-import { useLogout } from "../../authentication/useLogout";
-import { changeProfileImage } from "../../api/meProfileImage";
-import { useReadFileFromEvent } from "../../shared/hooks/useReadFileFromEvent";
-import InvisibleButton from "../../shared/InvisibleButton";
-import HiddenImageInput from "../../shared/HiddenImageInput";
-import { useHiddenInput } from "../../shared/hooks/useHiddenInput";
+import React, { useRef } from 'react';
+import { PostResponseDto, UserResponseDto } from '../../api/shared-dtos';
+import Profile from '../Profile';
+import Button, { ButtonType } from '../../shared/Button';
+import { useLogout } from '../../authentication/useLogout';
+import { changeProfileImage } from '../../api/me-profile-image';
+import { useReadFileFromEvent } from '../../shared/hooks/useReadFileFromEvent';
+import InvisibleButton from '../../shared/InvisibleButton';
+import HiddenImageInput from '../../shared/HiddenImageInput';
+import { useHiddenInput } from '../../shared/hooks/useHiddenInput';
 
 export interface MyProfileProps {
   user: UserResponseDto;
@@ -57,7 +56,7 @@ const MyProfile: React.FC<MyProfileProps> = ({
       <InvisibleButton onClick={() => pretendClickOnFileInput()}>
         <HiddenImageInput
           ref={fileInputRef}
-          data-testid="changeProfileImageHiddenFileInput"
+          data-testid='change-profile-image-hidden-file-input'
           onChange={handleInputChange}
         />
 

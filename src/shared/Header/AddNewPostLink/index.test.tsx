@@ -7,7 +7,7 @@ it('should open file inputs dialog when button is pressed', () => {
   renderWithProviders(<AddNewPostLink />, {});
 
   const fileInputClick = jest.spyOn(
-    screen.getByTestId('hiddenNewPostInput'),
+    screen.getByTestId('hidden-new-post-input'),
     'click'
   );
 

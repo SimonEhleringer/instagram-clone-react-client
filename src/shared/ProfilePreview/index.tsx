@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserResponseDto } from '../../api/meFollowed';
+import { UserResponseDto } from '../../api/shared-dtos';
 import Avatar from '../Avatar';
 import './style.scss';
 

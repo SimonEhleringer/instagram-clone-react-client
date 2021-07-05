@@ -4,9 +4,9 @@ import PageLoader from '../../shared/PageLoader';
 import SuggestionsList from '../../suggestions/SuggestionsList';
 import SlimPageLayout from '../../shared/SlimPageLayout';
 
-import { UserResponseDto } from '../../api/meFollowed';
-import { getSuggestions } from '../../api/meSuggestions';
+import { getSuggestions } from '../../api/me-suggestions';
 import ResponsiveHeading from '../../shared/ResponsiveHeading';
+import { UserResponseDto } from '../../api/shared-dtos';
 
 const SuggestionsPage: React.FC = () => {
   const [suggestions, setSuggestions] = useState<UserResponseDto[] | undefined>(

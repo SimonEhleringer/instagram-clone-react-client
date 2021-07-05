@@ -1,9 +1,8 @@
 import { AxiosResponse } from 'axios';
-import authenticationApi from '../config/authenticationApi';
-import { RefreshTokenRequestDto } from './sharedDtos';
+import authenticationApi from '../config/authentication-api';
 
-export const requestRegister = async (request: RegisterRequest) => {
-  const response: AxiosResponse<AccessAndRefreshTokenResponse> =
+export const register = async (request: RegisterRequestDto) => {
+  const response: AxiosResponse<AccessAndRefreshTokenResponseDto> =
     await authenticationApi.post(buildRegisterUrl(), {
       ...request,
     });
@@ -13,8 +12,8 @@ export const requestRegister = async (request: RegisterRequest) => {
 
 export const buildRegisterUrl = () => '/register';
 
-export const requestLogin = async (request: LoginRequest) => {
-  const response: AxiosResponse<AccessAndRefreshTokenResponse> =
+export const login = async (request: LoginRequestDto) => {
+  const response: AxiosResponse<AccessAndRefreshTokenResponseDto> =
     await authenticationApi.post(buildLoginUrl(), request);
 
   return response;
@@ -22,7 +21,6 @@ export const requestLogin = async (request: LoginRequest) => {
 
 export const buildLoginUrl = () => '/login';
 
-// TODO: Add test
 export const logout = async (request: RefreshTokenRequestDto) => {
   return await authenticationApi.post(buildLogoutUrl(), request);
 };
@@ -30,7 +28,7 @@ export const logout = async (request: RefreshTokenRequestDto) => {
 export const buildLogoutUrl = () => 'logout';
 
 export const refresh = (request: RefreshTokenRequestDto) => {
-  return authenticationApi.post<AccessAndRefreshTokenResponse>(
+  return authenticationApi.post<AccessAndRefreshTokenResponseDto>(
     buildRefreshUrl(),
     request
   );
@@ -38,21 +36,23 @@ export const refresh = (request: RefreshTokenRequestDto) => {
 
 export const buildRefreshUrl = () => '/refreshAccessToken';
 
-// requests
-export type RegisterRequest = {
+export type RegisterRequestDto = {
   email: string;
   fullName: string;
   username: string;
   password: string;
 };
 
-export type LoginRequest = {
+export interface RefreshTokenRequestDto {
+  refreshToken: string;
+}
+
+export type LoginRequestDto = {
   usernameOrEmail: string;
   password: string;
 };
 
-// responses
-export type AccessAndRefreshTokenResponse = {
+export type AccessAndRefreshTokenResponseDto = {
   accessToken: string;
   refreshToken: string;
 };

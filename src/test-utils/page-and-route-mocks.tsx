@@ -44,7 +44,7 @@ export const MockedNewPostPage: React.FC = () => {
 
   return (
     <div data-testid='new-post-page'>
-      <div data-testid='selectedImageDataUri'>
+      <div data-testid='selected-image-data-uri'>
         {location.state.selectedImageDataUri}
       </div>
     </div>
@@ -66,7 +66,7 @@ export const MockedUserProfilePage: React.FC = () => {
 
   return (
     <div data-testid='user-profile-page'>
-      <div data-testid={'userId'}>{params.userId}</div>
+      <div data-testid={'user-id'}>{params.userId}</div>
     </div>
   );
 };

@@ -5,20 +5,20 @@ import {
   buildAddFollowUrl,
   buildDeleteFollowUrl,
   buildGetLoggedInUsersFollowedUrl,
-  UserResponseDto,
-} from '../../api/meFollowed';
-import { PostsResponseDto } from '../../api/sharedDtos';
-import { buildGetUserUrl } from '../../api/user';
+} from '../../api/me-followed';
 import {
-  buildGetUsersFollowedUrl,
   FollowedResponseDto,
-} from '../../api/userFollowed';
+  PostsResponseDto,
+  UserResponseDto,
+} from '../../api/shared-dtos';
+import { buildGetUserUrl } from '../../api/user';
+import { buildGetUsersFollowedUrl } from '../../api/user-followed';
 import {
   buildGetUsersFollowersUrl,
   FollowersResponseDto,
-} from '../../api/userFollowers';
-import { buildGetUsersPostsUrl } from '../../api/userPost';
-import resourceApi from '../../config/resourceApi';
+} from '../../api/user-followers';
+import { buildGetUsersPostsUrl } from '../../api/user-post';
+import resourceApi from '../../config/resource-api';
 import { configureStore, StoreType } from '../../config/store';
 import { initialState } from '../../redux/authentication/slice';
 import { buildUserProfilePath } from '../../routes/path';
@@ -35,7 +35,7 @@ import {
   renderWithProviders,
 } from '../../test-utils';
 
-jest.mock('../../config/resourceApi.ts');
+jest.mock('../../config/resource-api.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
 
 jest.mock(
@@ -79,26 +79,13 @@ beforeEach(() => {
   });
 });
 
-it('should redirect to login page when user is not logged in', () => {
-  store.getState().authenticationState = { ...initialState };
-
-  renderWithProviders(
-    <>
-      {renderUserProfileRoute()} {renderMockedLoginRoute()}
-    </>,
-    { route: buildUserProfilePath(user.userId), store }
-  );
-
-  expect(screen.getByTestId('login-page')).toBeInTheDocument();
-});
-
 it('should load data and show profile when data is loaded', async () => {
   renderWithProviders(renderUserProfileRoute(), {
     route: buildUserProfilePath(user.userId),
     store,
   });
 
-  expect(screen.getByTestId('pageLoader')).toBeInTheDocument();
+  expect(screen.getByTestId('page-loader')).toBeInTheDocument();
 
   await waitFor(() =>
     expect(

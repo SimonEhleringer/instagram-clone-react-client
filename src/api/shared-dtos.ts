@@ -14,6 +14,13 @@ export interface PostsResponseDto {
   posts: PostResponseDto[];
 }
 
-export interface RefreshTokenRequestDto {
-  refreshToken: string;
+export interface UserResponseDto {
+  userId: string;
+  fullName: string;
+  username: string;
+  publicProfileImageId?: string;
+}
+
+export interface FollowedResponseDto {
+  followed: UserResponseDto[];
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FeedPostResponseDto } from '../../api/meFeed';
+import { FeedPostResponseDto } from '../../api/me-feed';
 import FeedPost from '../FeedPost';
 
 export interface FeedProps {

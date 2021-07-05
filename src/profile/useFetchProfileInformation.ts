@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { UserResponseDto } from '../api/meFollowed';
-import { PostResponseDto } from '../api/sharedDtos';
+import { PostResponseDto, UserResponseDto } from '../api/shared-dtos';
 import { getUser } from '../api/user';
-import { getUsersFollowed } from '../api/userFollowed';
-import { getUsersFollowers } from '../api/userFollowers';
-import { getUsersPosts } from '../api/userPost';
+import { getUsersFollowed } from '../api/user-followed';
+import { getUsersFollowers } from '../api/user-followers';
+import { getUsersPosts } from '../api/user-post';
 
 export const useFetchProfileInformation = (userId: string) => {
   const [user, setUser] = useState<UserResponseDto | undefined>(undefined);

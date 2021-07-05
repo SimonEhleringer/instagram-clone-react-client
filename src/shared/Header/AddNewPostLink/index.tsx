@@ -31,7 +31,7 @@ const AddNewPostLink = () => {
       <HiddenImageInput
         ref={fileInputRef}
         onChange={handleInputChange}
-        data-testid='hiddenNewPostInput'
+        data-testid='hidden-new-post-input'
       />
 
       <div className='add-new-post-link__prevent-click' />
@@ -39,7 +39,7 @@ const AddNewPostLink = () => {
         Icon={BsPlusCircle}
         ActiveIcon={BsPlusCircleFill}
         to={buildNewPostPathname()}
-        dataTestId='newPostPageLink'
+        dataTestId='new-post-page-link'
       />
     </InvisibleButton>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { addPost } from '../../api/mePost';
-import { PostRequestDto } from '../../api/sharedDtos';
+import { addPost } from '../../api/me-post';
+import { PostRequestDto } from '../../api/shared-dtos';
 import { buildIndexPath } from '../../routes/path';
 import Button from '../../shared/Button';
 import { getErrorsArrayFromError } from '../../shared/error';
@@ -34,7 +34,6 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ imageDataUri }) => {
 
       history.push(buildIndexPath());
     } catch (e) {
-      console.log(getErrorsArrayFromError(e));
       setErrors(getErrorsArrayFromError(e));
     }
 

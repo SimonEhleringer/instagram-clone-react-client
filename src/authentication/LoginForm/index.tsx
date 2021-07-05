@@ -8,7 +8,7 @@ import {
   buildRegisterPath,
 } from '../../routes/path';
 import { useDispatch } from 'react-redux';
-import { LoginRequest, requestLogin } from '../../api/authentication';
+import { LoginRequestDto, login } from '../../api/authentication';
 import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../utils';
 import { setState } from '../../redux/authentication/slice';
 import { useHistory } from 'react-router-dom';
@@ -18,16 +18,16 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { handleSubmit, control } = useForm<LoginRequest>();
+  const { handleSubmit, control } = useForm<LoginRequestDto>();
 
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
+  const onSubmit: SubmitHandler<LoginRequestDto> = async (data) => {
     setLoading(true);
 
     try {
-      const response = await requestLogin(data);
+      const response = await login(data);
 
       const authenticationState =
         convertAccessAndRefreshTokenResponseToAuthenticationState(
@@ -58,7 +58,6 @@ const LoginForm = () => {
         name='usernameOrEmail'
         render={({ field: { onChange, onBlur, value, ref } }) => (
           <Input
-            date-testId='usernameOrEmailInput'
             placeholder='Benutzername oder E-Mail Adresse'
             onChange={onChange}
             onBlur={onBlur}
@@ -73,7 +72,6 @@ const LoginForm = () => {
         name='password'
         render={({ field: { onChange, onBlur, value, ref } }) => (
           <Input
-            data-testId='passwordInput'
             placeholder='Passwort'
             onChange={onChange}
             onBlur={onBlur}

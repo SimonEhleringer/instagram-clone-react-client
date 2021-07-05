@@ -4,13 +4,13 @@ import {
   buildGetSuggestionsUrl,
   getSuggestions,
   SuggestionsResponseDto,
-} from '../../api/meSuggestions';
+} from '../../api/me-suggestions';
 import { AxiosResponse } from 'axios';
 import { Provider } from 'react-redux';
 import { render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { configureStore, StoreType } from '../../config/store';
-import { buildAddFollowUrl, UserResponseDto } from '../../api/meFollowed';
+import { buildAddFollowUrl } from '../../api/me-followed';
 import { buildSuggestionsPath, suggestionsPath } from '../../routes/path';
 import { renderSuggestionsRoute } from '../../routes/renderers';
 import {
@@ -23,12 +23,12 @@ import {
   renderMockedUserProfileRoute,
   renderWithProviders,
 } from '../../test-utils';
-import resourceApi from '../../config/resourceApi';
+import resourceApi from '../../config/resource-api';
 import { when } from 'jest-when';
 import { initialState } from '../../redux/authentication/slice';
 import userEvent from '@testing-library/user-event';
 
-jest.mock('../../config/resourceApi.ts');
+jest.mock('../../config/resource-api.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
 
 jest.mock(
@@ -50,26 +50,13 @@ beforeEach(() => {
   store.getState().authenticationState = buildAuthenticationState();
 });
 
-it('should redirect to login page when user is not logged in', () => {
-  store.getState().authenticationState = { ...initialState };
-
-  renderWithProviders(
-    <>
-      {renderSuggestionsRoute()} {renderMockedLoginRoute()}
-    </>,
-    { route: buildSuggestionsPath(), store }
-  );
-
-  expect(screen.getByTestId('login-page')).toBeInTheDocument();
-});
-
 it('should load data and show suggestions when no errors occured', async () => {
   renderWithProviders(renderSuggestionsRoute(), {
     route: buildSuggestionsPath(),
     store,
   });
 
-  expect(screen.getByTestId('pageLoader')).toBeInTheDocument();
+  expect(screen.getByTestId('page-loader')).toBeInTheDocument();
 
   const buttons = await screen.findAllByRole('button', { name: 'Abonnieren' });
 
@@ -146,7 +133,7 @@ it('should show users profile when link is pressed', async () => {
   );
 
   expect(screen.getByTestId('user-profile-page')).toBeInTheDocument();
-  expect(screen.getByTestId('userId')).toHaveTextContent(
+  expect(screen.getByTestId('user-id')).toHaveTextContent(
     suggestionToShowProfile.userId
   );
 });

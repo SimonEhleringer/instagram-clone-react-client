@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,sBAAsB,CAAC;EACrB,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,UAAU;EACvB,eAAe,EAAE,MAAM;CACxB",
+    "sources": [
+        "../../src/shared/VerticalSplitLayout/style.scss"
+    ],
+    "names": [],
+    "file": "style.css"
+}

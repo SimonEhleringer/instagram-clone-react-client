@@ -98,7 +98,7 @@ it('should navigate throw all routes when routes in header are pressed successiv
 
   const { image } = buildMockedImage();
 
-  fireEvent.change(screen.getByTestId('hiddenNewPostInput'), {
+  fireEvent.change(screen.getByTestId('hidden-new-post-input'), {
     target: {
       files: [image],
     },
@@ -106,15 +106,15 @@ it('should navigate throw all routes when routes in header are pressed successiv
 
   expect(await screen.findByTestId('new-post-page')).toBeInTheDocument();
 
-  userEvent.click(screen.getByTestId('suggestionsPageLink'));
+  userEvent.click(screen.getByTestId('suggestions-page-link'));
 
   expect(screen.getByTestId('suggestions-page')).toBeInTheDocument();
 
-  userEvent.click(screen.getByTestId('myProfilePageLink'));
+  userEvent.click(screen.getByTestId('my-profile-page-link'));
 
   expect(screen.getByTestId('my-profile-page')).toBeInTheDocument();
 
-  userEvent.click(screen.getByTestId('indexPageLink'));
+  userEvent.click(screen.getByTestId('index-page-link'));
 
   expect(screen.getByTestId('index-page')).toBeInTheDocument();
 });

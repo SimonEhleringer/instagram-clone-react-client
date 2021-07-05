@@ -1,6 +1,5 @@
 import React from 'react';
-import { UserResponseDto } from '../../api/meFollowed';
-import { PostResponseDto } from '../../api/sharedDtos';
+import { PostResponseDto, UserResponseDto } from '../../api/shared-dtos';
 import { AvatarProps } from '../../shared/Avatar';
 import ProfileInformation from '../ProfileInformation';
 import ProfilePosts from '../ProfilePosts';

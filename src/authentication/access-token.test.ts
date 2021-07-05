@@ -2,7 +2,10 @@ import {
   buildJwtTokenWithoutSubject,
   buildJwtTokenWithUserIdAsSubject,
 } from '../test-utils';
-import { AccessTokenParseError, getUserIdFromAccessToken } from './accessToken';
+import {
+  AccessTokenParseError,
+  getUserIdFromAccessToken,
+} from './access-token';
 
 describe('getUserIdFromAccessToken', () => {
   it('should parse JWT and return users ID', () => {

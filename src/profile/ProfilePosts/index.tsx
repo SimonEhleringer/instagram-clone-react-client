@@ -1,7 +1,7 @@
 import React from 'react';
 import { BsGrid3X3 } from 'react-icons/bs';
 import { Image, Transformation } from 'cloudinary-react';
-import { PostResponseDto } from '../../api/sharedDtos';
+import { PostResponseDto } from '../../api/shared-dtos';
 import './style.scss';
 
 interface ProfilePostsProps {

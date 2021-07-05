@@ -22,7 +22,7 @@ export interface ButtonProps
 const Button: React.FC<ButtonProps> = ({
   isLoading = false,
   buttonType = ButtonType.PrimaryContained,
-  loaderDataTestId = 'buttonLoader',
+  loaderDataTestId = 'button-loader',
   children,
   ...rest
 }) => {

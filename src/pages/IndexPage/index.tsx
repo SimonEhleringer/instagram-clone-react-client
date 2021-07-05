@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { FeedPostResponseDto, getFeed } from '../../api/meFeed';
-import { UserResponseDto } from '../../api/meFollowed';
-import { getSuggestions } from '../../api/meSuggestions';
+import { FeedPostResponseDto, getFeed } from '../../api/me-feed';
+import { getSuggestions } from '../../api/me-suggestions';
 import Feed from '../../feed/Feed';
 import PageLoader from '../../shared/PageLoader';
 import NormalPageLayout from '../../shared/NormalPageLayout';
@@ -13,6 +12,7 @@ import SideBarSuggestions from '../../suggestions/SideBarSuggestions';
 import VerticalSplitLayout from '../../shared/VerticalSplitLayout';
 import { Redirect } from 'react-router';
 import { buildSuggestionsPath } from '../../routes/path';
+import { UserResponseDto } from '../../api/shared-dtos';
 
 const IndexPage: React.FC = () => {
   const [feed, setFeed] = useState<FeedPostResponseDto[] | undefined>(

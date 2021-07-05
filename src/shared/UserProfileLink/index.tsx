@@ -1,10 +1,10 @@
 import React from 'react';
-import { UserResponseDto } from '../../api/meFollowed';
 import { Link } from 'react-router-dom';
 import './style.scss';
 import { buildMyProfilePath, buildUserProfilePath } from '../../routes/path';
 import { useSelector } from 'react-redux';
 import { ReduxState } from '../../config/store';
+import { UserResponseDto } from '../../api/shared-dtos';
 
 interface UserProfileProps {
   user: UserResponseDto;

@@ -7,14 +7,12 @@ import {
   useLocation,
   useRouteMatch,
 } from 'react-router-dom';
-import {
-  getLoggedInUsersFollowed,
-  UserResponseDto,
-} from '../../api/meFollowed';
+import { getLoggedInUsersFollowed } from '../../api/me-followed';
 import { useFetchProfileInformation } from '../../profile/useFetchProfileInformation';
 import UserProfile from '../../profile/UserProfile';
 import PageLoader from '../../shared/PageLoader';
 import NormalPageLayout from '../../shared/NormalPageLayout';
+import { UserResponseDto } from '../../api/shared-dtos';
 
 export interface UserProfilePageParams {
   userId: string;

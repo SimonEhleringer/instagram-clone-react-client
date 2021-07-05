@@ -1,15 +1,12 @@
-import resourceApi from '../../config/resourceApi';
+import resourceApi from '../../config/resource-api';
 import {
   buildGetUsersFollowersUrl,
   FollowersResponseDto,
-} from '../../api/userFollowers';
-import {
-  buildGetUsersFollowedUrl,
-  FollowedResponseDto,
-} from '../../api/userFollowed';
+} from '../../api/user-followers';
+import { buildGetUsersFollowedUrl } from '../../api/user-followed';
 import { when } from 'jest-when';
 import { buildGetUserUrl } from '../../api/user';
-import { buildGetUsersPostsUrl } from '../../api/userPost';
+import { buildGetUsersPostsUrl } from '../../api/user-post';
 import {
   buildAuthenticationState,
   buildAxiosResponseWithData,
@@ -28,14 +25,17 @@ import userEvent from '@testing-library/user-event';
 import faker from 'faker';
 import { buildMyProfilePath } from '../../routes/path';
 import { renderMyProfileRoute } from '../../routes/renderers';
-import { ProfileImageRequestDto } from '../../api/meProfileImage';
-import { UserResponseDto } from '../../api/meFollowed';
-import { PostsResponseDto } from '../../api/sharedDtos';
+import { ProfileImageRequestDto } from '../../api/me-profile-image';
+import {
+  FollowedResponseDto,
+  PostsResponseDto,
+  UserResponseDto,
+} from '../../api/shared-dtos';
 
-jest.mock('../../config/resourceApi.ts');
+jest.mock('../../config/resource-api.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
 
-jest.mock('../../config/authenticationApi.ts');
+jest.mock('../../config/authentication-api.ts');
 
 jest.mock(
   'cloudinary-react',
@@ -72,26 +72,13 @@ beforeEach(() => {
   };
 });
 
-it('should redirect to login page when user is not logged in', () => {
-  store.getState().authenticationState = { ...initialState };
-
-  renderWithProviders(
-    <>
-      {renderMyProfileRoute()} {renderMockedLoginRoute()}
-    </>,
-    { route: buildMyProfilePath(), store }
-  );
-
-  expect(screen.getByTestId('login-page')).toBeInTheDocument();
-});
-
 it('should load data and show profile when data is loaded and no errors occurred', async () => {
   renderWithProviders(renderMyProfileRoute(), {
     route: buildMyProfilePath(),
     store: store,
   });
 
-  expect(screen.getByTestId('pageLoader')).toBeInTheDocument();
+  expect(screen.getByTestId('page-loader')).toBeInTheDocument();
 
   await waitFor(() =>
     expect(
@@ -172,7 +159,7 @@ it('should pretent click on hidden input when profile image is pressed', async (
   });
 
   const fileInputClick = jest.spyOn(
-    await screen.findByTestId('changeProfileImageHiddenFileInput'),
+    await screen.findByTestId('change-profile-image-hidden-file-input'),
     'click'
   );
 
@@ -206,7 +193,7 @@ it('should upload new profile image and show it when new image is selected', asy
     .mockResolvedValueOnce(buildAxiosResponseWithData(newUser));
 
   fireEvent.change(
-    await screen.findByTestId('changeProfileImageHiddenFileInput'),
+    await screen.findByTestId('change-profile-image-hidden-file-input'),
     {
       target: {
         files: [image],

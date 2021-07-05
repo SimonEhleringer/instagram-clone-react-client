@@ -1,18 +1,18 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { AuthenticationState } from '../redux/authentication/slice';
 import faker from 'faker';
-import { UserResponseDto } from '../api/meFollowed';
-import { PostResponseDto, PostsResponseDto } from '../api/sharedDtos';
-import { FollowersResponseDto } from '../api/userFollowers';
-import { FollowedResponseDto } from '../api/userFollowed';
-import { FeedPostResponseDto, FeedResponseDto } from '../api/meFeed';
-import { SuggestionsResponseDto } from '../api/meSuggestions';
+import {
+  FollowedResponseDto,
+  PostResponseDto,
+  PostsResponseDto,
+  UserResponseDto,
+} from '../api/shared-dtos';
+import { FollowersResponseDto } from '../api/user-followers';
+import { FeedPostResponseDto, FeedResponseDto } from '../api/me-feed';
+import { SuggestionsResponseDto } from '../api/me-suggestions';
 import { config } from 'node:process';
 import { ErrorResponseDto } from '../shared/error';
-import {
-  AccessAndRefreshTokenResponse,
-  AccessAndRefreshTokenResponse as AccessAndRefreshTokenResponseDto,
-} from '../api/authentication';
+import { AccessAndRefreshTokenResponseDto } from '../api/authentication';
 
 export const buildAuthenticationState = (
   overrides?: Partial<AuthenticationState>
@@ -173,7 +173,7 @@ export const buildAxiosError = <T extends unknown>(
 };
 
 export const buildAccessAndRefreshTokenResponseDto = (
-  overrides?: Partial<AccessAndRefreshTokenResponse>
+  overrides?: Partial<AccessAndRefreshTokenResponseDto>
 ): AccessAndRefreshTokenResponseDto => {
   return {
     accessToken: buildJwtTokenWithUserIdAsSubject().jwtToken,

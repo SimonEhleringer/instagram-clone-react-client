@@ -1,5 +1,5 @@
-import resourceApi from '../config/resourceApi';
-import { UserResponseDto } from './meFollowed';
+import resourceApi from '../config/resource-api';
+import { UserResponseDto } from './shared-dtos';
 
 export const getFeed = () => {
   return resourceApi.get<FeedResponseDto>(buildGetFeedUrl());

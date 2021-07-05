@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import ProfilePreview from "..";
-import { addFollow, UserResponseDto } from "../../../api/meFollowed";
-import Button, { ButtonType } from "../../Button";
-import UserProfileLink from "../../UserProfileLink";
-import "./style.scss";
+import React, { useState } from 'react';
+import ProfilePreview from '..';
+import { addFollow } from '../../../api/me-followed';
+import { UserResponseDto } from '../../../api/shared-dtos';
+import Button, { ButtonType } from '../../Button';
+import UserProfileLink from '../../UserProfileLink';
+import './style.scss';
 
 export interface UserProfilePreviewProps {
   user: UserResponseDto;
@@ -34,7 +35,7 @@ const UserProfilePreview: React.FC<UserProfilePreviewProps> = ({
     <>
       <UserProfileLink user={user} />
 
-      <div className="user-profile-preview__full-name">{user.fullName}</div>
+      <div className='user-profile-preview__full-name'>{user.fullName}</div>
     </>
   );
 

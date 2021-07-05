@@ -1,9 +1,9 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { when } from 'jest-when';
-import { buildAddPostUrl } from '../../api/mePost';
-import { PostRequestDto } from '../../api/sharedDtos';
-import resourceApi from '../../config/resourceApi';
+import { buildAddPostUrl } from '../../api/me-post';
+import { PostRequestDto } from '../../api/shared-dtos';
+import resourceApi from '../../config/resource-api';
 import { configureStore, StoreType } from '../../config/store';
 import { buildNewPostPath } from '../../routes/path';
 import { renderNewPostRoute } from '../../routes/renderers';
@@ -19,7 +19,7 @@ import {
 import faker from 'faker';
 import { initialState } from '../../redux/authentication/slice';
 
-jest.mock('../../config/resourceApi.ts');
+jest.mock('../../config/resource-api.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
 
 let store: StoreType;
@@ -27,20 +27,6 @@ let store: StoreType;
 beforeEach(() => {
   store = configureStore();
   store.getState().authenticationState = buildAuthenticationState();
-});
-
-it('should redirect to login page when user is not logged in', () => {
-  store.getState().authenticationState = { ...initialState };
-  const { imageDataUri } = buildMockedImage();
-
-  renderWithProviders(
-    <>
-      {renderNewPostRoute()} {renderMockedLoginRoute()}
-    </>,
-    { route: buildNewPostPath({ selectedImageDataUri: imageDataUri }), store }
-  );
-
-  expect(screen.getByTestId('login-page')).toBeInTheDocument();
 });
 
 it('should show image preview when route was given the data uri', () => {

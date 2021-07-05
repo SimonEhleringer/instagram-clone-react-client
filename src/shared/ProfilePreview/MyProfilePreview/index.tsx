@@ -1,10 +1,10 @@
-import React from "react";
-import ProfilePreview from "..";
-import { UserResponseDto } from "../../../api/meFollowed";
-import "./style.scss";
-import UserProfileLink from "../../UserProfileLink";
-import Button, { ButtonType } from "../../Button";
-import { useLogout } from "../../../authentication/useLogout";
+import React from 'react';
+import ProfilePreview from '..';
+import './style.scss';
+import UserProfileLink from '../../UserProfileLink';
+import Button, { ButtonType } from '../../Button';
+import { useLogout } from '../../../authentication/useLogout';
+import { UserResponseDto } from '../../../api/shared-dtos';
 
 export interface MyProfilePreviewProps {
   me: UserResponseDto;
@@ -23,7 +23,7 @@ const MyProfilePreview: React.FC<MyProfilePreviewProps> = ({
     <>
       <UserProfileLink user={me} />
 
-      <div className="my-profile-preview__full-name">{me.fullName}</div>
+      <div className='my-profile-preview__full-name'>{me.fullName}</div>
     </>
   );
 

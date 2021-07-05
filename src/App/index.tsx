@@ -46,8 +46,7 @@ export const Routes = () => {
 // TODO: Images loading
 // TODO: Add redux persist
 // TODO: Clean up public folder
-// TODO: Add test for image preview on new post page
-// TODO: Delete tests on pages for redirect to login page
+// TODO: NewPostPage has a warning when running tests
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>

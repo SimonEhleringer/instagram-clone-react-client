@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { UserResponseDto } from '../../api/meFollowed';
+import { UserResponseDto } from '../../api/shared-dtos';
 import { buildSuggestionsPath } from '../../routes/path';
 import { ButtonType } from '../../shared/Button';
 import UserProfilePreview from '../../shared/ProfilePreview/UserProfilePreview';

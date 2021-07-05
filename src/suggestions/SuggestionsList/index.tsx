@@ -1,8 +1,8 @@
-import React from "react";
-import { UserResponseDto } from "../../api/meFollowed";
-import { ButtonType } from "../../shared/Button";
-import "./style.scss";
-import UserProfilePreview from "../../shared/ProfilePreview/UserProfilePreview";
+import React from 'react';
+import { ButtonType } from '../../shared/Button';
+import './style.scss';
+import UserProfilePreview from '../../shared/ProfilePreview/UserProfilePreview';
+import { UserResponseDto } from '../../api/shared-dtos';
 
 interface SuggestionsListProps {
   suggestions: UserResponseDto[];
@@ -14,10 +14,10 @@ const SuggestionsList: React.FC<SuggestionsListProps> = ({
   loadSuggestions,
 }) => {
   return (
-    <div className="suggestions-list">
+    <div className='suggestions-list'>
       {suggestions.map((suggestion, index) => {
         return (
-          <div key={suggestion.userId} className="suggestions-list__suggestion">
+          <div key={suggestion.userId} className='suggestions-list__suggestion'>
             <UserProfilePreview
               key={index}
               user={suggestion}

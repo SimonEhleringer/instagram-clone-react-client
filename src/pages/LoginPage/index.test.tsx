@@ -13,11 +13,11 @@ import {
   renderWithProviders,
 } from '../../test-utils';
 import faker from 'faker';
-import authenticationApi from '../../config/authenticationApi';
+import authenticationApi from '../../config/authentication-api';
 import { when } from 'jest-when';
-import { buildLoginUrl, LoginRequest } from '../../api/authentication';
+import { buildLoginUrl, LoginRequestDto } from '../../api/authentication';
 
-jest.mock('../../config/authenticationApi.ts');
+jest.mock('../../config/authentication-api.ts');
 const mockedAuthenticationApi = authenticationApi as jest.Mocked<
   typeof authenticationApi
 >;
@@ -42,7 +42,7 @@ it('should redirect to index page when login button was pressed and API call was
   );
   userEvent.type(screen.getByPlaceholderText('Passwort'), password);
 
-  const requestDto: LoginRequest = {
+  const requestDto: LoginRequestDto = {
     usernameOrEmail: username,
     password,
   };

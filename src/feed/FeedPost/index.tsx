@@ -1,5 +1,5 @@
 import React from 'react';
-import { FeedPostResponseDto } from '../../api/meFeed';
+import { FeedPostResponseDto } from '../../api/me-feed';
 import Avatar from '../../shared/Avatar';
 import { Image, Transformation } from 'cloudinary-react';
 import './style.scss';

@@ -1,5 +1,5 @@
-import resourceApi from '../config/resourceApi';
-import { PostRequestDto, PostResponseDto } from './sharedDtos';
+import resourceApi from '../config/resource-api';
+import { PostRequestDto, PostResponseDto } from './shared-dtos';
 
 export const addPost = async (request: PostRequestDto) => {
   return await resourceApi.post<PostResponseDto>(buildAddPostUrl(), request);

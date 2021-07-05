@@ -1,7 +1,6 @@
-import resourceApi from '../config/resourceApi';
-import { UserResponseDto } from './meFollowed';
+import resourceApi from '../config/resource-api';
+import { UserResponseDto } from '../api/shared-dtos';
 
-// Add tests
 export const getUsersFollowers = async (userId: string) => {
   return await resourceApi.get<FollowersResponseDto>(
     buildGetUsersFollowersUrl(userId)

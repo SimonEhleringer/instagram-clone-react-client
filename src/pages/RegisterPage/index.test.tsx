@@ -1,7 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
-import { buildRegisterUrl, RegisterRequest } from '../../api/authentication';
+import { buildRegisterUrl, RegisterRequestDto } from '../../api/authentication';
 import { buildRegisterPath } from '../../routes/path';
-import authenticationApi from '../../config/authenticationApi';
+import authenticationApi from '../../config/authentication-api';
 import {
   buildAccessAndRefreshTokenResponseDto,
   buildAxiosError,
@@ -16,7 +16,7 @@ import faker from 'faker';
 import userEvent from '@testing-library/user-event';
 import { when } from 'jest-when';
 
-jest.mock('../../config/authenticationApi.ts');
+jest.mock('../../config/authentication-api.ts');
 const mockedAuthenticationApi = authenticationApi as jest.Mocked<
   typeof authenticationApi
 >;
@@ -40,7 +40,7 @@ it('should redirect to index route when register button was pressed and API call
   userEvent.type(screen.getByPlaceholderText('Benutzername'), username);
   userEvent.type(screen.getByPlaceholderText('Passwort'), password);
 
-  const request: RegisterRequest = {
+  const request: RegisterRequestDto = {
     email,
     fullName,
     username,
