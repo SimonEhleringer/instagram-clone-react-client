@@ -1,6 +1,6 @@
 import React from 'react';
 import { BsGrid3X3 } from 'react-icons/bs';
-import { Image, Transformation } from 'cloudinary-react';
+import { Image, Transformation, Placeholder } from 'cloudinary-react';
 import { PostResponseDto } from '../../api/shared-dtos';
 import './style.scss';
 
@@ -26,7 +26,11 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
         <div className='profile-posts__posts'>
           {posts.map((post) => (
             <div key={post.postId} className='profile-posts__post'>
-              <Image publicId={post.publicImageId} alt={post.publicImageId}>
+              <Image
+                publicId={post.publicImageId}
+                alt={post.publicImageId}
+                loading='lazy'
+              >
                 <Transformation aspectRatio='1:1' crop='lfill' width={300} />
               </Image>
             </div>

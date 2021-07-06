@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Transformation } from 'cloudinary-react';
+import { Image, Transformation, Placeholder } from 'cloudinary-react';
 
 export interface AvatarProps {
   publicProfileImageId?: string;
@@ -21,6 +21,7 @@ const Avatar: React.FC<AvatarProps> = ({
       }
       alt={`${username}-profile-image`}
       format='webp'
+      loading='lazy'
     >
       <Transformation
         aspectRatio='1:1'

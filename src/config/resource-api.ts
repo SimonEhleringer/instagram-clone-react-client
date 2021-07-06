@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { refresh } from '../api/authentication';
 import { setAccessAndRefreshToken } from '../redux/authentication/slice';
-import applicationStore from './store';
+import { applicationStore } from './store';
 
 const resourceApi = axios.create({
   baseURL: 'https://instagram-clone-spring-boot.herokuapp.com/api/v1',

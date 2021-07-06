@@ -1,7 +1,7 @@
 import React from 'react';
 import { FeedPostResponseDto } from '../../api/me-feed';
 import Avatar from '../../shared/Avatar';
-import { Image, Transformation } from 'cloudinary-react';
+import { Image, Transformation, Placeholder } from 'cloudinary-react';
 import './style.scss';
 import UserProfileLink from '../../shared/UserProfileLink';
 import { getDisplayTimeDiffFromNowString } from '../../shared/time';
@@ -24,7 +24,11 @@ const FeedPost: React.FC<FeedPostProps> = ({ feedPost }) => {
       </div>
 
       <div className='feed-post__middle'>
-        <Image publicId={feedPost.publicImageId} alt={feedPost.publicImageId}>
+        <Image
+          publicId={feedPost.publicImageId}
+          alt={feedPost.publicImageId}
+          loading='lazy'
+        >
           <Transformation crop='lfill' width={800} />
         </Image>
       </div>

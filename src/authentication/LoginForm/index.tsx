@@ -51,7 +51,7 @@ const LoginForm = () => {
       redirectButtonText='Registrieren'
       redirectTo={buildRegisterPath()}
       errors={errors}
-      isLoading={loading}
+      isLoading={true}
     >
       <Controller
         control={control}

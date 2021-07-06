@@ -35,15 +35,12 @@ export const Routes = () => {
 
 // TODO: Check for accessibility
 // TODO: Maybe change fetch format for images
-// TODO: Suggestions: Show some text when no suggestions are there
 // TODO: Maybe add padding scss variable?
 // TODO: Delete unnessecary API endpoints
-// TODO: Rename files to kebap-case
 // TODO: Test interceptors
 // TODO: Show errors when errors in api call apeared
 // TODO: Fix all warnings
 // TODO: Images loading
-// TODO: Add redux persist
 // TODO: Clean up public folder
 // TODO: NewPostPage has a warning when running tests
 // TODO: Another loader
