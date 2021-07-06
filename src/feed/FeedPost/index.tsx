@@ -33,7 +33,7 @@ const FeedPost: React.FC<FeedPostProps> = ({ feedPost }) => {
         {feedPost.text && (
           <div className='feed-post__caption'>
             <UserProfileLink user={feedPost.creator} />{' '}
-            <span>{feedPost.text}</span>
+            <span className='feed-post__caption-text'>{feedPost.text}</span>
           </div>
         )}
 

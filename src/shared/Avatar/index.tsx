@@ -20,6 +20,7 @@ const Avatar: React.FC<AvatarProps> = ({
           : 'instagram-clone/static/blank-profile-image'
       }
       alt={`${username}-profile-image`}
+      format='webp'
     >
       <Transformation
         aspectRatio='1:1'

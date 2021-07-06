@@ -34,8 +34,7 @@ export const Routes = () => {
 };
 
 // TODO: Check for accessibility
-// TODO: Profile image on profile page: has white background (but only sometimes?)
-// TODO: When post caption is multiline it is not displayed correctly
+// TODO: Maybe change fetch format for images
 // TODO: Suggestions: Show some text when no suggestions are there
 // TODO: Maybe add padding scss variable?
 // TODO: Delete unnessecary API endpoints
@@ -47,6 +46,7 @@ export const Routes = () => {
 // TODO: Add redux persist
 // TODO: Clean up public folder
 // TODO: NewPostPage has a warning when running tests
+// TODO: Another loader
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>

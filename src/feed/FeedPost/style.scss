@@ -44,6 +44,10 @@
   margin-bottom: 0.5rem;
 }
 
+.feed-post__caption-text {
+  white-space: pre-wrap;
+}
+
 .feed-post__creation-time {
   color: variables.$text-secondary;
   text-transform: uppercase;
