@@ -14,6 +14,7 @@ export interface ImagePlaceholderProps {
   render: (onLoad: () => void) => JSX.Element;
 }
 
+// TODO: Add tests
 const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
   widthInPx,
   shape,

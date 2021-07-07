@@ -43,7 +43,7 @@ export const Routes = () => {
 // TODO: Images loading
 // TODO: Clean up public folder
 // TODO: NewPostPage has a warning when running tests
-// TODO: Another loader
+// TODO: Load smaller images on mobile
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>

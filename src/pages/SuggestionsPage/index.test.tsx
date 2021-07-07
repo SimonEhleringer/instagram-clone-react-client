@@ -8,7 +8,6 @@ import {
 import { AxiosResponse } from 'axios';
 import { Provider } from 'react-redux';
 import { render, screen, waitFor } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
 import { configureStore, StoreType } from '../../config/store';
 import { buildAddFollowUrl } from '../../api/me-followed';
 import { buildSuggestionsPath, suggestionsPath } from '../../routes/path';
