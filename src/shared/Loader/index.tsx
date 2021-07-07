@@ -1,6 +1,5 @@
 import React from 'react';
-import { FadeLoader } from 'react-spinners';
-import ReactLoader from 'react-loader-spinner';
+import { CircularProgress } from '@material-ui/core';
 
 export interface LoaderProps {
   color: string;
@@ -8,7 +7,7 @@ export interface LoaderProps {
 }
 
 const Loader: React.FC<LoaderProps> = ({ color, size }) => {
-  return <ReactLoader type='Oval' color={color} height={size} width={size} />;
+  return <CircularProgress size={size} style={{ color: color }} />;
 };
 
 export default Loader;

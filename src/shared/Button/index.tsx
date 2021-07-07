@@ -44,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
       {isLoading && (
         <div className='button__spinner' data-testid={loaderDataTestId}>
           <Loader
-            size='16px'
+            size='1em'
             color={`
           ${buttonType === ButtonType.PrimaryContained ? 'white' : ''}
           ${buttonType === ButtonType.SecondaryContained ? 'black' : ''}

@@ -15,7 +15,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({
     <>
       {isLoading ? (
         <div data-testid='page-loader' className='page-loader'>
-          <Loader color='#8e8e8e' size='4rem' />
+          <Loader color='#8e8e8e' size='3rem' />
         </div>
       ) : (
         children
