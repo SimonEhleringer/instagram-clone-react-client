@@ -1,0 +1,28 @@
+@use 'variables';
+
+.image-placeholder {
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+
+.image-placeholder--image-loading {
+  img {
+    height: 0;
+  }
+}
+
+.image-placeholder__placeholder {
+  max-width: 100%;
+  padding-top: 100%;
+  background-color: variables.$border-light;
+}
+
+.image-placeholder__placeholder--circle {
+  border-radius: 50%;
+}
+
+.image-placeholder__placeholder--image-loaded {
+  display: none;
+}

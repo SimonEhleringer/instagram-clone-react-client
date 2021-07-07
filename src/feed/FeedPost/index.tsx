@@ -1,14 +1,20 @@
 import React from 'react';
 import { FeedPostResponseDto } from '../../api/me-feed';
 import Avatar from '../../shared/Avatar';
-import { Image, Transformation, Placeholder } from 'cloudinary-react';
+import { Image, Transformation } from 'cloudinary-react';
 import './style.scss';
 import UserProfileLink from '../../shared/UserProfileLink';
 import { getDisplayTimeDiffFromNowString } from '../../shared/time';
+import ImagePlaceholder, {
+  ImagePlaceholderShape,
+} from '../../shared/ImagePlaceholder';
+import LazyLoad from 'react-lazyload';
 
 export interface FeedPostProps {
   feedPost: FeedPostResponseDto;
 }
+
+const imageWidthInPx = 800;
 
 const FeedPost: React.FC<FeedPostProps> = ({ feedPost }) => {
   return (
@@ -24,13 +30,21 @@ const FeedPost: React.FC<FeedPostProps> = ({ feedPost }) => {
       </div>
 
       <div className='feed-post__middle'>
-        <Image
-          publicId={feedPost.publicImageId}
-          alt={feedPost.publicImageId}
-          loading='lazy'
-        >
-          <Transformation crop='lfill' width={800} />
-        </Image>
+        <ImagePlaceholder
+          widthInPx={imageWidthInPx}
+          shape={ImagePlaceholderShape.square}
+          render={(onLoad) => (
+            <LazyLoad offset={500}>
+              <Image
+                publicId={feedPost.publicImageId}
+                alt={feedPost.publicImageId}
+                onLoad={onLoad}
+              >
+                <Transformation crop='lfill' width={imageWidthInPx} />
+              </Image>
+            </LazyLoad>
+          )}
+        />
       </div>
 
       <div className='feed-post__bottom'>

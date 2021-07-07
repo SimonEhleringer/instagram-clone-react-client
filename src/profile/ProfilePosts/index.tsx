@@ -3,10 +3,16 @@ import { BsGrid3X3 } from 'react-icons/bs';
 import { Image, Transformation, Placeholder } from 'cloudinary-react';
 import { PostResponseDto } from '../../api/shared-dtos';
 import './style.scss';
+import ImagePlaceholder, {
+  ImagePlaceholderShape,
+} from '../../shared/ImagePlaceholder';
+import LazyLoad from 'react-lazyload';
 
 interface ProfilePostsProps {
   posts: PostResponseDto[];
 }
+
+const imageWidthInPx = 300;
 
 const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
   return (
@@ -25,15 +31,25 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
       ) : (
         <div className='profile-posts__posts'>
           {posts.map((post) => (
-            <div key={post.postId} className='profile-posts__post'>
-              <Image
-                publicId={post.publicImageId}
-                alt={post.publicImageId}
-                loading='lazy'
-              >
-                <Transformation aspectRatio='1:1' crop='lfill' width={300} />
-              </Image>
-            </div>
+            <ImagePlaceholder
+              widthInPx={imageWidthInPx}
+              shape={ImagePlaceholderShape.square}
+              render={(onLoad) => (
+                <LazyLoad offset={100}>
+                  <Image
+                    publicId={post.publicImageId}
+                    alt={post.publicImageId}
+                    onLoad={onLoad}
+                  >
+                    <Transformation
+                      aspectRatio='1:1'
+                      crop='fill'
+                      width={imageWidthInPx}
+                    />
+                  </Image>
+                </LazyLoad>
+              )}
+            />
           ))}
         </div>
       )}

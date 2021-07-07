@@ -3,9 +3,13 @@
 
 .index-page__feed {
   margin-right: 2rem;
+  width: 600px;
+  max-width: 100%;
+  flex-grow: 1;
 
   @include mixins.tablet {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     margin-right: 0;
   }
 }
