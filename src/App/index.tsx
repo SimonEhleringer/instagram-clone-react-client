@@ -40,9 +40,7 @@ export const Routes = () => {
 // TODO: Test interceptors
 // TODO: Show errors when errors in api call apeared
 // TODO: Fix all warnings
-// TODO: Images loading
 // TODO: Clean up public folder
-// TODO: NewPostPage has a warning when running tests
 // TODO: Load smaller images on mobile
 const App = () => {
   return (

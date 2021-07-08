@@ -10,6 +10,11 @@ jest.mock('cloudinary-react', () => {
   };
 });
 
+jest.mock(
+  'react-lazyload',
+  () => require('../../test-utils/mock-objects/react-lazyload').default
+);
+
 it('should render avatar and pass props to cloudinary components', () => {
   const { publicProfileImageId, username, widthInPx } = buildProps();
 

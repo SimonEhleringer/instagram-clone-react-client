@@ -43,6 +43,11 @@ jest.mock(
   () => require('../../test-utils/mock-objects/cloudinary').default
 );
 
+jest.mock(
+  'react-lazyload',
+  () => require('../../test-utils/mock-objects/react-lazyload').default
+);
+
 let loggedInUser: UserResponseDto;
 let loggedInUsersFollowed: FollowedResponseDto;
 let user: UserResponseDto;

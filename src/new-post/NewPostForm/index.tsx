@@ -35,9 +35,9 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ imageDataUri }) => {
       history.push(buildIndexPath());
     } catch (e) {
       setErrors(getErrorsArrayFromError(e));
-    }
 
-    setIsLoading(false);
+      setIsLoading(false);
+    }
   };
 
   return (

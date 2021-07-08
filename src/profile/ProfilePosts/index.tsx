@@ -32,6 +32,7 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
         <div className='profile-posts__posts'>
           {posts.map((post) => (
             <ImagePlaceholder
+              key={post.postId}
               widthInPx={imageWidthInPx}
               shape={ImagePlaceholderShape.square}
               render={(onLoad) => (
@@ -40,11 +41,13 @@ const ProfilePosts: React.FC<ProfilePostsProps> = ({ posts }) => {
                     publicId={post.publicImageId}
                     alt={post.publicImageId}
                     onLoad={onLoad}
+                    format='jpg'
                   >
                     <Transformation
                       aspectRatio='1:1'
                       crop='fill'
                       width={imageWidthInPx}
+                      quality='80'
                     />
                   </Image>
                 </LazyLoad>

@@ -8,7 +8,11 @@ const HiddenImageInput = React.forwardRef<
   HiddenImageInputProps
 >((props, ref) => {
   return (
-    <HiddenFileInput accept={'image/png, image/jpeg'} {...props} ref={ref} />
+    <HiddenFileInput
+      accept={'image/png, image/jpeg, image/webp'}
+      {...props}
+      ref={ref}
+    />
   );
 });
 

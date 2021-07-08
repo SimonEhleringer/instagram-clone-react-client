@@ -39,8 +39,13 @@ const FeedPost: React.FC<FeedPostProps> = ({ feedPost }) => {
                 publicId={feedPost.publicImageId}
                 alt={feedPost.publicImageId}
                 onLoad={onLoad}
+                format='jpg'
               >
-                <Transformation crop='lfill' width={imageWidthInPx} />
+                <Transformation
+                  crop='lfill'
+                  width={imageWidthInPx}
+                  quality='80'
+                />
               </Image>
             </LazyLoad>
           )}

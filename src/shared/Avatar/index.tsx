@@ -27,14 +27,15 @@ const Avatar: React.FC<AvatarProps> = ({
                 : 'instagram-clone/static/blank-profile-image'
             }
             alt={`${username}-profile-image`}
-            format='webp'
+            format='jpg'
             onLoad={onLoad}
+            style={{ borderRadius: '50%' }}
           >
             <Transformation
               aspectRatio='1:1'
               crop='lfill'
-              radius='max'
               width={widthInPx}
+              quality='80'
             />
           </Image>
         </LazyLoad>

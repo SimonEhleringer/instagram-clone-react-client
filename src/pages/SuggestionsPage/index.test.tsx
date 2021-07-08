@@ -35,6 +35,11 @@ jest.mock(
   () => require('../../test-utils/mock-objects/cloudinary').default
 );
 
+jest.mock(
+  'react-lazyload',
+  () => require('../../test-utils/mock-objects/react-lazyload').default
+);
+
 let suggestions: SuggestionsResponseDto;
 let store: StoreType;
 
