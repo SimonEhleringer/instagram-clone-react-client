@@ -7,7 +7,7 @@ import {
   BsPerson,
   BsPersonFill,
 } from 'react-icons/bs';
-import instagramLogo from '../../assets/images/logo.png';
+import instagramLogo from '../../assets/images/logo-header.png';
 import {
   buildIndexPath,
   buildMyProfilePath,
