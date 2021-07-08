@@ -1,13 +1,13 @@
-import React, { useRef } from 'react';
-import { PostResponseDto, UserResponseDto } from '../../api/shared-dtos';
-import Profile from '../Profile';
-import Button, { ButtonType } from '../../shared/Button';
-import { useLogout } from '../../authentication/useLogout';
+import React from 'react';
 import { changeProfileImage } from '../../api/me-profile-image';
-import { useReadFileFromEvent } from '../../shared/hooks/useReadFileFromEvent';
-import InvisibleButton from '../../shared/InvisibleButton';
+import { PostResponseDto, UserResponseDto } from '../../api/shared-dtos';
+import { useLogout } from '../../authentication/useLogout';
+import Button, { ButtonType } from '../../shared/Button';
 import HiddenImageInput from '../../shared/HiddenImageInput';
 import { useHiddenInput } from '../../shared/hooks/useHiddenInput';
+import { useReadFileFromEvent } from '../../shared/hooks/useReadFileFromEvent';
+import InvisibleButton from '../../shared/InvisibleButton';
+import Profile from '../Profile';
 
 export interface MyProfileProps {
   user: UserResponseDto;
@@ -17,7 +17,6 @@ export interface MyProfileProps {
   reloadProfileInformation: () => void;
 }
 
-// TODO: Add loader to profile image (for changing profile image)
 const MyProfile: React.FC<MyProfileProps> = ({
   reloadProfileInformation,
   ...rest

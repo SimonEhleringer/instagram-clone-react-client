@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Image, Transformation } from 'cloudinary-react';
-import Avatar from '.';
 import faker from 'faker';
+import Avatar from '.';
 
 jest.mock('cloudinary-react', () => {
   return {

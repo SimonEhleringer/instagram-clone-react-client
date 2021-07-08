@@ -1,18 +1,11 @@
-import React, { useEffect } from 'react';
-import { useCallback } from 'react';
-import { useState } from 'react';
-import {
-  RouteComponentProps,
-  useHistory,
-  useLocation,
-  useRouteMatch,
-} from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useRouteMatch } from 'react-router-dom';
 import { getLoggedInUsersFollowed } from '../../api/me-followed';
+import { UserResponseDto } from '../../api/shared-dtos';
 import { useFetchProfileInformation } from '../../profile/useFetchProfileInformation';
 import UserProfile from '../../profile/UserProfile';
-import PageLoader from '../../shared/PageLoader';
 import NormalPageLayout from '../../shared/NormalPageLayout';
-import { UserResponseDto } from '../../api/shared-dtos';
+import PageLoader from '../../shared/PageLoader';
 
 export interface UserProfilePageParams {
   userId: string;

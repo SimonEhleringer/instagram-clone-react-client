@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { addFollow, deleteFollow } from '../../api/me-followed';
 import { PostResponseDto, UserResponseDto } from '../../api/shared-dtos';
-import Profile from '../Profile';
 import Button, { ButtonType } from '../../shared/Button';
-import { useState } from 'react';
+import Profile from '../Profile';
 
 export interface UserProfileProps {
   user: UserResponseDto;

@@ -1,14 +1,14 @@
+import { Image, Transformation } from 'cloudinary-react';
 import React from 'react';
+import LazyLoad from 'react-lazyload';
 import { FeedPostResponseDto } from '../../api/me-feed';
 import Avatar from '../../shared/Avatar';
-import { Image, Transformation } from 'cloudinary-react';
-import './style.scss';
-import UserProfileLink from '../../shared/UserProfileLink';
-import { getDisplayTimeDiffFromNowString } from '../../shared/time';
 import ImagePlaceholder, {
   ImagePlaceholderShape,
 } from '../../shared/ImagePlaceholder';
-import LazyLoad from 'react-lazyload';
+import { getDisplayTimeDiffFromNowString } from '../../shared/time';
+import UserProfileLink from '../../shared/UserProfileLink';
+import './style.scss';
 
 export interface FeedPostProps {
   feedPost: FeedPostResponseDto;

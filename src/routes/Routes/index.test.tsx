@@ -1,15 +1,9 @@
 import { fireEvent, screen } from '@testing-library/react';
-import { Routes } from '.';
-import { configureStore, StoreType } from '../config/store';
-import { initialState } from '../redux/authentication/slice';
-import {
-  buildIndexPath,
-  buildMyProfilePath,
-  buildNewPostPath,
-  buildNewPostPathname,
-  buildSuggestionsPath,
-  buildUserProfilePath,
-} from '../routes/path';
+import userEvent from '@testing-library/user-event';
+import faker from 'faker';
+import Routes from '.';
+import { configureStore, StoreType } from '../../config/store';
+import { initialState } from '../../redux/authentication/slice';
 import {
   buildAuthenticationState,
   buildMockedImage,
@@ -21,12 +15,18 @@ import {
   MockedSuggestionsPage,
   MockedUserProfilePage,
   renderWithProviders,
-} from '../test-utils';
-import faker from 'faker';
-import userEvent from '@testing-library/user-event';
+} from '../../test-utils';
+import {
+  buildIndexPath,
+  buildMyProfilePath,
+  buildNewPostPath,
+  buildNewPostPathname,
+  buildSuggestionsPath,
+  buildUserProfilePath,
+} from '../path';
 
-jest.mock('../routes/renderers.tsx', () => {
-  const actual = jest.requireActual('../routes/renderers.tsx');
+jest.mock('../renderers.tsx', () => {
+  const actual = jest.requireActual('../renderers.tsx');
 
   return {
     renderIndexRoute: () => actual.renderIndexRoute(<MockedIndexPage />),

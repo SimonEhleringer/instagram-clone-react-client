@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
-import PageLoader from '../../shared/PageLoader';
-import SuggestionsList from '../../suggestions/SuggestionsList';
-import SlimPageLayout from '../../shared/SlimPageLayout';
-
 import { getSuggestions } from '../../api/me-suggestions';
-import ResponsiveHeading from '../../shared/ResponsiveHeading';
 import { UserResponseDto } from '../../api/shared-dtos';
+import PageLoader from '../../shared/PageLoader';
+import ResponsiveHeading from '../../shared/ResponsiveHeading';
+import SlimPageLayout from '../../shared/SlimPageLayout';
+import SuggestionsList from '../../suggestions/SuggestionsList';
 
 const SuggestionsPage: React.FC = () => {
   const [suggestions, setSuggestions] = useState<UserResponseDto[] | undefined>(

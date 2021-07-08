@@ -1,6 +1,7 @@
 import React from 'react';
-import './style.scss';
+import { textOnPrimary, textPrimary } from '../../scss/variables';
 import Loader from '../Loader';
+import './style.scss';
 
 export enum ButtonType {
   PrimaryContained,
@@ -18,7 +19,6 @@ export interface ButtonProps
   loaderDataTestId?: string;
 }
 
-// TODO: use variables for Loader color
 const Button: React.FC<ButtonProps> = ({
   isLoading = false,
   buttonType = ButtonType.PrimaryContained,
@@ -46,9 +46,9 @@ const Button: React.FC<ButtonProps> = ({
           <Loader
             size='1em'
             color={`
-          ${buttonType === ButtonType.PrimaryContained ? 'white' : ''}
-          ${buttonType === ButtonType.SecondaryContained ? 'black' : ''}
-          ${buttonType === ButtonType.PrimaryText ? 'black' : ''}`}
+          ${buttonType === ButtonType.PrimaryContained ? textOnPrimary : ''}
+          ${buttonType === ButtonType.SecondaryContained ? textPrimary : ''}
+          ${buttonType === ButtonType.PrimaryText ? textPrimary : ''}`}
           />
         </div>
       )}

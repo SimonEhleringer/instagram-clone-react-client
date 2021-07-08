@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import Button from '.';
 import faker from 'faker';
+import Button from '.';
 
 it('should render only text in button when not loading', () => {
   const buttonText = faker.lorem.word();

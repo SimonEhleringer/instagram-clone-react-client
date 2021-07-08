@@ -1,14 +1,14 @@
 import React from 'react';
 import { BsPlusCircle, BsPlusCircleFill } from 'react-icons/bs';
 import { useHistory } from 'react-router';
-import HeaderLink from '../HeaderLink';
-import './style.scss';
+import { NewPostPageState } from '../../../pages/NewPostPage';
 import { buildNewPostPath, buildNewPostPathname } from '../../../routes/path';
-import { useReadFileFromEvent } from '../../hooks/useReadFileFromEvent';
-import InvisibleButton from '../../InvisibleButton';
 import HiddenImageInput from '../../HiddenImageInput';
 import { useHiddenInput } from '../../hooks/useHiddenInput';
-import { NewPostPageState } from '../../../pages/NewPostPage';
+import { useReadFileFromEvent } from '../../hooks/useReadFileFromEvent';
+import InvisibleButton from '../../InvisibleButton';
+import HeaderLink from '../HeaderLink';
+import './style.scss';
 
 const AddNewPostLink = () => {
   const history = useHistory();

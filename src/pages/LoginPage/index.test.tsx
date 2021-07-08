@@ -1,6 +1,9 @@
-import { getByPlaceholderText, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { configureStore, StoreType } from '../../config/store';
+import faker from 'faker';
+import { when } from 'jest-when';
+import { buildLoginUrl, LoginRequestDto } from '../../api/authentication';
+import authenticationApi from '../../config/authentication-api';
 import { buildLoginPath } from '../../routes/path';
 import { renderLoginRoute } from '../../routes/renderers';
 import {
@@ -12,10 +15,6 @@ import {
   renderMockedRegisterRoute,
   renderWithProviders,
 } from '../../test-utils';
-import faker from 'faker';
-import authenticationApi from '../../config/authentication-api';
-import { when } from 'jest-when';
-import { buildLoginUrl, LoginRequestDto } from '../../api/authentication';
 
 jest.mock('../../config/authentication-api.ts');
 const mockedAuthenticationApi = authenticationApi as jest.Mocked<

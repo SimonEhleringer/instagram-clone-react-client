@@ -1,6 +1,4 @@
-import { render } from '@testing-library/react';
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 
 export enum ImagePlaceholderShape {
@@ -14,7 +12,6 @@ export interface ImagePlaceholderProps {
   render: (onLoad: () => void) => JSX.Element;
 }
 
-// TODO: Add tests
 const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
   widthInPx,
   shape,

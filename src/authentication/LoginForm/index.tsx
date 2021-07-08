@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import AuthenticationForm from '../../authentication/AuthenticationForm';
-import Input from '../../shared/Input';
-import {
-  buildIndexPath,
-  buildLoginPath,
-  buildRegisterPath,
-} from '../../routes/path';
 import { useDispatch } from 'react-redux';
-import { LoginRequestDto, login } from '../../api/authentication';
-import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../utils';
-import { setState } from '../../redux/authentication/slice';
 import { useHistory } from 'react-router-dom';
+import { login, LoginRequestDto } from '../../api/authentication';
+import AuthenticationForm from '../../authentication/AuthenticationForm';
+import { setState } from '../../redux/authentication/slice';
+import { buildIndexPath, buildRegisterPath } from '../../routes/path';
 import { getErrorsArrayFromError } from '../../shared/error';
+import Input from '../../shared/Input';
+import { convertAccessAndRefreshTokenResponseToAuthenticationState } from '../utils';
 
 const LoginForm = () => {
   const dispatch = useDispatch();

@@ -20,7 +20,6 @@ import {
 import { buildGetUsersPostsUrl } from '../../api/user-post';
 import resourceApi from '../../config/resource-api';
 import { configureStore, StoreType } from '../../config/store';
-import { initialState } from '../../redux/authentication/slice';
 import { buildUserProfilePath } from '../../routes/path';
 import { renderUserProfileRoute } from '../../routes/renderers';
 import {
@@ -31,7 +30,6 @@ import {
   buildFollowersResponseDto,
   buildPostsResponseDto,
   buildUserResponseDto,
-  renderMockedLoginRoute,
   renderWithProviders,
 } from '../../test-utils';
 

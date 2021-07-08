@@ -1,8 +1,8 @@
 import React from 'react';
 import { PostResponseDto, UserResponseDto } from '../../api/shared-dtos';
 import Avatar from '../../shared/Avatar';
-import './style.scss';
 import Stat from '../Stat';
+import './style.scss';
 
 interface ProfileInformationProps {
   user: UserResponseDto;

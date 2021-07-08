@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { addPost } from '../../api/me-post';
 import { PostRequestDto } from '../../api/shared-dtos';
@@ -7,8 +6,8 @@ import { buildIndexPath } from '../../routes/path';
 import Button from '../../shared/Button';
 import { getErrorsArrayFromError } from '../../shared/error';
 import Errors from '../../shared/Errors';
-import './style.scss';
 import Textarea from '../../shared/Textarea';
+import './style.scss';
 
 export interface NewPostFormProps {
   imageDataUri: string;

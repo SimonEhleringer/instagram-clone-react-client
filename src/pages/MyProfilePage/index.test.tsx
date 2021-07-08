@@ -1,36 +1,36 @@
-import resourceApi from '../../config/resource-api';
-import {
-  buildGetUsersFollowersUrl,
-  FollowersResponseDto,
-} from '../../api/user-followers';
-import { buildGetUsersFollowedUrl } from '../../api/user-followed';
-import { when } from 'jest-when';
-import { buildGetUserUrl } from '../../api/user';
-import { buildGetUsersPostsUrl } from '../../api/user-post';
-import {
-  buildAuthenticationState,
-  buildAxiosResponseWithData,
-  buildFollowedResponseDto,
-  buildFollowersResponseDto,
-  buildPostsResponseDto,
-  buildUserResponseDto,
-  renderWithProviders,
-  renderMockedLoginRoute,
-  buildMockedCloudinaryImageSource,
-} from '../../test-utils';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { configureStore, StoreType } from '../../config/store';
-import { initialState } from '../../redux/authentication/slice';
 import userEvent from '@testing-library/user-event';
 import faker from 'faker';
-import { buildMyProfilePath } from '../../routes/path';
-import { renderMyProfileRoute } from '../../routes/renderers';
+import { when } from 'jest-when';
 import { ProfileImageRequestDto } from '../../api/me-profile-image';
 import {
   FollowedResponseDto,
   PostsResponseDto,
   UserResponseDto,
 } from '../../api/shared-dtos';
+import { buildGetUserUrl } from '../../api/user';
+import { buildGetUsersFollowedUrl } from '../../api/user-followed';
+import {
+  buildGetUsersFollowersUrl,
+  FollowersResponseDto,
+} from '../../api/user-followers';
+import { buildGetUsersPostsUrl } from '../../api/user-post';
+import resourceApi from '../../config/resource-api';
+import { configureStore, StoreType } from '../../config/store';
+import { initialState } from '../../redux/authentication/slice';
+import { buildMyProfilePath } from '../../routes/path';
+import { renderMyProfileRoute } from '../../routes/renderers';
+import {
+  buildAxiosResponseWithData,
+  buildFollowedResponseDto,
+  buildFollowersResponseDto,
+  buildMockedCloudinaryImageSource,
+  buildMockedImage,
+  buildPostsResponseDto,
+  buildUserResponseDto,
+  renderMockedLoginRoute,
+  renderWithProviders,
+} from '../../test-utils';
 
 jest.mock('../../config/resource-api.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
@@ -179,10 +179,7 @@ it('should upload new profile image and show it when new image is selected', asy
     store: store,
   });
 
-  // TODO: Use builder
-  const imageBlob = 'imageDataUri';
-  const image = new File([imageBlob], 'image.png', { type: 'image/png' });
-  const imageDataUri = 'data:image/png;base64,aW1hZ2VEYXRhVXJp';
+  const { image, imageDataUri } = buildMockedImage();
 
   const newUser: UserResponseDto = {
     ...user,

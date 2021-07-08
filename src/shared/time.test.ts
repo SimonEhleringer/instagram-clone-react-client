@@ -1,3 +1,4 @@
+import faker from 'faker';
 import MockDate from 'mockdate';
 import {
   calculateTimeDiffFromNow,
@@ -5,7 +6,6 @@ import {
   getDisplayTimeDiffFromNowString,
   getDisplayTimeDiffString,
 } from './time';
-import faker from 'faker';
 
 const mockedNowForSettingMockDate = faker.date.recent();
 

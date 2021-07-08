@@ -1,12 +1,12 @@
+import { Image, Transformation } from 'cloudinary-react';
 import React from 'react';
 import { BsGrid3X3 } from 'react-icons/bs';
-import { Image, Transformation, Placeholder } from 'cloudinary-react';
+import LazyLoad from 'react-lazyload';
 import { PostResponseDto } from '../../api/shared-dtos';
-import './style.scss';
 import ImagePlaceholder, {
   ImagePlaceholderShape,
 } from '../../shared/ImagePlaceholder';
-import LazyLoad from 'react-lazyload';
+import './style.scss';
 
 interface ProfilePostsProps {
   posts: PostResponseDto[];

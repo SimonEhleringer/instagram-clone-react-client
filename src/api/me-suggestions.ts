@@ -1,5 +1,5 @@
-import { UserResponseDto } from './shared-dtos';
 import resourceApi from '../config/resource-api';
+import { UserResponseDto } from './shared-dtos';
 
 export const getSuggestions = async () => {
   const response = await resourceApi.get<SuggestionsResponseDto>(

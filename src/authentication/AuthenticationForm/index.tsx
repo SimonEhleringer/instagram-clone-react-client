@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../../shared/Button';
 import instagramLogo from '../../assets/images/logo.png';
-import './style.scss';
+import Button from '../../shared/Button';
 import Errors from '../../shared/Errors';
+import './style.scss';
 
 export interface AuthenticationFormProps {
   handleSubmit: () => void;
@@ -16,8 +16,6 @@ export interface AuthenticationFormProps {
   isLoading: boolean;
 }
 
-// TODO: Add tests for loading
-// TODO: Remove Data test ids
 const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   handleSubmit,
   subTitle,

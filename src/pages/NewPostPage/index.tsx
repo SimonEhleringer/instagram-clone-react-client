@@ -1,9 +1,8 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import NewPostForm from '../../new-post/NewPostForm';
-import SlimPageLayout from '../../shared/SlimPageLayout';
 import ResponsiveHeading from '../../shared/ResponsiveHeading';
-import { RouteComponentProps, useLocation } from 'react-router-dom';
-import { StaticContext } from 'react-router';
+import SlimPageLayout from '../../shared/SlimPageLayout';
 
 export interface NewPostPageState {
   selectedImageDataUri: string;

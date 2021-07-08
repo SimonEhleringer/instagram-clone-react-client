@@ -1,8 +1,8 @@
 import React from 'react';
-import { ButtonType } from '../../shared/Button';
-import './style.scss';
-import UserProfilePreview from '../../shared/ProfilePreview/UserProfilePreview';
 import { UserResponseDto } from '../../api/shared-dtos';
+import { ButtonType } from '../../shared/Button';
+import UserProfilePreview from '../../shared/ProfilePreview/UserProfilePreview';
+import './style.scss';
 
 interface SuggestionsListProps {
   suggestions: UserResponseDto[];

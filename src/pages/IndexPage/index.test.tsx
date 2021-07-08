@@ -1,7 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { when } from 'jest-when';
-import { forceCheck, forceVisible } from 'react-lazyload';
 import { buildGetMeUrl } from '../../api/me';
 import { buildGetFeedUrl, FeedResponseDto } from '../../api/me-feed';
 import { buildAddFollowUrl } from '../../api/me-followed';
@@ -12,7 +11,6 @@ import {
 import { UserResponseDto } from '../../api/shared-dtos';
 import resourceApi from '../../config/resource-api';
 import { configureStore, StoreType } from '../../config/store';
-import { initialState } from '../../redux/authentication/slice';
 import { buildIndexPath } from '../../routes/path';
 import { renderIndexRoute } from '../../routes/renderers';
 import { getDisplayTimeDiffFromNowString } from '../../shared/time';

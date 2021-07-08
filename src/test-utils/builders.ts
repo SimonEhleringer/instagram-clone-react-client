@@ -1,6 +1,8 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { AuthenticationState } from '../redux/authentication/slice';
 import faker from 'faker';
+import { AccessAndRefreshTokenResponseDto } from '../api/authentication';
+import { FeedPostResponseDto, FeedResponseDto } from '../api/me-feed';
+import { SuggestionsResponseDto } from '../api/me-suggestions';
 import {
   FollowedResponseDto,
   PostResponseDto,
@@ -8,11 +10,8 @@ import {
   UserResponseDto,
 } from '../api/shared-dtos';
 import { FollowersResponseDto } from '../api/user-followers';
-import { FeedPostResponseDto, FeedResponseDto } from '../api/me-feed';
-import { SuggestionsResponseDto } from '../api/me-suggestions';
-import { config } from 'node:process';
+import { AuthenticationState } from '../redux/authentication/slice';
 import { ErrorResponseDto } from '../shared/error';
-import { AccessAndRefreshTokenResponseDto } from '../api/authentication';
 
 export const buildAuthenticationState = (
   overrides?: Partial<AuthenticationState>

@@ -1,8 +1,7 @@
-import React from "react";
-import ContentCenteredLayout from "../../shared/ContentCenteredLayout";
-import RegisterForm from "../../authentication/RegisterForm";
+import React from 'react';
+import RegisterForm from '../../authentication/RegisterForm';
+import ContentCenteredLayout from '../../shared/ContentCenteredLayout';
 
-// TODO: Add tests for loading
 const RegisterPage: React.FC = () => {
   return (
     <ContentCenteredLayout>

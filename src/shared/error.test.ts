@@ -1,6 +1,6 @@
+import faker from 'faker';
 import { buildAxiosError, buildErrorResponseDto } from '../test-utils';
 import { getErrorsArrayFromError } from './error';
-import faker from 'faker';
 
 describe('getErrorsArrayFromError', () => {
   it('should return errors from error response DTO in axios error when error is axios error of error response DTO', () => {

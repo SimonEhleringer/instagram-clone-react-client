@@ -1,7 +1,11 @@
 import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import faker from 'faker';
+import { when } from 'jest-when';
 import { buildRegisterUrl, RegisterRequestDto } from '../../api/authentication';
-import { buildRegisterPath } from '../../routes/path';
 import authenticationApi from '../../config/authentication-api';
+import { buildRegisterPath } from '../../routes/path';
+import { renderRegisterRoute } from '../../routes/renderers';
 import {
   buildAccessAndRefreshTokenResponseDto,
   buildAxiosError,
@@ -11,10 +15,6 @@ import {
   renderMockedLoginRoute,
   renderWithProviders,
 } from '../../test-utils';
-import { renderRegisterRoute } from '../../routes/renderers';
-import faker from 'faker';
-import userEvent from '@testing-library/user-event';
-import { when } from 'jest-when';
 
 jest.mock('../../config/authentication-api.ts');
 const mockedAuthenticationApi = authenticationApi as jest.Mocked<

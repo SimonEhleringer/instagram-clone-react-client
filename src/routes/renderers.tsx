@@ -1,13 +1,13 @@
-import ProtectedRoute from '../shared/ProtectedRoute';
-import IndexPage from '../pages/IndexPage';
+import React from 'react';
 import { Route } from 'react-router';
+import IndexPage from '../pages/IndexPage';
 import LoginPage from '../pages/LoginPage';
+import MyProfilePage from '../pages/MyProfilePage';
+import NewPostPage from '../pages/NewPostPage';
 import RegisterPage from '../pages/RegisterPage';
 import SuggestionsPage from '../pages/SuggestionsPage';
-import NewPostPage from '../pages/NewPostPage';
-import MyProfilePage from '../pages/MyProfilePage';
 import UserProfilePage from '../pages/UserProfilePage';
-import React, { FC } from 'react';
+import ProtectedRoute from '../shared/ProtectedRoute';
 import {
   indexPath,
   loginPath,

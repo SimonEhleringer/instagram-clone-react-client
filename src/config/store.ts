@@ -1,8 +1,8 @@
 import { combineReducers, createStore } from 'redux';
-import { authenticationReducer } from '../redux/authentication/slice';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { persistStore, persistReducer } from 'redux-persist';
+import { authenticationReducer } from '../redux/authentication/slice';
 
 const persistConfig = {
   key: 'root',

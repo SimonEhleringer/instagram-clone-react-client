@@ -1,12 +1,12 @@
 import React from 'react';
-import './style.scss';
+import { border } from '../../scss/variables';
 import Loader from '../Loader';
+import './style.scss';
 
 interface PageLoaderProps {
   isLoading?: boolean;
 }
 
-// TODO: color as variable
 const PageLoader: React.FC<PageLoaderProps> = ({
   isLoading = true,
   children,
@@ -15,7 +15,7 @@ const PageLoader: React.FC<PageLoaderProps> = ({
     <>
       {isLoading ? (
         <div data-testid='page-loader' className='page-loader'>
-          <Loader color='rgb(219, 219, 219)' size='3rem' />
+          <Loader color={border} size='3rem' />
         </div>
       ) : (
         children

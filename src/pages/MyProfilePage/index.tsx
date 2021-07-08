@@ -1,15 +1,11 @@
 import React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
-
-import PageLoader from '../../shared/PageLoader';
-import { ReduxState } from '../../config/store';
 import { useSelector } from 'react-redux';
+import { ReduxState } from '../../config/store';
 import MyProfile from '../../profile/MyProfile';
 import { useFetchProfileInformation } from '../../profile/useFetchProfileInformation';
 import NormalPageLayout from '../../shared/NormalPageLayout';
+import PageLoader from '../../shared/PageLoader';
 
-// TODO: Add tests
-// TODO: Add errors -> Errors to loader
 const MyProfilePage: React.FC = () => {
   const { loggedInUserId } = useSelector(
     (state: ReduxState) => state.authenticationState

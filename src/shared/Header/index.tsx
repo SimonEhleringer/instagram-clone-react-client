@@ -1,21 +1,21 @@
 import React from 'react';
-import './style.scss';
-import instagramLogo from '../../assets/images/logo.png';
 import {
+  BsHeart,
+  BsHeartFill,
   BsHouseDoor,
   BsHouseDoorFill,
-  BsHeart,
   BsPerson,
-  BsHeartFill,
   BsPersonFill,
 } from 'react-icons/bs';
-import HeaderLink from './HeaderLink';
-import AddNewPostLink from './AddNewPostLink';
+import instagramLogo from '../../assets/images/logo.png';
 import {
   buildIndexPath,
   buildMyProfilePath,
   buildSuggestionsPath,
 } from '../../routes/path';
+import AddNewPostLink from './AddNewPostLink';
+import HeaderLink from './HeaderLink';
+import './style.scss';
 
 interface HeaderProps {}
 

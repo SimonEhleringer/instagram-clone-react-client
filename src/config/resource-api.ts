@@ -21,6 +21,7 @@ let isRefreshing = false;
 let refreshSubscribers: ((accessToken: string) => void)[] = [];
 
 // TODO: Read one more time threw this interceptor to understand it completele
+// TODO: What happens if refresh token is expired?
 resourceApi.interceptors.response.use(
   (value) => value,
   (error) => {

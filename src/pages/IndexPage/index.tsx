@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
+import { getMe } from '../../api/me';
 import { FeedPostResponseDto, getFeed } from '../../api/me-feed';
 import { getSuggestions } from '../../api/me-suggestions';
-import Feed from '../../feed/Feed';
-import PageLoader from '../../shared/PageLoader';
-import NormalPageLayout from '../../shared/NormalPageLayout';
-import './style.scss';
-import MyProfilePreview from '../../shared/ProfilePreview/MyProfilePreview';
-import { getMe } from '../../api/me';
-import SideBarSuggestions from '../../suggestions/SideBarSuggestions';
-import VerticalSplitLayout from '../../shared/VerticalSplitLayout';
-import { Redirect } from 'react-router';
-import { buildSuggestionsPath } from '../../routes/path';
 import { UserResponseDto } from '../../api/shared-dtos';
+import Feed from '../../feed/Feed';
+import { buildSuggestionsPath } from '../../routes/path';
+import NormalPageLayout from '../../shared/NormalPageLayout';
+import PageLoader from '../../shared/PageLoader';
+import MyProfilePreview from '../../shared/ProfilePreview/MyProfilePreview';
+import VerticalSplitLayout from '../../shared/VerticalSplitLayout';
+import SideBarSuggestions from '../../suggestions/SideBarSuggestions';
+import './style.scss';
 
 const IndexPage: React.FC = () => {
   const [feed, setFeed] = useState<FeedPostResponseDto[] | undefined>(

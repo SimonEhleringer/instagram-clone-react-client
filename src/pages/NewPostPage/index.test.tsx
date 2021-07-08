@@ -1,5 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import faker from 'faker';
 import { when } from 'jest-when';
 import { buildAddPostUrl } from '../../api/me-post';
 import { PostRequestDto } from '../../api/shared-dtos';
@@ -13,11 +14,8 @@ import {
   buildErrorResponseDto,
   buildMockedImage,
   renderMockedIndexRoute,
-  renderMockedLoginRoute,
   renderWithProviders,
 } from '../../test-utils';
-import faker from 'faker';
-import { initialState } from '../../redux/authentication/slice';
 
 jest.mock('../../config/resource-api.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;

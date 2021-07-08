@@ -1,31 +1,23 @@
-import { Route, Router } from 'react-router';
-import SuggestionsPage from '.';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { when } from 'jest-when';
+import { buildAddFollowUrl } from '../../api/me-followed';
 import {
   buildGetSuggestionsUrl,
-  getSuggestions,
   SuggestionsResponseDto,
 } from '../../api/me-suggestions';
-import { AxiosResponse } from 'axios';
-import { Provider } from 'react-redux';
-import { render, screen, waitFor } from '@testing-library/react';
+import resourceApi from '../../config/resource-api';
 import { configureStore, StoreType } from '../../config/store';
-import { buildAddFollowUrl } from '../../api/me-followed';
-import { buildSuggestionsPath, suggestionsPath } from '../../routes/path';
+import { buildSuggestionsPath } from '../../routes/path';
 import { renderSuggestionsRoute } from '../../routes/renderers';
 import {
   buildAuthenticationState,
   buildAxiosResponseWithData,
   buildMockedCloudinaryImageSource,
   buildSuggestionsResponseDto,
-  buildUserResponseDto,
-  renderMockedLoginRoute,
   renderMockedUserProfileRoute,
   renderWithProviders,
 } from '../../test-utils';
-import resourceApi from '../../config/resource-api';
-import { when } from 'jest-when';
-import { initialState } from '../../redux/authentication/slice';
-import userEvent from '@testing-library/user-event';
 
 jest.mock('../../config/resource-api.ts');
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;

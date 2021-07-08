@@ -1,10 +1,10 @@
 import React from 'react';
 import ProfilePreview from '..';
-import './style.scss';
-import UserProfileLink from '../../UserProfileLink';
-import Button, { ButtonType } from '../../Button';
-import { useLogout } from '../../../authentication/useLogout';
 import { UserResponseDto } from '../../../api/shared-dtos';
+import { useLogout } from '../../../authentication/useLogout';
+import Button, { ButtonType } from '../../Button';
+import UserProfileLink from '../../UserProfileLink';
+import './style.scss';
 
 export interface MyProfilePreviewProps {
   me: UserResponseDto;
