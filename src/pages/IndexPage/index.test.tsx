@@ -1,20 +1,21 @@
-import { screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { when } from 'jest-when';
-import { buildGetMeUrl } from '../../api/me';
-import { buildGetFeedUrl, FeedResponseDto } from '../../api/me-feed';
-import { buildAddFollowUrl } from '../../api/me-followed';
+import { screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { when } from "jest-when";
+import { forceCheck, forceVisible } from "react-lazyload";
+import { buildGetMeUrl } from "../../api/me";
+import { buildGetFeedUrl, FeedResponseDto } from "../../api/me-feed";
+import { buildAddFollowUrl } from "../../api/me-followed";
 import {
   buildGetSuggestionsUrl,
   SuggestionsResponseDto,
-} from '../../api/me-suggestions';
-import { UserResponseDto } from '../../api/shared-dtos';
-import resourceApi from '../../config/resource-api';
-import { configureStore, StoreType } from '../../config/store';
-import { initialState } from '../../redux/authentication/slice';
-import { buildIndexPath } from '../../routes/path';
-import { renderIndexRoute } from '../../routes/renderers';
-import { getDisplayTimeDiffFromNowString } from '../../shared/time';
+} from "../../api/me-suggestions";
+import { UserResponseDto } from "../../api/shared-dtos";
+import resourceApi from "../../config/resource-api";
+import { configureStore, StoreType } from "../../config/store";
+import { initialState } from "../../redux/authentication/slice";
+import { buildIndexPath } from "../../routes/path";
+import { renderIndexRoute } from "../../routes/renderers";
+import { getDisplayTimeDiffFromNowString } from "../../shared/time";
 import {
   buildAuthenticationState,
   buildAxiosResponseWithData,
@@ -27,17 +28,19 @@ import {
   renderMockedSuggestionsRoute,
   renderMockedUserProfileRoute,
   renderWithProviders,
-} from '../../test-utils';
+} from "../../test-utils";
 
-jest.mock('../../config/resource-api.ts');
+jest.mock("../../config/resource-api.ts");
 const mockedResourceApi = resourceApi as jest.Mocked<typeof resourceApi>;
 
-jest.mock('../../config/authentication-api.ts');
+jest.mock("../../config/authentication-api.ts");
 
 jest.mock(
-  'cloudinary-react',
-  () => require('../../test-utils/mock-objects/cloudinary').default
+  "cloudinary-react",
+  () => require("../../test-utils/mock-objects/cloudinary").default
 );
+
+jest.mock("react-lazyload", () => (props: any) => props.children);
 
 let loggedInUser: UserResponseDto;
 let feed: FeedResponseDto;
@@ -63,21 +66,21 @@ beforeEach(() => {
   });
 });
 
-it('should load data and show page when data is loaded', async () => {
+it("should load data and show page when data is loaded", async () => {
   renderWithProviders(renderIndexRoute(), { route: buildIndexPath(), store });
 
-  expect(screen.getByTestId('page-loader')).toBeInTheDocument();
+  expect(screen.getByTestId("page-loader")).toBeInTheDocument();
 
   await waitFor(() =>
     expect(
-      screen.getByRole('link', { name: loggedInUser.username })
+      screen.getByRole("link", { name: loggedInUser.username })
     ).toBeInTheDocument()
   );
   expect(screen.getByText(loggedInUser.fullName)).toBeInTheDocument();
   expect(
     screen.getByAltText(`${loggedInUser.username}-profile-image`)
   ).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: 'Abmelden' })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Abmelden" })).toBeInTheDocument();
 
   for (let i = 0; i < suggestions.suggestions.length; i++) {
     const suggestion = suggestions.suggestions[i];
@@ -87,14 +90,14 @@ it('should load data and show page when data is loaded', async () => {
     }
 
     expect(
-      screen.getByRole('link', { name: suggestion.username })
+      screen.getByRole("link", { name: suggestion.username })
     ).toBeInTheDocument();
     expect(screen.getByText(suggestion.fullName)).toBeInTheDocument();
     expect(
-      screen.getByAltText(`${suggestion.username}-profile-image`)
+      await screen.findByAltText(`${suggestion.username}-profile-image`)
     ).toBeInTheDocument();
   }
-  expect(screen.getAllByRole('button', { name: 'Abonnieren' }).length).toBe(5);
+  expect(screen.getAllByRole("button", { name: "Abonnieren" }).length).toBe(5);
 
   for (let i = 5; i < suggestions.suggestions.length; i++) {
     const suggestion = suggestions.suggestions[i];
@@ -102,24 +105,26 @@ it('should load data and show page when data is loaded', async () => {
     expect(screen.queryByText(suggestion.fullName)).not.toBeInTheDocument();
   }
 
-  feed.feed.forEach((feedPost) => {
+  for (const feedPost of feed.feed) {
     expect(
-      screen.getAllByRole('link', { name: feedPost.creator.username }).length
+      screen.getAllByRole("link", { name: feedPost.creator.username }).length
     ).toBe(2);
     expect(
-      screen.getByAltText(`${feedPost.creator.username}-profile-image`)
+      await screen.findByAltText(`${feedPost.creator.username}-profile-image`)
     ).toBeInTheDocument();
-    expect(screen.getByAltText(feedPost.publicImageId)).toBeInTheDocument();
+    expect(
+      await screen.findByAltText(feedPost.publicImageId)
+    ).toBeInTheDocument();
     expect(screen.getByText(feedPost.text)).toBeInTheDocument();
     expect(
       screen.getAllByText(
-        'vor ' + getDisplayTimeDiffFromNowString(feedPost.creationTime)
+        "vor " + getDisplayTimeDiffFromNowString(feedPost.creationTime)
       )[0]
     ).toBeInTheDocument();
-  });
+  }
 });
 
-it('should redirect to suggestions page when no posts are in feed', async () => {
+it("should redirect to suggestions page when no posts are in feed", async () => {
   feed = buildFeedResponseDto({}, 0);
 
   when(mockedResourceApi.get)
@@ -136,10 +141,10 @@ it('should redirect to suggestions page when no posts are in feed', async () => 
     }
   );
 
-  expect(await screen.findByTestId('suggestions-page')).toBeInTheDocument();
+  expect(await screen.findByTestId("suggestions-page")).toBeInTheDocument();
 });
 
-it('should log user out when logout button is pressed', async () => {
+it("should log user out when logout button is pressed", async () => {
   renderWithProviders(
     <>
       {renderIndexRoute()} {renderMockedLoginRoute()}
@@ -150,12 +155,12 @@ it('should log user out when logout button is pressed', async () => {
     }
   );
 
-  userEvent.click(await screen.findByRole('button', { name: 'Abmelden' }));
+  userEvent.click(await screen.findByRole("button", { name: "Abmelden" }));
 
-  expect(await screen.findByTestId('login-page')).toBeInTheDocument();
+  expect(await screen.findByTestId("login-page")).toBeInTheDocument();
 });
 
-it('should follow user when follow button on sidebar suggestion is pressed', async () => {
+it("should follow user when follow button on sidebar suggestion is pressed", async () => {
   when(mockedResourceApi.post)
     .calledWith(buildAddFollowUrl(expect.anything()))
     .mockResolvedValue(buildAxiosResponseWithoutData());
@@ -165,8 +170,8 @@ it('should follow user when follow button on sidebar suggestion is pressed', asy
     store: store,
   });
 
-  const followButtons = await screen.findAllByRole('button', {
-    name: 'Abonnieren',
+  const followButtons = await screen.findAllByRole("button", {
+    name: "Abonnieren",
   });
 
   const suggestionToFollow = suggestions.suggestions[0];
@@ -190,7 +195,7 @@ it('should follow user when follow button on sidebar suggestion is pressed', asy
   ).not.toBeInTheDocument();
 });
 
-it('should show logged in users profile when link is clicked', async () => {
+it("should show logged in users profile when link is clicked", async () => {
   renderWithProviders(
     <>
       {renderIndexRoute()} {renderMockedMyProfileRoute()}
@@ -202,13 +207,13 @@ it('should show logged in users profile when link is clicked', async () => {
   );
 
   userEvent.click(
-    await screen.findByRole('link', { name: loggedInUser.username })
+    await screen.findByRole("link", { name: loggedInUser.username })
   );
 
-  expect(screen.getByTestId('my-profile-page')).toBeInTheDocument();
+  expect(screen.getByTestId("my-profile-page")).toBeInTheDocument();
 });
 
-it('should show users profile when link in suggestion is clicked', async () => {
+it("should show users profile when link in suggestion is clicked", async () => {
   renderWithProviders(
     <>
       {renderIndexRoute()} {renderMockedUserProfileRoute()}
@@ -222,16 +227,16 @@ it('should show users profile when link in suggestion is clicked', async () => {
   const suggestionToShowProfile = suggestions.suggestions[0];
 
   userEvent.click(
-    await screen.findByRole('link', { name: suggestionToShowProfile.username })
+    await screen.findByRole("link", { name: suggestionToShowProfile.username })
   );
 
-  expect(screen.getByTestId('user-profile-page')).toBeInTheDocument();
-  expect(screen.getByTestId('user-id')).toHaveTextContent(
+  expect(screen.getByTestId("user-profile-page")).toBeInTheDocument();
+  expect(screen.getByTestId("user-id")).toHaveTextContent(
     suggestionToShowProfile.userId
   );
 });
 
-it('should show users profile when link in top of feed post is clicked', async () => {
+it("should show users profile when link in top of feed post is clicked", async () => {
   renderWithProviders(
     <>
       {renderIndexRoute()} {renderMockedUserProfileRoute()}
@@ -244,19 +249,19 @@ it('should show users profile when link in top of feed post is clicked', async (
 
   const creatorToShowProfile = feed.feed[0].creator;
 
-  const creatorsLinks = await screen.findAllByRole('link', {
+  const creatorsLinks = await screen.findAllByRole("link", {
     name: creatorToShowProfile.username,
   });
 
   userEvent.click(creatorsLinks[0]);
 
-  expect(screen.getByTestId('user-profile-page')).toBeInTheDocument();
-  expect(screen.getByTestId('user-id')).toHaveTextContent(
+  expect(screen.getByTestId("user-profile-page")).toBeInTheDocument();
+  expect(screen.getByTestId("user-id")).toHaveTextContent(
     creatorToShowProfile.userId
   );
 });
 
-it('should show users profile when link in caption of feed post is clicked', async () => {
+it("should show users profile when link in caption of feed post is clicked", async () => {
   renderWithProviders(
     <>
       {renderIndexRoute()} {renderMockedUserProfileRoute()}
@@ -269,19 +274,19 @@ it('should show users profile when link in caption of feed post is clicked', asy
 
   const creatorToShowProfile = feed.feed[0].creator;
 
-  const creatorsLinks = await screen.findAllByRole('link', {
+  const creatorsLinks = await screen.findAllByRole("link", {
     name: creatorToShowProfile.username,
   });
 
   userEvent.click(creatorsLinks[1]);
 
-  expect(screen.getByTestId('user-profile-page')).toBeInTheDocument();
-  expect(screen.getByTestId('user-id')).toHaveTextContent(
+  expect(screen.getByTestId("user-profile-page")).toBeInTheDocument();
+  expect(screen.getByTestId("user-id")).toHaveTextContent(
     creatorToShowProfile.userId
   );
 });
 
-it('should show suggestions page when button to show all suggestions is pressed', async () => {
+it("should show suggestions page when button to show all suggestions is pressed", async () => {
   renderWithProviders(
     <>
       {renderIndexRoute()} {renderMockedSuggestionsRoute()}
@@ -292,7 +297,7 @@ it('should show suggestions page when button to show all suggestions is pressed'
     }
   );
 
-  userEvent.click(await screen.findByRole('link', { name: 'Alle ansehen' }));
+  userEvent.click(await screen.findByRole("link", { name: "Alle ansehen" }));
 
-  expect(screen.getByTestId('suggestions-page')).toBeInTheDocument();
+  expect(screen.getByTestId("suggestions-page")).toBeInTheDocument();
 });
