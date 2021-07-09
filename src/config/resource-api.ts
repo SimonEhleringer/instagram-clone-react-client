@@ -1,10 +1,14 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { refresh } from '../api/authentication';
-import { setAccessAndRefreshToken } from '../redux/authentication/slice';
-import { applicationStore } from './store';
+import axios, { AxiosRequestConfig } from "axios";
+import { refresh } from "../api/authentication";
+import {
+  initialState,
+  setAccessAndRefreshToken,
+  setState,
+} from "../redux/authentication/slice";
+import { applicationStore } from "./store";
 
 const resourceApi = axios.create({
-  baseURL: 'https://instagram-clone-spring-boot.herokuapp.com/api/v1',
+  baseURL: "https://instagram-clone-spring-boot.herokuapp.com/api/v1",
 });
 
 // TODO: Add tests for interceptor
@@ -22,6 +26,7 @@ let refreshSubscribers: ((accessToken: string) => void)[] = [];
 
 // TODO: Read one more time threw this interceptor to understand it completele
 // TODO: What happens if refresh token is expired?
+// TODO: Fix outline in button
 resourceApi.interceptors.response.use(
   (value) => value,
   (error) => {
@@ -41,17 +46,22 @@ resourceApi.interceptors.response.use(
       const refreshToken =
         applicationStore.getState().authenticationState.refreshToken;
 
-      refresh({ refreshToken }).then((val) => {
-        isRefreshing = false;
+      refresh({ refreshToken }).then(
+        (val) => {
+          isRefreshing = false;
 
-        applicationStore.dispatch(setAccessAndRefreshToken(val.data));
+          applicationStore.dispatch(setAccessAndRefreshToken(val.data));
 
-        refreshSubscribers.forEach((callback) =>
-          callback(val.data.accessToken)
-        );
+          refreshSubscribers.forEach((callback) =>
+            callback(val.data.accessToken)
+          );
 
-        refreshSubscribers = [];
-      });
+          refreshSubscribers = [];
+        },
+        () => {
+          applicationStore.dispatch(setState({ ...initialState }));
+        }
+      );
     }
 
     const retryOriginalRequest = new Promise((resolve) => {
