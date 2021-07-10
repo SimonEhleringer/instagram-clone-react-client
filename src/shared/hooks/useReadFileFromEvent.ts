@@ -17,6 +17,8 @@ export const useReadFileFromEvent = () => {
       }
 
       onFileRead(reader.result);
+
+      e.target.value = '';
     };
   };
 
