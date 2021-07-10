@@ -35,7 +35,7 @@ const Avatar: React.FC<AvatarProps> = ({
               aspectRatio='1:1'
               crop='fill'
               width={widthInPx}
-              quality='80'
+              quality='100'
             />
           </Image>
         </LazyLoad>
