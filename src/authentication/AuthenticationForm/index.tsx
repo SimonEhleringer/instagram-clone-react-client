@@ -1,9 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import instagramLogo from '../../assets/images/logo-authentication.png';
-import Button from '../../shared/Button';
-import Errors from '../../shared/Errors';
-import './style.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import Button from "../../shared/Button";
+import Errors from "../../shared/Errors";
+import "./style.scss";
 
 export interface AuthenticationFormProps {
   handleSubmit: () => void;
@@ -28,9 +27,9 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
   isLoading,
 }) => {
   return (
-    <form className='authentication-form' onSubmit={handleSubmit}>
-      <div className='authentication-form__box'>
-        <img
+    <form className="authentication-form" onSubmit={handleSubmit}>
+      <div className="authentication-form__box">
+        {/* <img
           className={
             subTitle
               ? 'authentication-form__logo'
@@ -38,33 +37,34 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
           }
           src={instagramLogo}
           alt='Instagram'
-        />
+        /> */}
+        <h1 style={{ fontFamily: "Beauty Mountains" }}>Instagram Klon</h1>
 
-        <div className='authentication-form__content-wrapper'>
+        <div className="authentication-form__content-wrapper">
           {subTitle && (
-            <p className='authentication-form__sub-title'>{subTitle}</p>
+            <p className="authentication-form__sub-title">{subTitle}</p>
           )}
 
           {children}
 
-          <div className='authentication-form__submit-button'>
-            <Button type={'submit'} isLoading={isLoading}>
+          <div className="authentication-form__submit-button">
+            <Button type={"submit"} isLoading={isLoading}>
               {submitButtonCaption}
             </Button>
           </div>
 
           {errors.length > 0 && (
-            <div className='authentication-form__errors'>
+            <div className="authentication-form__errors">
               <Errors errors={errors} />
             </div>
           )}
         </div>
       </div>
 
-      <div className='authentication-form__box'>
-        <div className='authentication-form__redirect-text'>
-          {redirectText}{' '}
-          <Link className='authentication-form__redirect-link' to={redirectTo}>
+      <div className="authentication-form__box">
+        <div className="authentication-form__redirect-text">
+          {redirectText}{" "}
+          <Link className="authentication-form__redirect-link" to={redirectTo}>
             {redirectButtonText}
           </Link>
         </div>
