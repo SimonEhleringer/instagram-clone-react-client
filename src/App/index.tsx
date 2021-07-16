@@ -7,6 +7,7 @@ import './style.scss';
 // TODO: Delete unnessecary API endpoints
 // TODO: Fix all warnings
 // TODO: Clean up public folder
+// TODO: New images, Instagram logo, favicon
 const App = () => {
   return (
     <CloudinaryContext cloudName={process.env.REACT_APP_CLOUD_NAME}>

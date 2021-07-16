@@ -18,11 +18,13 @@ const ProfilePreview: React.FC<ProfilePreviewProps> = ({
 }) => {
   return (
     <div className='profile-preview'>
-      <Avatar
-        publicProfileImageId={user.publicProfileImageId}
-        widthInPx={avatarSizeInPx}
-        username={user.username}
-      />
+      <div style={{ minWidth: avatarSizeInPx }}>
+        <Avatar
+          publicProfileImageId={user.publicProfileImageId}
+          widthInPx={avatarSizeInPx}
+          username={user.username}
+        />
+      </div>
 
       <div className='profile-preview__user-information'>
         {renderUserInformation()}
