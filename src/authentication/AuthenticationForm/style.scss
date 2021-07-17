@@ -33,6 +33,16 @@
   }
 }
 
+.authentication-form__logo {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+
+  &--margin-bottom {
+    @extend .authentication-form__logo;
+    margin-bottom: 1.5rem;
+  }
+}
+
 .authentication-form__content-wrapper {
   display: flex;
   flex-direction: column;
