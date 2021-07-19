@@ -12,6 +12,7 @@ import {
   buildMyProfilePath,
   buildSuggestionsPath,
 } from "../../routes/path";
+import Logo from "../Logo";
 import AddNewPostLink from "./AddNewPostLink";
 import HeaderLink from "./HeaderLink";
 import "./style.scss";
@@ -23,9 +24,7 @@ const Header: React.FC<HeaderProps> = () => {
     <div className="header__page-padding">
       <div className="header">
         <div className="header__content-wrapper">
-          {/* <img className='header__logo' src={instagramLogo} alt='Instagram' /> */}
-          {/* TODO: Fertig machen */}
-          <h1>Instagram-Klon</h1>
+          <Logo size="2rem" />
 
           <div className="header__links">
             <HeaderLink
