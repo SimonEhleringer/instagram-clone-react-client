@@ -1,17 +1,16 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { refresh } from '../api/authentication';
+import axios, { AxiosRequestConfig } from "axios";
+import { refresh } from "../api/authentication";
 import {
   initialState,
   setAccessAndRefreshToken,
   setState,
-} from '../redux/authentication/slice';
-import { applicationStore } from './store';
+} from "../redux/authentication/slice";
+import { applicationStore } from "./store";
 
 const resourceApi = axios.create({
-  baseURL: 'https://instagram-clone-spring-boot.herokuapp.com/api/v1',
+  baseURL: "https://instagram-clone-spring-boot.herokuapp.com/api/v1",
 });
 
-// TODO: Add tests for interceptor
 resourceApi.interceptors.request.use((config: AxiosRequestConfig) => {
   const accessToken =
     applicationStore.getState().authenticationState.accessToken;
@@ -24,7 +23,6 @@ resourceApi.interceptors.request.use((config: AxiosRequestConfig) => {
 let isRefreshing = false;
 let refreshSubscribers: ((accessToken: string) => void)[] = [];
 
-// TODO: Read one more time threw this interceptor to understand it completele
 resourceApi.interceptors.response.use(
   (value) => value,
   (error) => {
