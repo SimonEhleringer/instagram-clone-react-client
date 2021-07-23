@@ -22,7 +22,13 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({
   const isActive = pathname === to;
 
   return (
-    <NavLink data-testid={dataTestId} exact to={to} className='header-link'>
+    <NavLink
+      data-testid={dataTestId}
+      exact
+      to={to}
+      className='header-link'
+      replace
+    >
       {isActive ? <ActiveIcon size={size} /> : <Icon size={size} />}
     </NavLink>
   );

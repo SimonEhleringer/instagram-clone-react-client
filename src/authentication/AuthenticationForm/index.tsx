@@ -64,7 +64,11 @@ const AuthenticationForm: React.FC<AuthenticationFormProps> = ({
       <div className='authentication-form__box'>
         <div className='authentication-form__redirect-text'>
           {redirectText}{' '}
-          <Link className='authentication-form__redirect-link' to={redirectTo}>
+          <Link
+            className='authentication-form__redirect-link'
+            to={redirectTo}
+            replace
+          >
             {redirectButtonText}
           </Link>
         </div>
