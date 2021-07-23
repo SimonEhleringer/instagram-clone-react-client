@@ -24,6 +24,7 @@ const Button: React.FC<ButtonProps> = ({
   buttonType = ButtonType.PrimaryContained,
   loaderDataTestId = 'button-loader',
   children,
+  disabled,
   ...rest
 }) => {
   return (
@@ -39,6 +40,7 @@ const Button: React.FC<ButtonProps> = ({
       } ${
         buttonType === ButtonType.PrimaryText ? 'button--primary-text' : ' '
       } ${isLoading ? 'button--loading' : ''}`}
+      disabled={isLoading || disabled}
       {...rest}
     >
       {isLoading && (
