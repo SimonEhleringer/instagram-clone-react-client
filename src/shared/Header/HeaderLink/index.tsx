@@ -27,7 +27,6 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({
       exact
       to={to}
       className='header-link'
-      replace
     >
       {isActive ? <ActiveIcon size={size} /> : <Icon size={size} />}
     </NavLink>

@@ -24,7 +24,6 @@ const SideBarSuggestions: React.FC<SideBarSuggestionsProps> = ({
         <Link
           className='side-bar-suggestions__all-suggestions-link'
           to={buildSuggestionsPath()}
-          replace
         >
           Alle ansehen
         </Link>

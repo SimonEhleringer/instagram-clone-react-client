@@ -22,7 +22,7 @@ const UserProfileLink: React.FC<UserProfileProps> = ({ user }) => {
     : buildUserProfilePath(user.userId);
 
   return (
-    <Link to={profilePath} className='user-profile-link' replace>
+    <Link to={profilePath} className='user-profile-link'>
       {user.username}
     </Link>
   );
