@@ -9,6 +9,8 @@ React.js frontend for an Instagram clone
 - [React Router](https://reactrouter.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Axios](https://github.com/axios/axios)
+- [Jest](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
 # Features
 
