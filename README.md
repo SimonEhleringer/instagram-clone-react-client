@@ -2,7 +2,16 @@
 
 React.js frontend for an Instagram clone
 
-# Technologies
+Click [here](https://simonehleringer.github.io/instagram-clone-react-client) for a live demo.
+You can use "Max_Mustermann" as username and "Passwort123!" as password.
+
+## Features
+
+- Authentication
+- Image upload
+- User following
+
+## Technologies
 
 - [React.js](https://reactjs.org/)
 - [Redux](https://redux.js.org/)
@@ -12,13 +21,3 @@ React.js frontend for an Instagram clone
 - [Jest](https://jestjs.io/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 - [Sass (SCSS)](https://sass-lang.com/)
-
-# Features
-
-- Authentication
-- Image upload
-- User following
-
-# Live demo
-
-[Click here](https://simonehleringer.github.io/instagram-clone-react-client)
