@@ -11,6 +11,7 @@ React.js frontend for an Instagram clone
 - [Axios](https://github.com/axios/axios)
 - [Jest](https://jestjs.io/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Sass (SCSS)](https://sass-lang.com/)
 
 # Features
 
