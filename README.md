@@ -5,7 +5,7 @@ React.js frontend for an Instagram clone
 ---
 
 Click [here](https://simonehleringer.github.io/instagram-clone-react-client) for a live demo.
-You can use "Max_Mustermann" as username and "Passwort123!" as password.
+You can use `Max_Mustermann` as username and `Passwort123!` as password.
 The first login might take a while, because the backend is in sleep mode.
 
 Click [here](https://github.com/SimonEhleringer/instagram-clone-api) to go to the repository of the backend.
