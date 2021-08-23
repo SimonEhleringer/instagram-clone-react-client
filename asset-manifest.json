@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/instagram-clone-react-client/static/css/main.f7c58301.chunk.css",
+    "main.css": "/instagram-clone-react-client/static/css/main.8896e6c1.chunk.css",
     "main.js": "/instagram-clone-react-client/static/js/main.10666945.chunk.js",
     "main.js.map": "/instagram-clone-react-client/static/js/main.10666945.chunk.js.map",
     "runtime-main.js": "/instagram-clone-react-client/static/js/runtime-main.6ca1b4fe.js",
@@ -10,14 +10,14 @@
     "static/js/3.cebd15b0.chunk.js": "/instagram-clone-react-client/static/js/3.cebd15b0.chunk.js",
     "static/js/3.cebd15b0.chunk.js.map": "/instagram-clone-react-client/static/js/3.cebd15b0.chunk.js.map",
     "index.html": "/instagram-clone-react-client/index.html",
-    "static/css/main.f7c58301.chunk.css.map": "/instagram-clone-react-client/static/css/main.f7c58301.chunk.css.map",
+    "static/css/main.8896e6c1.chunk.css.map": "/instagram-clone-react-client/static/css/main.8896e6c1.chunk.css.map",
     "static/js/2.cecf9772.chunk.js.LICENSE.txt": "/instagram-clone-react-client/static/js/2.cecf9772.chunk.js.LICENSE.txt",
     "static/media/style.scss": "/instagram-clone-react-client/static/media/beauty-mountains.76d6a4d4.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.6ca1b4fe.js",
     "static/js/2.cecf9772.chunk.js",
-    "static/css/main.f7c58301.chunk.css",
+    "static/css/main.8896e6c1.chunk.css",
     "static/js/main.10666945.chunk.js"
   ]
 }
