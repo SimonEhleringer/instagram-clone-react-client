@@ -6,6 +6,7 @@ $padding-horizontal: 0.75rem;
 .button {
   padding: $padding-vertical $padding-horizontal;
   font-weight: variables.$bold;
+  outline: none;
 
   cursor: pointer;
   position: relative;
