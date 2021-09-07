@@ -31,16 +31,24 @@ Click [here](https://github.com/SimonEhleringer/instagram-clone-api) to go to th
 
 ### Login page
 
-![Login page](https://user-images.githubusercontent.com/72859064/130053517-f801c348-2c7a-41de-a61d-32b440c48a25.png)
+<kbd>
+  <img src="https://user-images.githubusercontent.com/72859064/130053517-f801c348-2c7a-41de-a61d-32b440c48a25.png" alt="Login page" />
+</kbd>  
 
 ### Home page
 
-![Home page](https://user-images.githubusercontent.com/72859064/130053786-12646d8d-c2b0-4dfc-a37f-ee9343580c07.png)
+<kbd>
+  <img src="https://user-images.githubusercontent.com/72859064/130053786-12646d8d-c2b0-4dfc-a37f-ee9343580c07.png" alt="Home page" />
+</kbd>
 
 ### Profile page
 
-![Profile page](https://user-images.githubusercontent.com/72859064/130053790-612d0df8-5186-4fb5-a834-9228ca6ed1b2.png)
-
+<kbd>
+  <img src="https://user-images.githubusercontent.com/72859064/130053790-612d0df8-5186-4fb5-a834-9228ca6ed1b2.png" alt="Profile page" />
+</kbd>
+  
 ### New post page
 
-![New post page](https://user-images.githubusercontent.com/72859064/130053794-d6b17144-6f1d-4bad-8229-896c01227a04.png)
+<kbd>
+  <img src="https://user-images.githubusercontent.com/72859064/130053794-d6b17144-6f1d-4bad-8229-896c01227a04.png" alt="New post page" />
+</kbd>
